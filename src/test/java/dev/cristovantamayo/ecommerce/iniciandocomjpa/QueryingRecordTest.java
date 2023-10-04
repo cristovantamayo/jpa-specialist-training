@@ -1,9 +1,7 @@
 package dev.cristovantamayo.ecommerce.iniciandocomjpa;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import dev.cristovantamayo.ecommerce.model.Produto;
+import org.junit.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -34,5 +32,32 @@ public class QueryingRecordTest {
     @After
     public void tearDown() {
         entityManager.close();
+    }
+
+    @Test
+    public void searchForObjectIdentifier() {
+        Produto product =
+                entityManager.find(Produto.class, 1);
+
+        Produto productRef =
+                entityManager.getReference(Produto.class, 1);
+
+        System.out.println(productRef);
+
+        Assert.assertNotNull(product);
+        Assert.assertEquals("Kindle", product.getNome());
+    }
+
+    @Test
+    public void UpdateProductReferenceTest() {
+        Produto product =
+                entityManager.find(Produto.class, 1);
+
+        product.setNome("Microphone Samsung");
+
+        // refresh restore object attributes from database
+        entityManager.refresh(product);
+
+        Assert.assertEquals("Kindle", product.getNome());
     }
 }
