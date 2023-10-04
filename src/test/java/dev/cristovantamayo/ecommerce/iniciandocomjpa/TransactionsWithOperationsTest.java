@@ -8,8 +8,28 @@ import org.junit.Test;
 import java.math.BigDecimal;
 
 public class TransactionsWithOperationsTest extends EntityManagerTest {
+
+    @Test
+    public void preventDatabaseOperation() {
+        Product product = entityManager.find(Product.class, 1);
+
+        entityManager.detach(product);
+
+        entityManager.getTransaction().begin();
+        product.setName("Kindle Paperwhite Next Generation");
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Product actualProduct =
+                entityManager.find(Product.class, product.getId());
+
+        Assert.assertEquals("Kindle", actualProduct.getName());
+    }
+
     @Test
     public void showDiferenceBetweenPersistAndMerge() {
+
         Product productPersist = new Product();
         productPersist.setId(5);
         productPersist.setName("Microphone Rode Videmic");
@@ -30,7 +50,6 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Assert.assertNotNull(actualProductPersist);
 
 
-        
         Product productMerge = new Product();
         productMerge.setId(6);
         productMerge.setName("Notebook Dell");
@@ -123,7 +142,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Product actualProduct =
                 entityManager.find(Product.class, 3);
 
-        Assert.assertNotNull(actualProduct);
+        Assert.assertNull(actualProduct);
     }
 
     @Test
