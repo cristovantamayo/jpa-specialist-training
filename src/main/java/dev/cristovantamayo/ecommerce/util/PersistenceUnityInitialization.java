@@ -1,6 +1,6 @@
 package dev.cristovantamayo.ecommerce.util;
 
-import dev.cristovantamayo.ecommerce.model.Produto;
+import dev.cristovantamayo.ecommerce.model.Product;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,10 +15,10 @@ public class PersistenceUnityInitialization {
                 entityManagerFactory.createEntityManager();
 
         // Testes Aqui!
-        Produto produto = entityManager.find(Produto.class, 1);
-        System.out.println(produto.getNome());
-        System.out.println(produto.getDescricao());
-        System.out.println(produto.getPreco());
+        Product produto = entityManager.find(Product.class, 1);
+        System.out.println(produto.getName());
+        System.out.println(produto.getDescription());
+        System.out.println(produto.getPrice());
 
         entityManager.close();
         entityManagerFactory.close();

@@ -1,6 +1,5 @@
 package dev.cristovantamayo.ecommerce;
 
-import dev.cristovantamayo.ecommerce.model.Produto;
 import org.junit.*;
 
 import javax.persistence.EntityManager;

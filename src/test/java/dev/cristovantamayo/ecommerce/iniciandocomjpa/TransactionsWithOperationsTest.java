@@ -1,7 +1,7 @@
 package dev.cristovantamayo.ecommerce.iniciandocomjpa;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
-import dev.cristovantamayo.ecommerce.model.Produto;
+import dev.cristovantamayo.ecommerce.model.Product;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,53 +10,53 @@ import java.math.BigDecimal;
 public class TransactionsWithOperationsTest extends EntityManagerTest {
     @Test
     public void showDiferenceBetweenPersistAndMerge() {
-        Produto productPersist = new Produto();
+        Product productPersist = new Product();
         productPersist.setId(5);
-        productPersist.setNome("Microphone Rode Videmic");
-        productPersist.setDescricao("A melhor qualidade de som.");
-        productPersist.setPreco(new BigDecimal(1000));
+        productPersist.setName("Microphone Rode Videmic");
+        productPersist.setDescription("A melhor qualidade de som.");
+        productPersist.setPrice(new BigDecimal(1000));
 
         entityManager.getTransaction().begin();
         entityManager.persist(productPersist);
-        productPersist.setNome("SmartPhone Samsung S23");
-        productPersist.setPreco(new BigDecimal(8000));
+        productPersist.setName("SmartPhone Samsung S23");
+        productPersist.setPrice(new BigDecimal(8000));
         entityManager.getTransaction().commit();
 
         entityManager.clear();
 
-        Produto actualProductPersist =
-                entityManager.find(Produto.class, productPersist.getId());
+        Product actualProductPersist =
+                entityManager.find(Product.class, productPersist.getId());
 
         Assert.assertNotNull(actualProductPersist);
 
 
         
-        Produto productMerge = new Produto();
+        Product productMerge = new Product();
         productMerge.setId(6);
-        productMerge.setNome("Notebook Dell");
-        productMerge.setDescricao("O melhor da categoria.");
-        productMerge.setPreco(new BigDecimal(2000));
+        productMerge.setName("Notebook Dell");
+        productMerge.setDescription("O melhor da categoria.");
+        productMerge.setPrice(new BigDecimal(2000));
 
         entityManager.getTransaction().begin();
         productMerge = entityManager.merge(productMerge);
-        productMerge.setNome("Notebook Dell Inspire");
-        productMerge.setPreco(new BigDecimal(2500));
+        productMerge.setName("Notebook Dell Inspire");
+        productMerge.setPrice(new BigDecimal(2500));
         entityManager.getTransaction().commit();
 
         entityManager.clear();
 
-        Produto actualProductMerge =
-                entityManager.find(Produto.class, productMerge.getId());
+        Product actualProductMerge =
+                entityManager.find(Product.class, productMerge.getId());
 
         Assert.assertNotNull(actualProductMerge);
     }
     @Test
     public void insertObjectWithMergeMethod() {
-        Produto product = new Produto();
+        Product product = new Product();
         product.setId(4);
-        product.setNome("Microphone Rode Videmic");
-        product.setDescricao("A melhor qualidade de som.");
-        product.setPreco(new BigDecimal(1000));
+        product.setName("Microphone Rode Videmic");
+        product.setDescription("A melhor qualidade de som.");
+        product.setPrice(new BigDecimal(1000));
 
         entityManager.getTransaction().begin();
         entityManager.merge(product);
@@ -64,36 +64,36 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
 
         entityManager.clear();
 
-        Produto actualProduct =
-                entityManager.find(Produto.class, product.getId());
+        Product actualProduct =
+                entityManager.find(Product.class, product.getId());
 
         Assert.assertNotNull(actualProduct);
     }
 
     @Test
     public void updateManagedObject() {
-        Produto product = entityManager.find(Produto.class, 1);
+        Product product = entityManager.find(Product.class, 1);
 
 
         entityManager.getTransaction().begin();
-        product.setNome("Kindle Paperwhite Next Generation");
+        product.setName("Kindle Paperwhite Next Generation");
         entityManager.getTransaction().commit();
 
         entityManager.clear();
 
-        Produto actualProduct =
-                entityManager.find(Produto.class, product.getId());
+        Product actualProduct =
+                entityManager.find(Product.class, product.getId());
 
-        Assert.assertEquals("Kindle Paperwhite Next Generation", actualProduct.getNome());
+        Assert.assertEquals("Kindle Paperwhite Next Generation", actualProduct.getName());
     }
 
     @Test
     public void updateObject() {
-        Produto product = new Produto();
+        Product product = new Product();
         product.setId(1);
-        product.setNome("Kindle Paperwhite");
-        product.setDescricao("Conheça o novo Kindle Paperwhite");
-        product.setPreco(new BigDecimal(599));
+        product.setName("Kindle Paperwhite");
+        product.setDescription("Conheça o novo Kindle Paperwhite");
+        product.setPrice(new BigDecimal(599));
 
         entityManager.getTransaction().begin();
         entityManager.merge(product);
@@ -101,17 +101,17 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
 
         entityManager.clear();
 
-        Produto actualProduct =
-                entityManager.find(Produto.class, product.getId());
+        Product actualProduct =
+                entityManager.find(Product.class, product.getId());
 
         Assert.assertNotNull(actualProduct);
-        Assert.assertEquals("Kindle Paperwhite", actualProduct.getNome());
+        Assert.assertEquals("Kindle Paperwhite", actualProduct.getName());
     }
 
     @Test
     public void removeObject() {
 
-        Produto product = entityManager.find(Produto.class, 3);
+        Product product = entityManager.find(Product.class, 3);
 
         entityManager.getTransaction().begin();
         entityManager.remove(product);
@@ -120,19 +120,19 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         // No necessary here, because remove method clear entityManager memory under de hood
         // entityManager.clear();
 
-        Produto actualProduct =
-                entityManager.find(Produto.class, 3);
+        Product actualProduct =
+                entityManager.find(Product.class, 3);
 
         Assert.assertNotNull(actualProduct);
     }
 
     @Test
     public void insertFirstObject() {
-        Produto product = new Produto();
+        Product product = new Product();
         product.setId(2);
-        product.setNome("Câmera Canon");
-        product.setDescricao("A melhor definição para suas Fotos.");
-        product.setPreco(new BigDecimal(5000));
+        product.setName("Câmera Canon");
+        product.setDescription("A melhor definição para suas Fotos.");
+        product.setPrice(new BigDecimal(5000));
 
         entityManager.getTransaction().begin();
         entityManager.persist(product);
@@ -140,15 +140,15 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
 
         entityManager.clear();
 
-        Produto actualProduct =
-                entityManager.find(Produto.class, product.getId());
+        Product actualProduct =
+                entityManager.find(Product.class, product.getId());
 
         Assert.assertNotNull(actualProduct);
     }
 
     public void openAndCloseTransaction() {
 
-        Produto product = new Produto();
+        Product product = new Product();
 
         entityManager.getTransaction().begin();
 

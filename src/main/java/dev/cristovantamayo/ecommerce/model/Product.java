@@ -1,8 +1,6 @@
 package dev.cristovantamayo.ecommerce.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,17 +8,19 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 
 @Entity
-public class Produto {
+public class Product {
 
     @Id
     private Integer id;
 
-    private String nome;
+    private String name;
 
-    private String descricao;
-
-    public BigDecimal preco;
+    private String description;
+    
+    public BigDecimal price;
 }
