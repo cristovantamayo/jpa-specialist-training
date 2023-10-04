@@ -9,6 +9,48 @@ import java.math.BigDecimal;
 
 public class TransactionsWithOperationsTest extends EntityManagerTest {
     @Test
+    public void showDiferenceBetweenPersistAndMerge() {
+        Produto productPersist = new Produto();
+        productPersist.setId(5);
+        productPersist.setNome("Microphone Rode Videmic");
+        productPersist.setDescricao("A melhor qualidade de som.");
+        productPersist.setPreco(new BigDecimal(1000));
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(productPersist);
+        productPersist.setNome("SmartPhone Samsung S23");
+        productPersist.setPreco(new BigDecimal(8000));
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Produto actualProductPersist =
+                entityManager.find(Produto.class, productPersist.getId());
+
+        Assert.assertNotNull(actualProductPersist);
+
+
+        
+        Produto productMerge = new Produto();
+        productMerge.setId(6);
+        productMerge.setNome("Notebook Dell");
+        productMerge.setDescricao("O melhor da categoria.");
+        productMerge.setPreco(new BigDecimal(2000));
+
+        entityManager.getTransaction().begin();
+        productMerge = entityManager.merge(productMerge);
+        productMerge.setNome("Notebook Dell Inspire");
+        productMerge.setPreco(new BigDecimal(2500));
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Produto actualProductMerge =
+                entityManager.find(Produto.class, productMerge.getId());
+
+        Assert.assertNotNull(actualProductMerge);
+    }
+    @Test
     public void insertObjectWithMergeMethod() {
         Produto product = new Produto();
         product.setId(4);
