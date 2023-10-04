@@ -10,11 +10,12 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
 public class Product {
 
+    @EqualsAndHashCode.Include
     @Id
     private Integer id;
 
