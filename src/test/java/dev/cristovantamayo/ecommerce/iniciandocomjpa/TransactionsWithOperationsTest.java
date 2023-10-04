@@ -10,6 +10,26 @@ import java.math.BigDecimal;
 public class TransactionsWithOperationsTest extends EntityManagerTest {
 
     @Test
+    public void removeObject() {
+
+        Produto product = entityManager.find(Produto.class, 3);
+
+        entityManager.getTransaction().begin();
+        entityManager.remove(product);
+        entityManager.getTransaction().commit();
+
+        // No necessary here, because remove method clear entityManager memory under de hood
+        // entityManager.clear();
+
+        Produto actualProduct =
+                entityManager.find(Produto.class, 3);
+
+        Assert.assertNotNull(actualProduct);
+
+
+    }
+
+    @Test
     public void insertFirstObject() {
         Produto product = new Produto();
         product.setId(2);
