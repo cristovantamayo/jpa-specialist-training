@@ -3,6 +3,7 @@ package dev.cristovantamayo.ecommerce.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,8 +25,11 @@ public class Client {
     @Enumerated(EnumType.STRING)
     private ClientGender gender;
 
-    public static Client of (Integer id, String name, ClientGender gender){
-        return new Client(id, name, gender);
+    @OneToMany(mappedBy = "client")
+    private List<Purchase> purchases;
+
+    public static Client of (Integer id, String name, ClientGender gender, List<Purchase> purchase){
+        return new Client(id, name, gender, purchase);
     }
 
 }

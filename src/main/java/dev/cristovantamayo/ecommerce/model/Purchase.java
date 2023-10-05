@@ -22,6 +22,7 @@ public class Purchase {
     private Integer id;
 
     @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @Column(name = "purchase_date")
