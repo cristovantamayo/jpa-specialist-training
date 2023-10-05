@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.nio.MappedByteBuffer;
 
 @Getter
 @Setter
@@ -20,18 +21,17 @@ public class PurchaseItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne
     @Column(name = "purchase_id")
-    private Integer purchaseId;
+    private Purchase purchase;
 
+    @ManyToOne
     @Column(name = "product_id")
-    private Integer productId;
-
-    @Column(name = "product_price")
-    private BigDecimal productPrice;
+    private Product product;
 
     private Integer quantity;
 
-    public static PurchaseItem of (Integer id, Integer purchaseId, Integer productId, BigDecimal productPrice, Integer quantity) {
-        return new PurchaseItem(id, purchaseId, productId, productPrice, quantity);
+    public static PurchaseItem of (Integer id, Purchase purchase, Product product, Integer quantity) {
+        return new PurchaseItem(id, purchase, product, quantity);
     }
 }
