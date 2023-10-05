@@ -31,7 +31,6 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
     public void showDiferenceBetweenPersistAndMerge() {
 
         Product productPersist = new Product();
-        productPersist.setId(5);
         productPersist.setName("Microphone Rode Videmic");
         productPersist.setDescription("A melhor qualidade de som.");
         productPersist.setPrice(new BigDecimal(1000));
@@ -51,7 +50,6 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
 
 
         Product productMerge = new Product();
-        productMerge.setId(6);
         productMerge.setName("Notebook Dell");
         productMerge.setDescription("O melhor da categoria.");
         productMerge.setPrice(new BigDecimal(2000));
@@ -72,7 +70,6 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
     @Test
     public void insertObjectWithMergeMethod() {
         Product product = new Product();
-        product.setId(4);
         product.setName("Microphone Rode Videmic");
         product.setDescription("A melhor qualidade de som.");
         product.setPrice(new BigDecimal(1000));
@@ -109,7 +106,6 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
     @Test
     public void updateObject() {
         Product product = new Product();
-        product.setId(1);
         product.setName("Kindle Paperwhite");
         product.setDescription("Conheça o novo Kindle Paperwhite");
         product.setPrice(new BigDecimal(599));
@@ -148,7 +144,6 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
     @Test
     public void insertFirstObject() {
         Product product = new Product();
-        product.setId(2);
         product.setName("Câmera Canon");
         product.setDescription("A melhor definição para suas Fotos.");
         product.setPrice(new BigDecimal(5000));

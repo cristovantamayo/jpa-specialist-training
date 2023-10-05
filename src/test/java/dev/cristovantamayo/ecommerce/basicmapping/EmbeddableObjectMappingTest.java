@@ -18,7 +18,7 @@ public class EmbeddableObjectMappingTest extends EntityManagerTest {
                 DeliveryAddress.of("08990-010", "Jefferson Sr", "2376",
                         "Apt 2", "Elwood Park", "Baltimore", "Maryland");
 
-        Purchase purchase = Purchase.of(1, LocalDateTime.now(), null, null,
+        Purchase purchase = Purchase.of(null, LocalDateTime.now(), null, null,
                 new BigDecimal(4000), PurchaseStatus.WAITING, deliveryAddress);
 
         entityManager.getTransaction().begin();

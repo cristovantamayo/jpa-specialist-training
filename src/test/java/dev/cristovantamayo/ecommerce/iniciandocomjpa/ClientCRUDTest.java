@@ -9,14 +9,14 @@ import org.junit.Test;
 public class ClientCRUDTest extends EntityManagerTest {
 
     private Client client =
-            Client.of(3, "Joshua Tenens", ClientGender.MAN);
+            Client.of(null, "Joshua Tenens", ClientGender.MAN);
     @Test
     public void clientInsertion() {
 
         create(client);
 
         Client expectedClient = client;
-        Client actualClient = entityManager.find(Client.class, 3);
+        Client actualClient = entityManager.find(Client.class, client.getId());
 
         Assert.assertEquals(expectedClient.getName(), actualClient.getName());
         Assert.assertEquals(expectedClient.getId(), actualClient.getId());
