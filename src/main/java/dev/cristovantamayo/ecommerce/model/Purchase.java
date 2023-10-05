@@ -34,9 +34,12 @@ public class Purchase {
     @Enumerated(EnumType.STRING)
     private PurchaseStatus status;
 
+    @Embedded
+    private DeliveryAddress deliveryAddress;
+
     public static Purchase of (Integer id, LocalDateTime purchaseDate, LocalDateTime purchaseDueDate,
-                               Integer invoiceId, BigDecimal total, PurchaseStatus status) {
-        return new Purchase(id, purchaseDate, purchaseDueDate, invoiceId, total, status);
+                               Integer invoiceId, BigDecimal total, PurchaseStatus status, DeliveryAddress deliveryAddress) {
+        return new Purchase(id, purchaseDate, purchaseDueDate, invoiceId, total, status, deliveryAddress);
     }
 
 }
