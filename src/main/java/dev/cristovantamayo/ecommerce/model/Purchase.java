@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,18 +14,20 @@ import javax.persistence.Id;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
-public class Client {
+public class Purchase {
 
     @EqualsAndHashCode.Include
     @Id
     private Integer id;
 
-    private String name;
+    private LocalDateTime purchaseDate;
 
-    private GenderClient gender;
+    private LocalDateTime purchaseDue;
 
-    public static Client of (Integer id, String name, GenderClient gender){
-        return new Client(id, name, gender);
-    }
+    private Integer invoiceId;
+
+    private BigDecimal total;
+
+    private PurchaseStatus status;
 
 }

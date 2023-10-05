@@ -12,18 +12,14 @@ import javax.persistence.Id;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
-public class Client {
+public class Stock {
 
     @EqualsAndHashCode.Include
     @Id
     private Integer id;
 
-    private String name;
+    private Integer productId;
 
-    private GenderClient gender;
-
-    public static Client of (Integer id, String name, GenderClient gender){
-        return new Client(id, name, gender);
-    }
+    private Integer quantity;
 
 }

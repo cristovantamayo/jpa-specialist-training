@@ -12,18 +12,14 @@ import javax.persistence.Id;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
-public class Client {
+public class Category {
 
     @EqualsAndHashCode.Include
     @Id
     private Integer id;
 
-    private String name;
+    private String nome;
 
-    private GenderClient gender;
-
-    public static Client of (Integer id, String name, GenderClient gender){
-        return new Client(id, name, gender);
-    }
+    private Integer parentCategoryId;
 
 }

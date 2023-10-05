@@ -2,13 +2,14 @@ package dev.cristovantamayo.ecommerce.iniciandocomjpa;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
+import dev.cristovantamayo.ecommerce.model.GenderClient;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class ClientCRUDTest extends EntityManagerTest {
 
     private Client client =
-            Client.of(3, "Joshua Tenens");
+            Client.of(3, "Joshua Tenens", GenderClient.MAN);
     @Test
     public void clientInsertion() {
 
