@@ -9,7 +9,7 @@ public class PrimaryKeyStrategiesTest extends EntityManagerTest {
 
     @Test
     public void generatedValueStrategy() {
-        Category category = Category.of(null,"Electronics", null);
+        Category category = Category.of(null,"Electronics", 0);
 
         entityManager.getTransaction().begin();
         entityManager.persist(category);
