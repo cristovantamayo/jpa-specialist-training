@@ -16,8 +16,10 @@ public class Category {
 
     @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
-    @SequenceGenerator(name = "seq", sequenceName = "category_primary_key_sequence")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "table")
+    @TableGenerator(name = "table", table = "hibernate_sequences",
+            pkColumnName = "sequence_name", pkColumnValue = "category", valueColumnName = "next_val",
+            initialValue = 0, allocationSize = 50)
     private Integer id;
 
     private String nome;
