@@ -9,7 +9,7 @@ import org.junit.Test;
 public class ClientCRUDTest extends EntityManagerTest {
 
     private Client client =
-            Client.of(null, "Joshua Tenens", ClientGender.MAN);
+            Client.of(null, "Joshua Tenens", ClientGender.MAN, null);
     @Test
     public void clientInsertion() {
 

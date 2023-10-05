@@ -22,11 +22,11 @@ public class PurchaseItem {
     private Integer id;
 
     @ManyToOne
-    @Column(name = "purchase_id")
+    @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 
     @ManyToOne
-    @Column(name = "product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     private Integer quantity;
