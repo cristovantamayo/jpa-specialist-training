@@ -19,8 +19,9 @@ public class PaymentCredcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "purchase_id")
-    private Integer purchaseId;
+    @OneToOne
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
 
     @Column(name = "payment_status")
     @Enumerated(EnumType.STRING)
@@ -29,8 +30,8 @@ public class PaymentCredcard {
     @Column(name = "card_number")
     private String cardNumber;
 
-    public static PaymentCredcard of (Integer id, Integer purchaseId, PaymentStatus paymentStatus, String cardNumber){
-        return new PaymentCredcard(id, purchaseId, paymentStatus, cardNumber);
+    public static PaymentCredcard of (Integer id, Purchase purchase, PaymentStatus paymentStatus, String cardNumber){
+        return new PaymentCredcard(id, purchase, paymentStatus, cardNumber);
     }
 
 }

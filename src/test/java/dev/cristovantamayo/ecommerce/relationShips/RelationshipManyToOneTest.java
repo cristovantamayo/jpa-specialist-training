@@ -21,7 +21,7 @@ public class RelationshipManyToOneTest extends EntityManagerTest {
                 LocalDateTime.now(), LocalDateTime.now(), null,
                 new BigDecimal(5000), Arrays.asList(purchaseItem), PurchaseStatus.WAITING, DeliveryAddress.of("08990-010",
                         "Jefferson Sr", "2376", "Apt 2",
-                        "Elwood Park", "Baltimore", "Maryland"));
+                        "Elwood Park", "Baltimore", "Maryland"), null);
 
         entityManager.getTransaction().begin();
         entityManager.persist(purchase);

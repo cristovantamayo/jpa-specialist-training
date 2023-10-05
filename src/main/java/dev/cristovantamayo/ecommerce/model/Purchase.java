@@ -48,12 +48,15 @@ public class Purchase {
     @Column(name = "delivery_address")
     private DeliveryAddress deliveryAddress;
 
+    @OneToOne(mappedBy = "purchase")
+    private PaymentCredcard paymentCredcard;
+
     public static Purchase of (Integer id, Client client, LocalDateTime purchaseDate, LocalDateTime purchaseDueDate,
                                Integer invoiceId, BigDecimal total, List<PurchaseItem> purchaseItems,
-                               PurchaseStatus status, DeliveryAddress deliveryAddress) {
+                               PurchaseStatus status, DeliveryAddress deliveryAddress, PaymentCredcard paymentCredcard) {
 
         return new Purchase(id, client, purchaseDate, purchaseDueDate, invoiceId, total,
-                purchaseItems, status, deliveryAddress);
+                purchaseItems, status, deliveryAddress, paymentCredcard);
     }
 
 }
