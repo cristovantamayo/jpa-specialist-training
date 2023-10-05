@@ -8,7 +8,7 @@ import org.junit.Test;
 public class PrimaryKeyStrategiesTest extends EntityManagerTest {
 
     @Test
-    public void autoStrategy() {
+    public void generatedValueStrategy() {
         Category category = Category.of(null,"Electronics", null);
 
         entityManager.getTransaction().begin();
