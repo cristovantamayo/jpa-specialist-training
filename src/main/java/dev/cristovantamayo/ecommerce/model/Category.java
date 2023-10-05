@@ -2,8 +2,10 @@ package dev.cristovantamayo.ecommerce.model;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -12,6 +14,7 @@ import javax.persistence.Id;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
+@Table(name = "category")
 public class Category {
 
     @EqualsAndHashCode.Include
@@ -20,6 +23,7 @@ public class Category {
 
     private String nome;
 
+    @Column(name = "parent_category_id")
     private Integer parentCategoryId;
 
 }
