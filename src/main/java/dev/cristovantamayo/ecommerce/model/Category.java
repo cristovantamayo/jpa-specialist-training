@@ -26,4 +26,8 @@ public class Category {
     @Column(name = "parent_category_id")
     private Integer parentCategoryId;
 
+    public static Category of (Integer id, String nome, Integer parentCategoryId){
+        return new Category(id, nome, parentCategoryId);
+    }
+
 }

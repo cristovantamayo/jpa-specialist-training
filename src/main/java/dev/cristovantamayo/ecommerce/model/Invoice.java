@@ -30,4 +30,8 @@ public class Invoice {
     @Column(name = "issue_date")
     private Date issueDate;
 
+    public static Invoice of (Integer id, Integer purchaseId, String xml, Date issueDate){
+        return new Invoice(id, purchaseId, xml, issueDate);
+    }
+
 }

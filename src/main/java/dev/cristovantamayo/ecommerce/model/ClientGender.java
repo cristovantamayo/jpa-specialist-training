@@ -1,5 +1,5 @@
 package dev.cristovantamayo.ecommerce.model;
 
-public enum GenderClient {
+public enum ClientGender {
     MAN, WOMAN;
 }

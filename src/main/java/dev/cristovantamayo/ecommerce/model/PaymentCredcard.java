@@ -2,10 +2,7 @@ package dev.cristovantamayo.ecommerce.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -25,9 +22,14 @@ public class PaymentCredcard {
     private Integer purchaseId;
 
     @Column(name = "payment_status")
+    @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
     @Column(name = "card_number")
     private String cardNumber;
+
+    public static PaymentCredcard of (Integer id, Integer purchaseId, PaymentStatus paymentStatus, String cardNumber){
+        return new PaymentCredcard(id, purchaseId, paymentStatus, cardNumber);
+    }
 
 }
