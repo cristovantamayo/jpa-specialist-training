@@ -2,10 +2,7 @@ package dev.cristovantamayo.ecommerce.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -34,6 +31,12 @@ public class Purchase {
 
     private BigDecimal total;
 
+    @Enumerated(EnumType.STRING)
     private PurchaseStatus status;
+
+    public static Purchase of (Integer id, LocalDateTime purchaseDate, LocalDateTime purchaseDueDate,
+                               Integer invoiceId, BigDecimal total, PurchaseStatus status) {
+        return new Purchase(id, purchaseDate, purchaseDueDate, invoiceId, total, status);
+    }
 
 }

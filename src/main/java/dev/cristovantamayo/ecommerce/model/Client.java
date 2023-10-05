@@ -2,9 +2,7 @@ package dev.cristovantamayo.ecommerce.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -22,9 +20,10 @@ public class Client {
 
     private String name;
 
-    private GenderClient gender;
+    @Enumerated(EnumType.STRING)
+    private ClientGender gender;
 
-    public static Client of (Integer id, String name, GenderClient gender){
+    public static Client of (Integer id, String name, ClientGender gender){
         return new Client(id, name, gender);
     }
 

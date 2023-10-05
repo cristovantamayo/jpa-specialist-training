@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Stack;
 
 @Getter
 @Setter
@@ -25,5 +26,9 @@ public class Stock {
     private Integer productId;
 
     private Integer quantity;
+
+    public static Stock of (Integer id, Integer productId, Integer quantity) {
+        return new Stock(id, productId, quantity);
+    }
 
 }

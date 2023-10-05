@@ -32,4 +32,8 @@ public class PurchaseItem {
     private BigDecimal productPrice;
 
     private Integer quantity;
+
+    public static PurchaseItem of (Integer id, Integer purchaseId, Integer productId, BigDecimal productPrice, Integer quantity) {
+        return new PurchaseItem(id, purchaseId, productId, productPrice, quantity);
+    }
 }
