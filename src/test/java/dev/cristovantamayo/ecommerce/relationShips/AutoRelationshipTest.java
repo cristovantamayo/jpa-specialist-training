@@ -11,8 +11,8 @@ public class AutoRelationshipTest extends EntityManagerTest {
 
     @Test
     public void relationshipValidation() {
-        Category parentCategory = Category.of(null, "Home Appliances", null, null);
-        Category category = Category.of(null, "Mixers", parentCategory, null);
+        Category parentCategory = Category.of(null, "Home Appliances", null, null, null);
+        Category category = Category.of(null, "Mixers", parentCategory, null, null);
         parentCategory.setCategories(Arrays.asList(category));
 
         entityManager.getTransaction().begin();
