@@ -21,6 +21,9 @@ public class Purchase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne
+    private Client client;
+
     @Column(name = "purchase_date")
     private LocalDateTime purchaseDate;
 
@@ -38,9 +41,9 @@ public class Purchase {
     @Embedded
     private DeliveryAddress deliveryAddress;
 
-    public static Purchase of (Integer id, LocalDateTime purchaseDate, LocalDateTime purchaseDueDate,
+    public static Purchase of (Integer id, Client client, LocalDateTime purchaseDate, LocalDateTime purchaseDueDate,
                                Integer invoiceId, BigDecimal total, PurchaseStatus status, DeliveryAddress deliveryAddress) {
-        return new Purchase(id, purchaseDate, purchaseDueDate, invoiceId, total, status, deliveryAddress);
+        return new Purchase(id, client, purchaseDate, purchaseDueDate, invoiceId, total, status, deliveryAddress);
     }
 
 }
