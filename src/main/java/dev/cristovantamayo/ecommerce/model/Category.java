@@ -3,6 +3,7 @@ package dev.cristovantamayo.ecommerce.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,11 +22,15 @@ public class Category {
 
     private String nome;
 
-    @Column(name = "parent_category_id")
-    private Integer parentCategoryId;
+    @ManyToOne
+    @JoinColumn(name = "parent_category_id")
+    private Category parentCategory;
 
-    public static Category of (Integer id, String nome, Integer parentCategoryId){
-        return new Category(id, nome, parentCategoryId);
+    @OneToMany(mappedBy = "parentCategory")
+    private List<Category> categories;
+
+    public static Category of (Integer id, String nome, Category parentCategory, List<Category> parentCategories){
+        return new Category(id, nome, parentCategory, parentCategories);
     }
 
 }
