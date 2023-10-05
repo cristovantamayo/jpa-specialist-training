@@ -20,7 +20,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String nome;
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "parent_category_id")
@@ -29,8 +29,13 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory")
     private List<Category> categories;
 
-    public static Category of (Integer id, String nome, Category parentCategory, List<Category> parentCategories){
-        return new Category(id, nome, parentCategory, parentCategories);
+    @ManyToMany(mappedBy = "categories")
+    private List<Product> products;
+
+    public static Category of (Integer id, String nome, Category parentCategory,
+                               List<Category> parentCategories, List<Product> products){
+
+        return new Category(id, nome, parentCategory, parentCategories, products);
     }
 
 }
