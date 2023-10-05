@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,15 +37,23 @@ public class Purchase {
 
     private BigDecimal total;
 
+    @OneToMany(mappedBy = "purchase")
+    @Column(name = "purchase_item")
+    private List<PurchaseItem> purchaseItems;
+
     @Enumerated(EnumType.STRING)
     private PurchaseStatus status;
 
     @Embedded
+    @Column(name = "delivery_address")
     private DeliveryAddress deliveryAddress;
 
     public static Purchase of (Integer id, Client client, LocalDateTime purchaseDate, LocalDateTime purchaseDueDate,
-                               Integer invoiceId, BigDecimal total, PurchaseStatus status, DeliveryAddress deliveryAddress) {
-        return new Purchase(id, client, purchaseDate, purchaseDueDate, invoiceId, total, status, deliveryAddress);
+                               Integer invoiceId, BigDecimal total, List<PurchaseItem> purchaseItems,
+                               PurchaseStatus status, DeliveryAddress deliveryAddress) {
+
+        return new Purchase(id, client, purchaseDate, purchaseDueDate, invoiceId, total,
+                purchaseItems, status, deliveryAddress);
     }
 
 }

@@ -3,3 +3,7 @@ insert into product (id, name, price, description) values (3, 'Câmera GoPro Her
 
 insert into client (id, name, gender) values (1, 'Fernando Medeiros', 'MAN');
 insert into client (id, name, gender) values (2, 'Marcos Mariano', 'MAN');
+
+insert into purchase (id, client_id, purchase_date, total, status) values (1, 1, sysdate(), 100.0, 'WAITING');
+
+insert into purchase_item (id, purchase_id, product_id, product_price, quantity) values (1, 1, 1, 5.0, 2);

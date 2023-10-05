@@ -29,9 +29,12 @@ public class PurchaseItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Column(name = "product_price")
+    private BigDecimal productPrice;
+
     private Integer quantity;
 
-    public static PurchaseItem of (Integer id, Purchase purchase, Product product, Integer quantity) {
-        return new PurchaseItem(id, purchase, product, quantity);
+    public static PurchaseItem of (Integer id, Purchase purchase, Product product, BigDecimal productPrice, Integer quantity) {
+        return new PurchaseItem(id, purchase, product, productPrice, quantity);
     }
 }
