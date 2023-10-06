@@ -32,8 +32,8 @@ public class Purchase {
     @Column(name = "purchase_due_date")
     private LocalDateTime purchaseDueDate;
 
-    @Column(name = "invoice_id")
-    private Integer invoiceId;
+    @OneToOne(mappedBy = "purchase")
+    private Invoice invoice;
 
     private BigDecimal total;
 
@@ -52,10 +52,10 @@ public class Purchase {
     private PaymentCredcard paymentCredcard;
 
     public static Purchase of (Integer id, Client client, LocalDateTime purchaseDate, LocalDateTime purchaseDueDate,
-                               Integer invoiceId, BigDecimal total, List<PurchaseItem> purchaseItems,
+                               Invoice invoice, BigDecimal total, List<PurchaseItem> purchaseItems,
                                PurchaseStatus status, DeliveryAddress deliveryAddress, PaymentCredcard paymentCredcard) {
 
-        return new Purchase(id, client, purchaseDate, purchaseDueDate, invoiceId, total,
+        return new Purchase(id, client, purchaseDate, purchaseDueDate, invoice, total,
                 purchaseItems, status, deliveryAddress, paymentCredcard);
     }
 
