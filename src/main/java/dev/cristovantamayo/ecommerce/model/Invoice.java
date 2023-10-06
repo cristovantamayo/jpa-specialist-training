@@ -22,6 +22,9 @@ public class Invoice {
 
     @OneToOne
     @JoinColumn(name = "purchase_id")
+    //@JoinTable(name = "purchase_invoice",
+    //        joinColumns = @JoinColumn(name = "invoice_id", unique = true),
+    //        inverseJoinColumns = @JoinColumn(name = "purchase_id", unique = true))
     private Purchase purchase;
 
     private String xml;
