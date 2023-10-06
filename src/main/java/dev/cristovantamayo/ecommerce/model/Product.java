@@ -31,6 +31,7 @@ public class Product {
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
+    @Column(name = "categories")
     private List<Category> categories;
 
     @OneToOne(mappedBy = "product")

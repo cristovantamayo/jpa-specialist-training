@@ -16,6 +16,8 @@ public class RelationshipManyToManyTest extends EntityManagerTest {
         Product product = entityManager.find(Product.class, 1);
         Category category = entityManager.find(Category.class, 1);
 
+        Assert.assertTrue(category.getProducts().isEmpty());
+
         entityManager.getTransaction().begin();
         // failing persistence, category is not the owner
         category.setProducts(Arrays.asList(product));

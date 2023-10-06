@@ -1,4 +1,4 @@
-package dev.cristovantamayo.ecommerce.iniciandocomjpa;
+package dev.cristovantamayo.ecommerce.gettingstartwithjpa;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
