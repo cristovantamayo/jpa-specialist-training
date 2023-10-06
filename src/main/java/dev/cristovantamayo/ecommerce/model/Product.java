@@ -33,7 +33,11 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories;
 
-    public static Product of (Integer id, String name, String description, BigDecimal price) {
-        return new Product(id, name, description, price, null);
+    @OneToOne(mappedBy = "product")
+    private Stock stock;
+
+    public static Product of (Integer id, String name, String description, BigDecimal price,
+                              List<Category> categories, Stock stock) {
+        return new Product(id, name, description, price, categories, stock);
     }
 }

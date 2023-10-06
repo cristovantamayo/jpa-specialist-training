@@ -19,13 +19,14 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "product_id")
-    private Integer productId;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     private Integer quantity;
 
-    public static Stock of (Integer id, Integer productId, Integer quantity) {
-        return new Stock(id, productId, quantity);
+    public static Stock of (Integer id, Product product, Integer quantity) {
+        return new Stock(id, product, quantity);
     }
 
 }

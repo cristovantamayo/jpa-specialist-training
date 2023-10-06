@@ -20,7 +20,7 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(optional = false)
     @JoinColumn(name = "purchase_id")
     //@JoinTable(name = "purchase_invoice",
     //        joinColumns = @JoinColumn(name = "invoice_id", unique = true),
