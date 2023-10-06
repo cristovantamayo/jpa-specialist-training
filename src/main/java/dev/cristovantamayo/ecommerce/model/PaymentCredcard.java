@@ -19,7 +19,7 @@ public class PaymentCredcard {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(optional = false)
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 
