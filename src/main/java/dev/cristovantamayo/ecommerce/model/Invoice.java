@@ -12,7 +12,7 @@ import java.util.Date;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
-@Table(name = "Invoice")
+@Table(name = "invoice")
 public class Invoice {
 
     @EqualsAndHashCode.Include
@@ -20,16 +20,17 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "purchase_id")
-    private Integer purchaseId;
+    @OneToOne
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
 
     private String xml;
 
     @Column(name = "issue_date")
     private Date issueDate;
 
-    public static Invoice of (Integer id, Integer purchaseId, String xml, Date issueDate){
-        return new Invoice(id, purchaseId, xml, issueDate);
+    public static Invoice of (Integer id, Purchase purchase, String xml, Date issueDate){
+        return new Invoice(id, purchase, xml, issueDate);
     }
 
 }
