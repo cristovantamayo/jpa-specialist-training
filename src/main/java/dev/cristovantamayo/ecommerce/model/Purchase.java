@@ -37,7 +37,7 @@ public class Purchase {
 
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "purchase")
+    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
     @Column(name = "purchase_item")
     private List<PurchaseItem> purchaseItems;
 
