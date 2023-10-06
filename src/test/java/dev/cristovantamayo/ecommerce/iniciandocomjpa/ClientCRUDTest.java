@@ -82,6 +82,10 @@ public class ClientCRUDTest extends EntityManagerTest {
 
     private void delete(Client firstClient) {
         entityManager.getTransaction().begin();
+        firstClient.getPurchases().forEach(i -> {
+            i.getPurchaseItems().forEach(j -> entityManager.remove(j));
+            entityManager.remove(i);
+        });
         entityManager.remove(firstClient);
         entityManager.getTransaction().commit();
     }

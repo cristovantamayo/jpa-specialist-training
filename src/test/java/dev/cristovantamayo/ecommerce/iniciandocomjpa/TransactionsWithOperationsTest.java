@@ -75,7 +75,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         product.setPrice(new BigDecimal(1000));
 
         entityManager.getTransaction().begin();
-        entityManager.merge(product);
+        product = entityManager.merge(product);
         entityManager.getTransaction().commit();
 
         entityManager.clear();
@@ -111,7 +111,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         product.setPrice(new BigDecimal(599));
 
         entityManager.getTransaction().begin();
-        entityManager.merge(product);
+        product = entityManager.merge(product);
         entityManager.getTransaction().commit();
 
         entityManager.clear();
