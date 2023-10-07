@@ -29,10 +29,10 @@ public class Purchase {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @Column(name = "purchase_date")
+    @Column(name = "purchase_date", updatable = false)
     private LocalDateTime purchaseDate;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at", insertable = false)
     private LocalDateTime updatedAt;
 
     @Column(name = "purchase_due_date")
