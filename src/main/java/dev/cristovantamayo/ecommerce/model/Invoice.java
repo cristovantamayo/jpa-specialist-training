@@ -17,9 +17,10 @@ public class Invoice {
 
     @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "purchase_id")
     private Integer id;
 
+    @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "purchase_id")
     //@JoinTable(name = "purchase_invoice",
