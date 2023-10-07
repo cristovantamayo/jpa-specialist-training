@@ -21,7 +21,7 @@ public class EmbeddableObjectMappingTest extends EntityManagerTest {
 
         PurchaseItem purchaseItem = entityManager.find(PurchaseItem.class, 1);
 
-        Purchase purchase = Purchase.of(null, client, LocalDateTime.now(), null,null, null,
+        Purchase purchase = Purchase.of(null, client, LocalDateTime.now(), null, null, null,
                 new BigDecimal(4000), Arrays.asList(purchaseItem), PurchaseStatus.WAITING, deliveryAddress, null);
 
         entityManager.getTransaction().begin();
