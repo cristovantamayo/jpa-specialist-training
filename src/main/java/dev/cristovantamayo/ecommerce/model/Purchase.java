@@ -1,5 +1,7 @@
 package dev.cristovantamayo.ecommerce.model;
 
+import dev.cristovantamayo.ecommerce.listeners.GenerateInvoiceListener;
+import dev.cristovantamayo.ecommerce.listeners.GenericListener;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EntityListeners({ GenerateInvoiceListener.class, GenericListener.class })
 
 @Entity
 @Table(name = "purchase")
@@ -47,13 +50,16 @@ public class Purchase {
     @Enumerated(EnumType.STRING)
     private PurchaseStatus status;
 
+    @OneToOne(mappedBy = "purchase")
+    private PaymentCredcard paymentCredcard;
+
     @Embedded
     @Column(name = "delivery_address")
     private DeliveryAddress deliveryAddress;
 
-    @OneToOne(mappedBy = "purchase")
-    private PaymentCredcard paymentCredcard;
-
+    public boolean itsPaid() {
+        return PurchaseStatus.PAID_OUT.equals(status);
+    }
     @PrePersist
     public void prePersist() {
         purchaseDate = LocalDateTime.now();
@@ -106,7 +112,7 @@ public class Purchase {
                                PurchaseStatus status, DeliveryAddress deliveryAddress, PaymentCredcard paymentCredcard) {
 
         return new Purchase(id, client, purchaseDate, updateAt, purchaseDueDate, invoice, total,
-                purchaseItems, status, deliveryAddress, paymentCredcard);
+                        purchaseItems, status, paymentCredcard, deliveryAddress);
     }
 
 }
