@@ -1,5 +1,7 @@
 package dev.cristovantamayo.ecommerce.model;
 
+import dev.cristovantamayo.ecommerce.listeners.GenerateInvoiceListener;
+import dev.cristovantamayo.ecommerce.listeners.GenericListener;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EntityListeners({ GenericListener.class })
 
 @Entity
 @Table(name = "product")
