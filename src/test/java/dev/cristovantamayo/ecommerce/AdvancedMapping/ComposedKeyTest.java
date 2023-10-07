@@ -27,8 +27,9 @@ public class ComposedKeyTest extends EntityManagerTest {
         entityManager.flush();
 
         PurchaseItem purchaseItem = new PurchaseItem();
-        purchaseItem.setPurchaseId(purchase.getId());
-        purchaseItem.setProductId(product.getId());
+        //purchaseItem.setPurchaseId(purchase.getId()); --> @idClass
+        //purchaseItem.setProductId(product.getId());
+        purchaseItem.setId(new PurchaseItemId(purchase.getId(), product.getId()));
         purchaseItem.setPurchase(purchase);
         purchaseItem.setProduct(product);
         purchaseItem.setProductPrice(product.getPrice());
