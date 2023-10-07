@@ -20,12 +20,14 @@ public class PurchaseItem {
     @EmbeddedId
     private PurchaseItemId id;
 
+    @MapsId("purchaseId")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "purchase_id", insertable = false, updatable = false)
+    @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 
+    @MapsId("productId")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "product_id", insertable = false, updatable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(name = "product_price")
