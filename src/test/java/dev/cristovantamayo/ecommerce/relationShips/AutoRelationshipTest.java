@@ -2,8 +2,8 @@ package dev.cristovantamayo.ecommerce.relationShips;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Category;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
@@ -23,10 +23,10 @@ public class AutoRelationshipTest extends EntityManagerTest {
         entityManager.clear();
 
         Category actualCategory = entityManager.find(Category.class, category.getId());
-        Assert.assertNotNull(actualCategory.getCategories());
+        Assertions.assertNotNull(actualCategory.getCategories());
 
         Category actualParentCategory = entityManager.find(Category.class, parentCategory.getId());
-        Assert.assertFalse(parentCategory.getCategories().isEmpty());
+        Assertions.assertFalse(parentCategory.getCategories().isEmpty());
 
     }
 }

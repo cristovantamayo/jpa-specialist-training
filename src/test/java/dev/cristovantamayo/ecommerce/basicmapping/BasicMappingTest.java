@@ -3,7 +3,7 @@ package dev.cristovantamayo.ecommerce.basicmapping;
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
 import dev.cristovantamayo.ecommerce.model.ClientGender;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BasicMappingTest extends EntityManagerTest {
 

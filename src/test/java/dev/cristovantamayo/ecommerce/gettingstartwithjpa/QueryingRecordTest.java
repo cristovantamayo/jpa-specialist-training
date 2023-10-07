@@ -2,8 +2,8 @@ package dev.cristovantamayo.ecommerce.gettingstartwithjpa;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Product;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class QueryingRecordTest extends EntityManagerTest {
 
@@ -17,8 +17,8 @@ public class QueryingRecordTest extends EntityManagerTest {
 
         System.out.println(productRef);
 
-        Assert.assertNotNull(product);
-        Assert.assertEquals("Kindle", product.getName());
+        Assertions.assertNotNull(product);
+        Assertions.assertEquals("Kindle", product.getName());
     }
 
     @Test
@@ -31,6 +31,6 @@ public class QueryingRecordTest extends EntityManagerTest {
         // refresh restore object attributes from database
         entityManager.refresh(product);
 
-        Assert.assertEquals("Kindle", product.getName());
+        Assertions.assertEquals("Kindle", product.getName());
     }
 }

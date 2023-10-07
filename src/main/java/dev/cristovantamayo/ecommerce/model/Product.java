@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -40,8 +41,14 @@ public class Product {
     @OneToOne(mappedBy = "product")
     private Stock stock;
 
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", insertable = false)
+    private LocalDateTime updatedAt;
+
     public static Product of (Integer id, String name, String description, BigDecimal price,
-                              List<Category> categories, Stock stock) {
-        return new Product(id, name, description, price, categories, stock);
+                              List<Category> categories, Stock stock, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        return new Product(id, name, description, price, categories, stock, createdAt, updatedAt);
     }
 }

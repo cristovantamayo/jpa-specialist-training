@@ -2,7 +2,7 @@ package dev.cristovantamayo.ecommerce.gettingtoknowentitymanager;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Product;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FirstLevelCacheTest extends EntityManagerTest {
 
