@@ -2,7 +2,7 @@ package dev.cristovantamayo.ecommerce.relationShips;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Purchase;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OptionalAttributeTest extends EntityManagerTest {
 

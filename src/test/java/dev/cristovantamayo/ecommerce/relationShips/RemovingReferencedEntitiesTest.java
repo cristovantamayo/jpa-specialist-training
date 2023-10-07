@@ -2,15 +2,15 @@ package dev.cristovantamayo.ecommerce.relationShips;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Purchase;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class RemovingReferencedEntitiesTest extends EntityManagerTest {
 
     @Test
     public void relationshipValidation() {
         Purchase purchase = entityManager.find(Purchase.class, 1);
-        Assert.assertFalse(purchase.getPurchaseItems().isEmpty());
+        Assertions.assertFalse(purchase.getPurchaseItems().isEmpty());
 
         entityManager.getTransaction().begin();
         purchase.getPurchaseItems().forEach(i -> entityManager.remove(i));
@@ -20,7 +20,7 @@ public class RemovingReferencedEntitiesTest extends EntityManagerTest {
         entityManager.clear();
 
         Purchase actualPurchase = entityManager.find(Purchase.class, purchase.getId());
-        Assert.assertNull(actualPurchase);
+        Assertions.assertNull(actualPurchase);
 
     }
 }

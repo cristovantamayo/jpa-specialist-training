@@ -4,8 +4,8 @@ import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import dev.cristovantamayo.ecommerce.model.PurchaseStatus;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class LifeCycleCallbacksTest extends EntityManagerTest {
 
@@ -28,7 +28,7 @@ public class LifeCycleCallbacksTest extends EntityManagerTest {
         entityManager.clear();
 
         Purchase actualPurchase = entityManager.find(Purchase.class, purchase.getId());
-        Assert.assertNotNull(actualPurchase.getPurchaseDate());
-        Assert.assertNotNull(actualPurchase.getUpdatedAt());
+        Assertions.assertNotNull(actualPurchase.getPurchaseDate());
+        Assertions.assertNotNull(actualPurchase.getUpdatedAt());
     }
 }

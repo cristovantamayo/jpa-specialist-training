@@ -2,8 +2,8 @@ package dev.cristovantamayo.ecommerce.basicmapping;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Category;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class PrimaryKeyStrategiesTest extends EntityManagerTest {
 
@@ -20,6 +20,6 @@ public class PrimaryKeyStrategiesTest extends EntityManagerTest {
         Category actualCategory =
                 entityManager.find(Category.class, category.getId());
 
-        Assert.assertNotNull(actualCategory);
+        Assertions.assertNotNull(actualCategory);
     }
 }

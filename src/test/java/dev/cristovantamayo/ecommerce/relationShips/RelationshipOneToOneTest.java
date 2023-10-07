@@ -1,12 +1,13 @@
 package dev.cristovantamayo.ecommerce.relationShips;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
-import dev.cristovantamayo.ecommerce.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import dev.cristovantamayo.ecommerce.model.Invoice;
+import dev.cristovantamayo.ecommerce.model.PaymentCredcard;
+import dev.cristovantamayo.ecommerce.model.PaymentStatus;
+import dev.cristovantamayo.ecommerce.model.Purchase;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Date;
 
 public class RelationshipOneToOneTest extends EntityManagerTest {
@@ -24,7 +25,7 @@ public class RelationshipOneToOneTest extends EntityManagerTest {
 
         Purchase actualPurchase = entityManager.find(Purchase.class, purchase.getId());
 
-        Assert.assertNotNull(actualPurchase.getPaymentCredcard());
+        Assertions.assertNotNull(actualPurchase.getPaymentCredcard());
     }
 
     @Test
@@ -39,7 +40,7 @@ public class RelationshipOneToOneTest extends EntityManagerTest {
         entityManager.clear();
 
         Purchase actualPurchase = entityManager.find(Purchase.class, purchase.getId());
-        Assert.assertNotNull(actualPurchase.getInvoice());
+        Assertions.assertNotNull(actualPurchase.getInvoice());
     }
 
 

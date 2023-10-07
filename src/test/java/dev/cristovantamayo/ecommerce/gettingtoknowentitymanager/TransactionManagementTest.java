@@ -3,12 +3,17 @@ package dev.cristovantamayo.ecommerce.gettingtoknowentitymanager;
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import dev.cristovantamayo.ecommerce.model.PurchaseStatus;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class TransactionManagementTest extends EntityManagerTest {
 
-    @Test(expected = Exception.class)
+    @Test
     public void openCloseCancelTransaction() {
+        Assertions.assertThrows(Exception.class, () -> expectedBusinessException());
+    }
+
+    private void expectedBusinessException() {
 
         try {
             entityManager.getTransaction().begin();
@@ -20,7 +25,7 @@ public class TransactionManagementTest extends EntityManagerTest {
         }
     }
 
-    public void businessTrade() {
+    private void businessTrade() {
         Purchase purchase = entityManager.find(Purchase.class, 1);
         purchase.setStatus(PurchaseStatus.PAID_OUT);
 

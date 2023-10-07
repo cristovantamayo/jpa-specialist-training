@@ -3,13 +3,18 @@ package dev.cristovantamayo.ecommerce.gettingtoknowentitymanager;
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import dev.cristovantamayo.ecommerce.model.PurchaseStatus;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class FlushTest extends EntityManagerTest {
 
-    @Test(expected = Exception.class)
+    @Test
     public void callFlush() {
+        Assertions.assertThrows(Exception.class, () -> expectedBusinessException());
+    }
+
+
+    private void expectedBusinessException() {
         try {
             entityManager.getTransaction().begin();
 
@@ -43,7 +48,7 @@ public class FlushTest extends EntityManagerTest {
                     .createQuery("select p from Purchase p where p.id = 1", Purchase.class)
                     .getSingleResult();
 
-            Assert.assertEquals(purchase.getStatus(), purchasePaid.getStatus());
+            Assertions.assertEquals(purchase.getStatus(), purchasePaid.getStatus());
             entityManager.getTransaction().commit();
         } catch(Exception ex) {
             entityManager.getTransaction().toString();

@@ -2,8 +2,8 @@ package dev.cristovantamayo.ecommerce.basicmapping;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -31,6 +31,6 @@ public class EmbeddableObjectMappingTest extends EntityManagerTest {
         entityManager.clear();
 
         Purchase actualPurchase = entityManager.find(Purchase.class, purchase.getId());
-        Assert.assertNotNull(actualPurchase);
+        Assertions.assertNotNull(actualPurchase);
     }
 }

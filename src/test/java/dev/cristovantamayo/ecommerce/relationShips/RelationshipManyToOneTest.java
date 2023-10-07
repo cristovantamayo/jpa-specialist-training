@@ -2,8 +2,8 @@ package dev.cristovantamayo.ecommerce.relationShips;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.*;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -31,7 +31,7 @@ public class RelationshipManyToOneTest extends EntityManagerTest {
 
         Purchase actualPurchase = entityManager.find(Purchase.class, purchase.getId());
 
-        Assert.assertNotNull(actualPurchase.getClient());
+        Assertions.assertNotNull(actualPurchase.getClient());
 
 
 
@@ -48,6 +48,6 @@ public class RelationshipManyToOneTest extends EntityManagerTest {
 
         PurchaseItem actualItem = entityManager.find(PurchaseItem.class, purchaseItem2.getId());
 
-        Assert.assertNotNull(actualItem);
+        Assertions.assertNotNull(actualItem);
     }
 }

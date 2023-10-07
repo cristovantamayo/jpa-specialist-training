@@ -2,8 +2,8 @@ package dev.cristovantamayo.ecommerce.gettingstartwithjpa;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Product;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
@@ -24,7 +24,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Product actualProduct =
                 entityManager.find(Product.class, product.getId());
 
-        Assert.assertEquals("Kindle", actualProduct.getName());
+        Assertions.assertEquals("Kindle", actualProduct.getName());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Product actualProductPersist =
                 entityManager.find(Product.class, productPersist.getId());
 
-        Assert.assertNotNull(actualProductPersist);
+        Assertions.assertNotNull(actualProductPersist);
 
 
         Product productMerge = new Product();
@@ -65,7 +65,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Product actualProductMerge =
                 entityManager.find(Product.class, productMerge.getId());
 
-        Assert.assertNotNull(actualProductMerge);
+        Assertions.assertNotNull(actualProductMerge);
     }
     @Test
     public void insertObjectWithMergeMethod() {
@@ -83,7 +83,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Product actualProduct =
                 entityManager.find(Product.class, product.getId());
 
-        Assert.assertNotNull(actualProduct);
+        Assertions.assertNotNull(actualProduct);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Product actualProduct =
                 entityManager.find(Product.class, product.getId());
 
-        Assert.assertEquals("Kindle Paperwhite Next Generation", actualProduct.getName());
+        Assertions.assertEquals("Kindle Paperwhite Next Generation", actualProduct.getName());
     }
 
     @Test
@@ -119,8 +119,8 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Product actualProduct =
                 entityManager.find(Product.class, product.getId());
 
-        Assert.assertNotNull(actualProduct);
-        Assert.assertEquals("Kindle Paperwhite", actualProduct.getName());
+        Assertions.assertNotNull(actualProduct);
+        Assertions.assertEquals("Kindle Paperwhite", actualProduct.getName());
     }
 
     @Test
@@ -138,7 +138,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Product actualProduct =
                 entityManager.find(Product.class, 3);
 
-        Assert.assertNull(actualProduct);
+        Assertions.assertNull(actualProduct);
     }
 
     @Test
@@ -157,7 +157,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         Product actualProduct =
                 entityManager.find(Product.class, product.getId());
 
-        Assert.assertNotNull(actualProduct);
+        Assertions.assertNotNull(actualProduct);
     }
 
     public void openAndCloseTransaction() {

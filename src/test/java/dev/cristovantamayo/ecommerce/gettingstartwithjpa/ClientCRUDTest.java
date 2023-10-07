@@ -3,8 +3,8 @@ package dev.cristovantamayo.ecommerce.gettingstartwithjpa;
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
 import dev.cristovantamayo.ecommerce.model.ClientGender;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class ClientCRUDTest extends EntityManagerTest {
 
@@ -18,8 +18,8 @@ public class ClientCRUDTest extends EntityManagerTest {
         Client expectedClient = client;
         Client actualClient = entityManager.find(Client.class, client.getId());
 
-        Assert.assertEquals(expectedClient.getName(), actualClient.getName());
-        Assert.assertEquals(expectedClient.getId(), actualClient.getId());
+        Assertions.assertEquals(expectedClient.getName(), actualClient.getName());
+        Assertions.assertEquals(expectedClient.getId(), actualClient.getId());
     }
 
     @Test
@@ -29,7 +29,7 @@ public class ClientCRUDTest extends EntityManagerTest {
 
         actualClient = read(1);
 
-        Assert.assertNotNull(actualClient);
+        Assertions.assertNotNull(actualClient);
     }
 
     @Test
@@ -44,8 +44,8 @@ public class ClientCRUDTest extends EntityManagerTest {
 
         Client actualClient = read(theSameIndex);
 
-        Assert.assertEquals(client.getName(), actualClient.getName());
-        Assert.assertEquals(firstClient.getName(), actualClient.getName());
+        Assertions.assertEquals(client.getName(), actualClient.getName());
+        Assertions.assertEquals(firstClient.getName(), actualClient.getName());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ClientCRUDTest extends EntityManagerTest {
 
         Client actualClient = read(firstClient.getId());
 
-        Assert.assertNull(actualClient);
+        Assertions.assertNull(actualClient);
     }
 
     private void create(Client innerclient) {
