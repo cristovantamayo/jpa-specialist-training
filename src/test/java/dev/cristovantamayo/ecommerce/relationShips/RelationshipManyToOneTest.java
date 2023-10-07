@@ -38,7 +38,7 @@ public class RelationshipManyToOneTest extends EntityManagerTest {
         Product product = entityManager.find(Product.class, 1);
 
         PurchaseItem purchaseItem2 =
-                PurchaseItem.of(1, 1, purchase, product, BigDecimal.TEN,2);
+                PurchaseItem.of(purchase, product, BigDecimal.TEN,2);
 
         entityManager.getTransaction().begin();
         entityManager.persist(purchaseItem2);
@@ -47,10 +47,7 @@ public class RelationshipManyToOneTest extends EntityManagerTest {
         entityManager.clear();
 
         PurchaseItem actualItem = entityManager.find(
-                PurchaseItem.class,
-                new PurchaseItemId(
-                        purchaseItem2.getPurchaseId(),
-                        product.getId()));
+                PurchaseItem.class,purchaseItem2.getId());
 
         Assertions.assertNotNull(actualItem);
     }

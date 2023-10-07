@@ -12,21 +12,13 @@ import java.nio.MappedByteBuffer;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@IdClass(PurchaseItemId.class)
 
 @Entity
 @Table(name = "purchase_item")
 public class PurchaseItem {
 
-    @EqualsAndHashCode.Include
-    @Id
-    @Column(name = "purchase_id")
-    private Integer purchaseId;
-
-    @EqualsAndHashCode.Include
-    @Id
-    @Column(name = "product_id")
-    private Integer productId;
+    @EmbeddedId
+    private PurchaseItemId id;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "purchase_id", insertable = false, updatable = false)
@@ -41,7 +33,7 @@ public class PurchaseItem {
 
     private Integer quantity;
 
-    public static PurchaseItem of (Integer purchaseId, Integer productId, Purchase purchase, Product product, BigDecimal productPrice, Integer quantity) {
-        return new PurchaseItem(purchaseId, productId, purchase, product, productPrice, quantity);
+    public static PurchaseItem of (Purchase purchase, Product product, BigDecimal productPrice, Integer quantity) {
+        return new PurchaseItem(null, purchase, product, productPrice, quantity);
     }
 }
