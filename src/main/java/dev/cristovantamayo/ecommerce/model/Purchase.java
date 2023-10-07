@@ -29,6 +29,9 @@ public class Purchase {
     @Column(name = "purchase_date")
     private LocalDateTime purchaseDate;
 
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @Column(name = "purchase_due_date")
     private LocalDateTime purchaseDueDate;
 
@@ -51,11 +54,58 @@ public class Purchase {
     @OneToOne(mappedBy = "purchase")
     private PaymentCredcard paymentCredcard;
 
-    public static Purchase of (Integer id, Client client, LocalDateTime purchaseDate, LocalDateTime purchaseDueDate,
+    @PrePersist
+    public void prePersist() {
+        purchaseDate = LocalDateTime.now();
+        calculateTotal();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        updatedAt = LocalDateTime.now();
+        calculateTotal();
+    }
+
+    // we can't annotate Callback annotation twice, annotation just in use
+    //@PrePersist
+    //@PreUpdate
+    public void calculateTotal() {
+        if(purchaseItems != null) {
+            total = purchaseItems.stream().map(PurchaseItem::getProductPrice)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        }
+    }
+
+    @PostPersist
+    public void postPersist() {
+        System.out.println("After Persists");
+    }
+
+    @PostUpdate
+    public void postUpdate() {
+        System.out.println("After Update");
+    }
+
+    @PreRemove
+    public void preRemove() {
+        System.out.println("Before Delete");
+    }
+
+    @PostRemove
+    public void postRemove() {
+        System.out.println("After Remove");
+    }
+
+    @PostLoad
+    public void postLoad() {
+        System.out.println("After load a Entity");
+    }
+
+    public static Purchase of (Integer id, Client client, LocalDateTime purchaseDate, LocalDateTime updateAt, LocalDateTime purchaseDueDate,
                                Invoice invoice, BigDecimal total, List<PurchaseItem> purchaseItems,
                                PurchaseStatus status, DeliveryAddress deliveryAddress, PaymentCredcard paymentCredcard) {
 
-        return new Purchase(id, client, purchaseDate, purchaseDueDate, invoice, total,
+        return new Purchase(id, client, purchaseDate, updateAt, purchaseDueDate, invoice, total,
                 purchaseItems, status, deliveryAddress, paymentCredcard);
     }
 
