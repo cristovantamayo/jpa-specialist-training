@@ -13,42 +13,40 @@ public class RelationshipManyToOneTest extends EntityManagerTest {
 
     @Test
     public void relationshipValidation() {
+
         Client client = entityManager.find(Client.class, 1);
+        Product product = entityManager.find(Product.class, 1);
 
-        PurchaseItem purchaseItem = entityManager.find(PurchaseItem.class, 1);
+        Purchase purchase = new Purchase();
+        purchase.setStatus(PurchaseStatus.WAITING);
+        purchase.setPurchaseDate(LocalDateTime.now());
+        purchase.setClient(client);
+        purchase.setTotal(new BigDecimal(5000));
+        purchase.setDeliveryAddress(DeliveryAddress.of("08990-010",
+                "Jefferson Sr", "2376", "Apt 2",
+                "Elwood Park", "Baltimore", "Maryland"));
 
-        Purchase purchase = Purchase.of(null, client,
-                LocalDateTime.now(), null, LocalDateTime.now(), null,
-                new BigDecimal(5000), Arrays.asList(purchaseItem), PurchaseStatus.WAITING, DeliveryAddress.of("08990-010",
-                        "Jefferson Sr", "2376", "Apt 2",
-                        "Elwood Park", "Baltimore", "Maryland"), null);
+        PurchaseItem purchaseItem = new PurchaseItem();
+        purchaseItem.setId(new PurchaseItemId());
+        purchaseItem.setProductPrice(product.getPrice());
+        purchaseItem.setQuantity(1);
+        purchaseItem.setPurchase(purchase);
+        purchaseItem.setProduct(product);
 
         entityManager.getTransaction().begin();
-        entityManager.persist(purchase);
+        entityManager.persist(purchaseItem);
         entityManager.getTransaction().commit();
 
         entityManager.clear();
 
         Purchase actualPurchase = entityManager.find(Purchase.class, purchase.getId());
-
         Assertions.assertNotNull(actualPurchase.getClient());
+        Assertions.assertEquals(purchase.getDeliveryAddress().getNeighborhood(),
+                actualPurchase.getDeliveryAddress().getNeighborhood());
 
+        PurchaseItem actualItem = entityManager.find(PurchaseItem.class,purchaseItem.getId());
+        Assertions.assertNotNull(actualItem.getPurchase());
+        Assertions.assertNotNull(actualItem.getProduct());
 
-
-        Product product = entityManager.find(Product.class, 1);
-
-        PurchaseItem purchaseItem2 =
-                PurchaseItem.of(purchase, product, BigDecimal.TEN,2);
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(purchaseItem2);
-        entityManager.getTransaction().commit();
-
-        entityManager.clear();
-
-        PurchaseItem actualItem = entityManager.find(
-                PurchaseItem.class,purchaseItem2.getId());
-
-        Assertions.assertNotNull(actualItem);
     }
 }
