@@ -16,9 +16,9 @@ public class PaymentCredcard {
 
     @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
