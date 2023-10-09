@@ -2,11 +2,13 @@ package dev.cristovantamayo.ecommerce.AdvancedMapping;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Attribute;
+import dev.cristovantamayo.ecommerce.model.Client;
 import dev.cristovantamayo.ecommerce.model.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class ElementCollectionTest extends EntityManagerTest {
 
@@ -38,5 +40,24 @@ public class ElementCollectionTest extends EntityManagerTest {
 
         Product actualProduct = entityManager.find(Product.class, product.getId());
         Assertions.assertFalse(actualProduct.getAttributes().isEmpty());
+    }
+
+    @Test
+    public void applyContacts() {
+
+        final String email = "fernando@email.com";
+
+        entityManager.getTransaction().begin();
+
+        Client client = entityManager.find(Client.class, 1);
+        client.setContacts(Collections.singletonMap("email", email));
+
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Client actualClient = entityManager.find(Client.class, client.getId());
+        Assertions.assertFalse(actualClient.getContacts().isEmpty());
+        Assertions.assertEquals(email, actualClient.getContacts().get("email"));
     }
 }

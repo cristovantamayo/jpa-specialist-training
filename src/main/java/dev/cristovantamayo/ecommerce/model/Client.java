@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -31,8 +32,14 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Purchase> purchases;
 
+    @ElementCollection
+    @CollectionTable(name = "client_contact", joinColumns = @JoinColumn(name = "client_id"))
+    @MapKeyColumn(name = "type")
+    @Column(name = "description")
+    private Map<String, String> contacts;
+
     public static Client of (Integer id, String name, ClientGender gender, List<Purchase> purchase){
-        return new Client(id, name, null, gender, purchase);
+        return new Client(id, name, null, gender, purchase, null);
     }
 
     @PostLoad
