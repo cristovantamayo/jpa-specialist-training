@@ -3,6 +3,7 @@ package dev.cristovantamayo.ecommerce.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@SecondaryTable(name = "client_detail", pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"))
 
 @Entity
 @Table(name="client")
@@ -26,8 +28,12 @@ public class Client {
     @Transient
     private String firstName;
 
+    @Column(table = "client_detail")
     @Enumerated(EnumType.STRING)
     private ClientGender gender;
+
+    @Column(name = "birth_date", table = "client_detail")
+    private LocalDate birthDate;
 
     @OneToMany(mappedBy = "client")
     private List<Purchase> purchases;
@@ -39,7 +45,7 @@ public class Client {
     private Map<String, String> contacts;
 
     public static Client of (Integer id, String name, ClientGender gender, List<Purchase> purchase){
-        return new Client(id, name, null, gender, purchase, null);
+        return new Client(id, name, null, gender, null, purchase, null);
     }
 
     @PostLoad
