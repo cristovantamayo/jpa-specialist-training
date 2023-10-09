@@ -1,15 +1,18 @@
-package dev.cristovantamayo.ecommerce.basicmapping;
+package dev.cristovantamayo.ecommerce.AdvancedMapping;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
 import dev.cristovantamayo.ecommerce.model.ClientGender;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class BasicMappingTest extends EntityManagerTest {
+public class InheritanceTest extends EntityManagerTest {
 
     @Test
-    public void testarEnum() {
-        Client client = Client.of("José Mineiro", ClientGender.MAN, null);
+    public void saveClient() {
+        Client client = new Client();
+        client.setName("Mônica Belucci");
+        client.setGender(ClientGender.WOMAN);
 
         entityManager.getTransaction().begin();
         entityManager.persist(client);
@@ -18,7 +21,6 @@ public class BasicMappingTest extends EntityManagerTest {
         entityManager.clear();
 
         Client actualClient = entityManager.find(Client.class, client.getId());
-
+        Assertions.assertNotNull(actualClient.getId());
     }
-
 }

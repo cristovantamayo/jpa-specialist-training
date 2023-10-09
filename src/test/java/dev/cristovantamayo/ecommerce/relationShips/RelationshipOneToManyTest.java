@@ -16,7 +16,7 @@ public class RelationshipOneToManyTest extends EntityManagerTest {
         Client client = entityManager.find(Client.class, 1);
 
 
-        Purchase purchase = Purchase.of(null, client,
+        Purchase purchase = Purchase.of(client,
                 LocalDateTime.now(), null, LocalDateTime.now(), null,
                 new BigDecimal(5000), null, PurchaseStatus.WAITING, DeliveryAddress.of("08990-010",
                         "Jefferson Sr", "2376", "Apt 2",

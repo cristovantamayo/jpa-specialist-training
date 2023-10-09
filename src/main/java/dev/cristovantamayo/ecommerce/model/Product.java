@@ -13,17 +13,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners({ GenericListener.class })
 
 @Entity
 @Table(name = "product")
-public class Product {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Product extends EntityBaseInteger {
 
     private String name;
 
@@ -59,8 +53,8 @@ public class Product {
     @Column(length = 20000)
     private byte[] photo;
 
-    public static Product of (Integer id, String name, String description, BigDecimal price,
+    public static Product of (String name, String description, BigDecimal price,
                               List<Category> categories, Stock stock, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        return new Product(id, name, description, price, categories, stock, createdAt, updatedAt, null, null, null);
+        return new Product(name, description, price, categories, stock, createdAt, updatedAt, null, null, null);
     }
 }
