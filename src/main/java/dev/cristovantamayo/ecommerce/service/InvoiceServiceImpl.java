@@ -9,7 +9,11 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public void generate(Purchase purchase) {
         // Place to process
-        purchase.setInvoice(Invoice.of(null, purchase, "<?xml></xml>".getBytes(), new Date()));
+        Invoice invoice = new Invoice();
+        invoice.setPurchase(purchase);
+        invoice.setXml("<?xml></xml>".getBytes());
+        invoice.setIssueDate(new Date());
+        purchase.setInvoice(invoice);
         System.out.println("-----------> Generated:" + purchase.getInvoice().getXml());
     }
 }

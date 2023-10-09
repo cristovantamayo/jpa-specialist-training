@@ -22,7 +22,10 @@ public class SaveFilesTest extends EntityManagerTest {
     public void saveXmlInvoice() {
         Purchase purchase = entityManager.find(Purchase.class, 1);
 
-        Invoice invoice = Invoice.of(null, purchase, loadXmlInvoiceFile(), new Date());
+        Invoice invoice = new Invoice();
+        invoice.setPurchase(purchase);
+        invoice.setXml(loadXmlInvoiceFile());
+        invoice.setIssueDate(new Date());
 
         entityManager.getTransaction().begin();
         entityManager.persist(invoice);

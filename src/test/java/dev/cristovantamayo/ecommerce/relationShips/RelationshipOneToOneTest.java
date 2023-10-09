@@ -31,7 +31,10 @@ public class RelationshipOneToOneTest extends EntityManagerTest {
     @Test
     public void relationshipValidationInvoicePurchase() {
         Purchase purchase = entityManager.find(Purchase.class, 1);
-        Invoice invoice = Invoice.of(null, purchase, "<?xml><![CDATA[1234]]></xml>".getBytes(), new Date());
+        Invoice invoice = new Invoice();
+        invoice.setPurchase(purchase);
+        invoice.setXml("<?xml><![CDATA[1234]]></xml>".getBytes());
+        invoice.setIssueDate(new Date());
 
         entityManager.getTransaction().begin();
         entityManager.persist(invoice);

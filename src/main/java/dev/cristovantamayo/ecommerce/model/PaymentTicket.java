@@ -8,16 +8,10 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
 @Table(name = "payment_by_ticket")
-public class PaymentTicket {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class PaymentTicket extends EntityBaseInteger {
 
     @Column(name = "purchase_id")
     private Integer purchaseId;
@@ -29,8 +23,8 @@ public class PaymentTicket {
     @Column(name = "bar_code")
     private String barCode;
 
-    public static PaymentTicket of (Integer id, Integer purchaseId, PaymentStatus paymentStatus, String barCode){
-        return new PaymentTicket(id, purchaseId, paymentStatus, barCode);
+    public static PaymentTicket of (Integer purchaseId, PaymentStatus paymentStatus, String barCode){
+        return new PaymentTicket(purchaseId, paymentStatus, barCode);
     }
 
 }

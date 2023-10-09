@@ -9,16 +9,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
 @Table(name = "category")
-public class Category {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Category extends EntityBaseInteger {
 
     private String name;
 
@@ -32,10 +26,10 @@ public class Category {
     @ManyToMany(mappedBy = "categories")
     private List<Product> products;
 
-    public static Category of (Integer id, String nome, Category parentCategory,
+    public static Category of (String nome, Category parentCategory,
                                List<Category> parentCategories, List<Product> products){
 
-        return new Category(id, nome, parentCategory, parentCategories, products);
+        return new Category(nome, parentCategory, parentCategories, products);
     }
 
 }

@@ -11,17 +11,11 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @SecondaryTable(name = "client_detail", pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"))
 
 @Entity
 @Table(name="client")
-public class Client {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Client extends EntityBaseInteger {
 
     private String name;
 
@@ -44,8 +38,8 @@ public class Client {
     @Column(name = "description")
     private Map<String, String> contacts;
 
-    public static Client of (Integer id, String name, ClientGender gender, List<Purchase> purchase){
-        return new Client(id, name, null, gender, null, purchase, null);
+    public static Client of (String name, ClientGender gender, List<Purchase> purchase){
+        return new Client(name, null, gender, null, purchase, null);
     }
 
     @PostLoad

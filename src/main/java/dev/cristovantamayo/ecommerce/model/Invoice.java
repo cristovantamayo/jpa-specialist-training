@@ -9,16 +9,10 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
 @Table(name = "invoice")
-public class Invoice {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @Column(name = "purchase_id")
-    private Integer id;
+public class Invoice extends EntityBaseInteger {
 
     @MapsId
     @OneToOne(optional = false)
@@ -34,9 +28,5 @@ public class Invoice {
 
     @Column(name = "issue_date")
     private Date issueDate;
-
-    public static Invoice of (Integer id, Purchase purchase, byte[] xml, Date issueDate){
-        return new Invoice(id, purchase, xml, issueDate);
-    }
 
 }

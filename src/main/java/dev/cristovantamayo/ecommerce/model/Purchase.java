@@ -13,17 +13,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners({ GenerateInvoiceListener.class, GenericListener.class })
 
 @Entity
 @Table(name = "purchase")
-public class Purchase {
-
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Purchase extends EntityBaseInteger {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_id")
@@ -107,11 +101,11 @@ public class Purchase {
         System.out.println("After load a Entity");
     }
 
-    public static Purchase of (Integer id, Client client, LocalDateTime purchaseDate, LocalDateTime updateAt, LocalDateTime purchaseDueDate,
+    public static Purchase of (Client client, LocalDateTime purchaseDate, LocalDateTime updateAt, LocalDateTime purchaseDueDate,
                                Invoice invoice, BigDecimal total, List<PurchaseItem> purchaseItems,
                                PurchaseStatus status, DeliveryAddress deliveryAddress, PaymentCredcard paymentCredcard) {
 
-        return new Purchase(id, client, purchaseDate, updateAt, purchaseDueDate, invoice, total,
+        return new Purchase(client, purchaseDate, updateAt, purchaseDueDate, invoice, total,
                         purchaseItems, status, paymentCredcard, deliveryAddress);
     }
 

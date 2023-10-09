@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class ClientCRUDTest extends EntityManagerTest {
 
     private Client client =
-            Client.of(null, "Joshua Tenens", ClientGender.MAN, null);
+            Client.of("Joshua Tenens", ClientGender.MAN, null);
     @Test
     public void clientInsertion() {
 
@@ -27,7 +27,7 @@ public class ClientCRUDTest extends EntityManagerTest {
 
         Client actualClient = null;
 
-        actualClient = read(1);
+        actualClient = read(2);
 
         Assertions.assertNotNull(actualClient);
     }
