@@ -22,6 +22,9 @@ public class Client {
 
     private String name;
 
+    @Transient
+    private String firstName;
+
     @Enumerated(EnumType.STRING)
     private ClientGender gender;
 
@@ -29,7 +32,15 @@ public class Client {
     private List<Purchase> purchases;
 
     public static Client of (Integer id, String name, ClientGender gender, List<Purchase> purchase){
-        return new Client(id, name, gender, purchase);
+        return new Client(id, name, null, gender, purchase);
+    }
+
+    @PostLoad
+    public void configureFirstName() {
+        if(name != null && !name.isEmpty()){
+            String[] names = name.split(" ");
+            firstName = names[0];
+        }
     }
 
 }
