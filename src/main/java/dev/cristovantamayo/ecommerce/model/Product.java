@@ -47,8 +47,13 @@ public class Product {
     @Column(name = "updated_at", insertable = false)
     private LocalDateTime updatedAt;
 
+    @ElementCollection
+    @CollectionTable(name = "product_tag", joinColumns = @JoinColumn(name = "product_id"))
+    @Column(name = "tag")
+    private List<String> tags;
+
     public static Product of (Integer id, String name, String description, BigDecimal price,
                               List<Category> categories, Stock stock, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        return new Product(id, name, description, price, categories, stock, createdAt, updatedAt);
+        return new Product(id, name, description, price, categories, stock, createdAt, updatedAt, null);
     }
 }
