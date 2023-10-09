@@ -2,6 +2,7 @@ package dev.cristovantamayo.ecommerce.AdvancedMapping;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Invoice;
+import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,8 @@ public class SaveFilesTest extends EntityManagerTest {
         entityManager.persist(invoice);
         entityManager.getTransaction().commit();
 
+        entityManager.clear();
+
         Invoice actualInvoice = entityManager.find(Invoice.class, invoice.getId());
         Assertions.assertNotNull(actualInvoice.getXml());
         Assertions.assertTrue(actualInvoice.getXml().length > 0);
@@ -41,6 +44,40 @@ public class SaveFilesTest extends EntityManagerTest {
         }
         */
     }
+
+    @Test
+    public void saveProductImage() {
+        Product product = entityManager.find(Product.class, 1);
+
+        entityManager.getTransaction().begin();
+        product.setPhoto(loadProducPhotoFile());
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Product actualProduct = entityManager.find(Product.class, product.getId());
+        Assertions.assertNotNull(actualProduct.getPhoto());
+        Assertions.assertTrue(actualProduct.getPhoto().length > 0);
+
+        /*
+        try {
+            OutputStream out = new FileOutputStream(
+                    Files.createFile(Paths.get(System.getProperty("user.home") + "/algaworks/kindle.png")).toFile());
+            out.write(actualProduct.getPhoto());
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+        */
+    }
+
+    private byte[] loadProducPhotoFile() {
+        try {
+            return SaveFilesTest.class.getResourceAsStream("/kindle.png").readAllBytes();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     private static byte[] loadXmlInvoiceFile() {
         try {
