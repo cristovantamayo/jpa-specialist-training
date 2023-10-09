@@ -28,12 +28,14 @@ public class Invoice {
     //        inverseJoinColumns = @JoinColumn(name = "purchase_id", unique = true))
     private Purchase purchase;
 
-    private String xml;
+    @Lob
+    @Column(length = 1000)
+    private byte[] xml;
 
     @Column(name = "issue_date")
     private Date issueDate;
 
-    public static Invoice of (Integer id, Purchase purchase, String xml, Date issueDate){
+    public static Invoice of (Integer id, Purchase purchase, byte[] xml, Date issueDate){
         return new Invoice(id, purchase, xml, issueDate);
     }
 
