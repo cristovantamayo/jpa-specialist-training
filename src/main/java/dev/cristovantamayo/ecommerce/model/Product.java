@@ -56,8 +56,11 @@ public class Product {
     @CollectionTable(name = "product_attribute", joinColumns = @JoinColumn(name = "product_id"))
     private List<Attribute> attributes;
 
+    @Column(length = 20000)
+    private byte[] photo;
+
     public static Product of (Integer id, String name, String description, BigDecimal price,
                               List<Category> categories, Stock stock, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        return new Product(id, name, description, price, categories, stock, createdAt, updatedAt, null, null);
+        return new Product(id, name, description, price, categories, stock, createdAt, updatedAt, null, null, null);
     }
 }
