@@ -9,7 +9,9 @@ public class BasicMappingTest extends EntityManagerTest {
 
     @Test
     public void testarEnum() {
-        Client client = Client.of("José Mineiro", ClientGender.MAN, null);
+        Client client = new Client();
+        client.setName("José Mineiro");
+        client.setGender(ClientGender.MAN);
 
         entityManager.getTransaction().begin();
         entityManager.persist(client);
