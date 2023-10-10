@@ -8,8 +8,15 @@ import org.junit.jupiter.api.Test;
 
 public class ClientCRUDTest extends EntityManagerTest {
 
-    private Client client =
-            Client.of("Joshua Tenens", ClientGender.MAN, null);
+    private Client client;
+
+    public ClientCRUDTest () {
+        Client client = new Client();
+        client.setName("Joshua Tenens");
+        client.setGender(ClientGender.MAN);
+        this.client = client;
+    }
+
     @Test
     public void clientInsertion() {
 

@@ -14,13 +14,17 @@ import java.util.Map;
 @SecondaryTable(name = "client_detail", pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"))
 
 @Entity
-@Table(name="client")
+@Table(name="client",
+        uniqueConstraints = { @UniqueConstraint(name = "unq_cpf", columnNames = {"cpf"}) },
+        indexes = { @Index(name="idx_name", columnList = "name")})
 public class Client extends EntityBaseInteger {
 
     private String name;
 
     @Transient
     private String firstName;
+
+    private String cpf;
 
     @Column(table = "client_detail")
     @Enumerated(EnumType.STRING)
@@ -37,10 +41,6 @@ public class Client extends EntityBaseInteger {
     @MapKeyColumn(name = "type")
     @Column(name = "description")
     private Map<String, String> contacts;
-
-    public static Client of (String name, ClientGender gender, List<Purchase> purchase){
-        return new Client(name, null, gender, null, purchase, null);
-    }
 
     @PostLoad
     public void configureFirstName() {
