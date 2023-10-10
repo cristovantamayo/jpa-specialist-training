@@ -29,7 +29,7 @@ public class TransactionManagementTest extends EntityManagerTest {
         Purchase purchase = entityManager.find(Purchase.class, 1);
         purchase.setStatus(PurchaseStatus.PAID_OUT);
 
-        if(purchase.getPaymentCredcard() == null) {
+        if(purchase.getPayment() == null) {
             throw new RuntimeException("Purchase not paid yet");
         }
     }

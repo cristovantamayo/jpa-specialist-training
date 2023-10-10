@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class ExerciceMapsIdTest extends EntityManagerTest {
 
@@ -14,7 +13,7 @@ public class ExerciceMapsIdTest extends EntityManagerTest {
     public void insertPayment() {
         Purchase purchase = entityManager.find(Purchase.class, 1);
 
-        PaymentCredcard payment = new PaymentCredcard();
+        PaymentCredCard payment = new PaymentCredCard();
         payment.setPurchase(purchase);
         payment.setCardNumber("1234");
         payment.setPaymentStatus(PaymentStatus.IN_PROCESS);
@@ -25,7 +24,7 @@ public class ExerciceMapsIdTest extends EntityManagerTest {
 
         entityManager.clear();
 
-        PaymentCredcard actualPayment = entityManager.find(PaymentCredcard.class, payment.getId());
+        PaymentCredCard actualPayment = entityManager.find(PaymentCredCard.class, payment.getId());
         Assertions.assertNotNull(actualPayment);
         Assertions.assertEquals(purchase.getId(), actualPayment.getId());
     }

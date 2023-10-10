@@ -4,8 +4,12 @@ insert into product (id, name, price, description, created_at) values (3, 'Câme
 insert into client (id, name) values (1, 'Fernando Medeiros');
 insert into client (id, name) values (2, 'Marcos Mariano');
 
-insert into purchase (id, client_id, purchase_date, total, status) values (1, 1, sysdate(), 100.0, 'WAITING');
+insert into purchase (id, client_id, purchase_date, total, status) values (1, 1, sysdate(), 998.0, 'WAITING');
+insert into purchase (id, client_id, purchase_date, total, status) values (2, 1, sysdate(), 499.0, 'WAITING');
 
-insert into purchase_item (purchase_id, product_id, product_price, quantity) values (1, 1, 5.0, 2);
+insert into purchase_item (purchase_id, product_id, product_price, quantity) values (1, 1, 499, 2);
+insert into purchase_item (purchase_id, product_id, product_price, quantity) values (2, 1, 499, 1);
+
+insert into payment (purchase_id, payment_status, card_number, dtype) values (2, 'IN_PROCESS', '123', 'PaymentCredCard');
 
 insert into category (name) values ("Electronics");

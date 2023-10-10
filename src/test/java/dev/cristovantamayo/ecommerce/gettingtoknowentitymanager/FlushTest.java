@@ -23,7 +23,7 @@ public class FlushTest extends EntityManagerTest {
 
             //entityManager.flush();
 
-            if(purchase.getPaymentCredcard() == null) {
+            if(purchase.getPayment() == null) {
                 throw new RuntimeException("Purchase not paid yet.");
             }
 

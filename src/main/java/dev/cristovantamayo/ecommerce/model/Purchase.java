@@ -45,7 +45,7 @@ public class Purchase extends EntityBaseInteger {
     private PurchaseStatus status;
 
     @OneToOne(mappedBy = "purchase")
-    private PaymentCredcard paymentCredcard;
+    private Payment payment;
 
     @Embedded
     @Column(name = "delivery_address")
@@ -103,7 +103,7 @@ public class Purchase extends EntityBaseInteger {
 
     public static Purchase of (Client client, LocalDateTime purchaseDate, LocalDateTime updateAt, LocalDateTime purchaseDueDate,
                                Invoice invoice, BigDecimal total, List<PurchaseItem> purchaseItems,
-                               PurchaseStatus status, DeliveryAddress deliveryAddress, PaymentCredcard paymentCredcard) {
+                               PurchaseStatus status, DeliveryAddress deliveryAddress, PaymentCredCard paymentCredcard) {
 
         return new Purchase(client, purchaseDate, updateAt, purchaseDueDate, invoice, total,
                         purchaseItems, status, paymentCredcard, deliveryAddress);
