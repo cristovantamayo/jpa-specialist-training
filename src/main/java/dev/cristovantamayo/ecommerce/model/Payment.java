@@ -18,7 +18,7 @@ public abstract class Payment extends EntityBaseInteger {
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
 
-    @Column(name = "payment_status")
+    @Column(name = "payment_status", length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 

@@ -23,10 +23,10 @@ public class Invoice extends EntityBaseInteger {
     private Purchase purchase;
 
     @Lob
-    @Column(length = 1000)
+    @Column(length = 1000, nullable = false)
     private byte[] xml;
 
-    @Column(name = "issue_date")
+    @Column(name = "issue_date", nullable = false)
     private Date issueDate;
 
 }

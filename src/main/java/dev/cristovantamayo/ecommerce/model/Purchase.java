@@ -23,7 +23,7 @@ public class Purchase extends EntityBaseInteger {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @Column(name = "purchase_date", updatable = false)
+    @Column(name = "purchase_date", updatable = false, nullable = false)
     private LocalDateTime purchaseDate;
 
     @Column(name = "updated_at", insertable = false)
@@ -35,7 +35,7 @@ public class Purchase extends EntityBaseInteger {
     @OneToOne(mappedBy = "purchase")
     private Invoice invoice;
 
-    @Column(precision = 21, scale = 2)
+    @Column(nullable = false)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
