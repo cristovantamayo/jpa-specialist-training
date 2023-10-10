@@ -2,7 +2,7 @@ package dev.cristovantamayo.ecommerce.relationShips;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Invoice;
-import dev.cristovantamayo.ecommerce.model.PaymentCredcard;
+import dev.cristovantamayo.ecommerce.model.PaymentCredCard;
 import dev.cristovantamayo.ecommerce.model.PaymentStatus;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import org.junit.jupiter.api.Assertions;
@@ -15,7 +15,10 @@ public class RelationshipOneToOneTest extends EntityManagerTest {
     @Test
     public void relationshipValidation() {
         Purchase purchase = entityManager.find(Purchase.class, 1);
-        PaymentCredcard paymentCredcard = PaymentCredcard.of(null, purchase, PaymentStatus.RECEIVED, "1234");
+        PaymentCredCard paymentCredcard = new PaymentCredCard();
+        paymentCredcard.setPurchase(purchase);
+        paymentCredcard.setPaymentStatus(PaymentStatus.RECEIVED);
+        paymentCredcard.setCardNumber("1234");
 
         entityManager.getTransaction().begin();
         entityManager.persist(paymentCredcard);
@@ -25,7 +28,7 @@ public class RelationshipOneToOneTest extends EntityManagerTest {
 
         Purchase actualPurchase = entityManager.find(Purchase.class, purchase.getId());
 
-        Assertions.assertNotNull(actualPurchase.getPaymentCredcard());
+        Assertions.assertNotNull(actualPurchase.getPayment());
     }
 
     @Test

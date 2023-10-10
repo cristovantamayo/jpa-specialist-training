@@ -10,10 +10,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "payment_by_ticket")
-public class PaymentTicket extends Payment {
+@Table(name = "payment_by_credcard")
+public class PaymentCredCard extends Payment{
 
-    @Column(name = "bar_code")
-    private String barCode;
+    @Column(name = "card_number")
+    private String cardNumber;
 
 }
