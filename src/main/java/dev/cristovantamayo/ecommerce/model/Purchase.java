@@ -105,10 +105,10 @@ public class Purchase extends EntityBaseInteger {
 
     public static Purchase of (Client client, LocalDateTime purchaseDate, LocalDateTime updateAt, LocalDateTime purchaseDueDate,
                                Invoice invoice, BigDecimal total, List<PurchaseItem> purchaseItems,
-                               PurchaseStatus status, DeliveryAddress deliveryAddress, PaymentCredCard paymentCredcard) {
+                               PurchaseStatus status, DeliveryAddress deliveryAddress, Payment payment) {
 
         return new Purchase(client, purchaseDate, updateAt, purchaseDueDate, invoice, total,
-                        purchaseItems, status, paymentCredcard, deliveryAddress);
+                        purchaseItems, status, payment, deliveryAddress);
     }
 
 }

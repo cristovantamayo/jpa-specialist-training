@@ -14,6 +14,7 @@ public class ClientCRUDTest extends EntityManagerTest {
         Client client = new Client();
         client.setName("Joshua Tenens");
         client.setGender(ClientGender.MAN);
+        client.setCpf("55555555555");
         this.client = client;
     }
 
@@ -57,13 +58,9 @@ public class ClientCRUDTest extends EntityManagerTest {
 
     @Test
     public void clientDeletion() {
-
         Client firstClient = read(1);
-
         delete(firstClient);
-
         Client actualClient = read(firstClient.getId());
-
         Assertions.assertNull(actualClient);
     }
 
@@ -91,6 +88,7 @@ public class ClientCRUDTest extends EntityManagerTest {
         entityManager.getTransaction().begin();
         firstClient.getPurchases().forEach(i -> {
             i.getPurchaseItems().forEach(j -> entityManager.remove(j));
+            if(i.getPayment() != null) { entityManager.remove(i.getPayment()); }
             entityManager.remove(i);
         });
         entityManager.remove(firstClient);

@@ -28,7 +28,7 @@ public class Client extends EntityBaseInteger {
     @Column(length = 14, nullable = false)
     private String cpf;
 
-    @Column(table = "client_detail")
+    @Column(table = "client_detail", nullable = false)
     @Enumerated(EnumType.STRING)
     private ClientGender gender;
 

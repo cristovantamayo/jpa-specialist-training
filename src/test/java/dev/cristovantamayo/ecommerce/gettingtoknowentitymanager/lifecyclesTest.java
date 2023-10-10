@@ -10,6 +10,7 @@ public class lifecyclesTest extends EntityManagerTest {
     public void statesAnalysis() {
 
         Category transientObject = new Category();
+        transientObject.setName("Ware");
 
         // if persist it go to managed state
         entityManager.persist(transientObject);

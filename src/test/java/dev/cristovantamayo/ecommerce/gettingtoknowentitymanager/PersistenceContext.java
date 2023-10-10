@@ -5,6 +5,8 @@ import dev.cristovantamayo.ecommerce.model.Product;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class PersistenceContext extends EntityManagerTest {
 
@@ -20,12 +22,14 @@ public class PersistenceContext extends EntityManagerTest {
         product.setName("Coffee Cup");
         product.setDescription("God to drink Coffee");
         product.setPrice(new BigDecimal(89.00));
+        product.setCreatedAt(LocalDateTime.now());
         entityManager.persist(product);
 
         Product product2 = new Product();
         product2.setName("Tea Cup");
         product2.setDescription("God to drink Tea");
         product2.setPrice(new BigDecimal(89.00));
+        product2.setCreatedAt(LocalDateTime.now());
         product2 = entityManager.merge(product2);
 
         entityManager.flush();
