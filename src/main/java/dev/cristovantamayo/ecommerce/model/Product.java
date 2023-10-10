@@ -16,7 +16,9 @@ import java.util.List;
 @EntityListeners({ GenericListener.class })
 
 @Entity
-@Table(name = "product")
+@Table(name = "product",
+        uniqueConstraints = { @UniqueConstraint(name = "unq_product_name", columnNames = { "name" })},
+        indexes = { @Index(name = "idx_product_name", columnList = "name") })
 public class Product extends EntityBaseInteger {
 
     private String name;

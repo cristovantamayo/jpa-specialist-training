@@ -11,7 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "category")
+@Table(name = "category",
+        uniqueConstraints = { @UniqueConstraint(name = "unq_category_name", columnNames = { "name" }) },
+        indexes = { @Index(name = "idx_category_name", columnList = "name")})
 public class Category extends EntityBaseInteger {
 
     private String name;
