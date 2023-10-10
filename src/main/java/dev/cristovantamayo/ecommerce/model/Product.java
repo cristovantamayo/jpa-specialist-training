@@ -24,7 +24,7 @@ public class Product extends EntityBaseInteger {
     @Column(length = 100, nullable = false)
     private String name;
 
-    @Column(columnDefinition = "varchar(215) not null default 'empty'")
+    @Column(columnDefinition = "varchar(215) default 'empty'")
     private String description;
 
     public BigDecimal price;

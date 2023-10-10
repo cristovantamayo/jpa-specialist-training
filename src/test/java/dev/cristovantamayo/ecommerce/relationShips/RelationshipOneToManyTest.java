@@ -16,11 +16,14 @@ public class RelationshipOneToManyTest extends EntityManagerTest {
         Client client = entityManager.find(Client.class, 1);
 
 
-        Purchase purchase = Purchase.of(client,
-                LocalDateTime.now(), null, LocalDateTime.now(), null,
-                new BigDecimal(5000), null, PurchaseStatus.WAITING, DeliveryAddress.of("08990-010",
+        Purchase purchase = new Purchase();
+        purchase.setClient(client);
+        purchase.setPurchaseDate(LocalDateTime.now());
+        purchase.setTotal(new BigDecimal(5000));
+        purchase.setStatus(PurchaseStatus.WAITING);
+        purchase.setDeliveryAddress(DeliveryAddress.of("08990-010",
                         "Jefferson Sr", "2376", "Apt 2",
-                        "Elwood Park", "Baltimore", "Maryland"), null);
+                        "Elwood Park", "Baltimore", "MD"));
 
         entityManager.getTransaction().begin();
         entityManager.persist(purchase);

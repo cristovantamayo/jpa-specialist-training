@@ -1,10 +1,14 @@
 package dev.cristovantamayo.ecommerce.gettingtoknowentitymanager;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
+import dev.cristovantamayo.ecommerce.model.Client;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import dev.cristovantamayo.ecommerce.model.PurchaseStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class FlushTest extends EntityManagerTest {
 
@@ -40,8 +44,14 @@ public class FlushTest extends EntityManagerTest {
         try {
             entityManager.getTransaction().begin();
 
+            Client client = entityManager.find(Client.class, 2);
             Purchase purchase = entityManager.find(Purchase.class, 1);
             purchase.setStatus(PurchaseStatus.PAID_OUT);
+            purchase.setTotal(new BigDecimal(560));
+            purchase.setPurchaseDate(LocalDateTime.now());
+            purchase.setClient(client);
+
+            entityManager.flush();
 
             // JPQL forces Flush
             Purchase purchasePaid = entityManager

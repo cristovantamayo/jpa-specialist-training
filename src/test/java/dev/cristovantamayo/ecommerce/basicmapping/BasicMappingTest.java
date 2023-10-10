@@ -12,6 +12,7 @@ public class BasicMappingTest extends EntityManagerTest {
         Client client = new Client();
         client.setName("José Mineiro");
         client.setGender(ClientGender.MAN);
+        client.setCpf("33333333333");
 
         entityManager.getTransaction().begin();
         entityManager.persist(client);

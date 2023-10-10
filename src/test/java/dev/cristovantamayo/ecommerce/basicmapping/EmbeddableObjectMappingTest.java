@@ -17,12 +17,14 @@ public class EmbeddableObjectMappingTest extends EntityManagerTest {
 
         DeliveryAddress deliveryAddress =
                 DeliveryAddress.of("08990-010", "Jefferson Sr", "2376",
-                        "Apt 2", "Elwood Park", "Baltimore", "Maryland");
+                        "Apt 2", "Elwood Park", "Baltimore", "MD");
 
         PurchaseItem purchaseItem = entityManager.find(PurchaseItem.class, new PurchaseItemId(1, 1));
 
+        Payment payment = entityManager.find(Payment.class, 1);
+
         Purchase purchase = Purchase.of(client, LocalDateTime.now(), null, null, null,
-                new BigDecimal(4000), Arrays.asList(purchaseItem), PurchaseStatus.WAITING, deliveryAddress, null);
+                new BigDecimal(4000), Arrays.asList(purchaseItem), PurchaseStatus.WAITING, deliveryAddress, payment);
 
         entityManager.getTransaction().begin();
         entityManager.persist(purchase);

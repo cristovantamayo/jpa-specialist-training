@@ -4,6 +4,7 @@ import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
 import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Purchase;
+import dev.cristovantamayo.ecommerce.model.PurchaseStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -15,11 +16,13 @@ public class PurchaseColumnDetailsTest extends EntityManagerTest {
 
     @Test
     public void avoidInsertionsOnUpdateAtColumn() {
-        Client client = entityManager.find(Client.class, 1);
+        Client client = entityManager.find(Client.class, 2);
         Purchase purchase = new Purchase();
         purchase.setClient(client);
         purchase.setPurchaseDate(LocalDateTime.now());
         purchase.setUpdatedAt(LocalDateTime.now());
+        purchase.setStatus(PurchaseStatus.WAITING);
+        purchase.setTotal(new BigDecimal(5000));
 
         entityManager.getTransaction().begin();
         entityManager.persist(purchase);

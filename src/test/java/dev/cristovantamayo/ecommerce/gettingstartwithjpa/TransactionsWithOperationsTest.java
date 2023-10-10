@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class TransactionsWithOperationsTest extends EntityManagerTest {
 
@@ -31,9 +32,10 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
     public void showDiferenceBetweenPersistAndMerge() {
 
         Product productPersist = new Product();
-        productPersist.setName("Microphone Rode Videmic");
+        productPersist.setName("Microphone Rode Videmic Versin 2.0");
         productPersist.setDescription("A melhor qualidade de som.");
         productPersist.setPrice(new BigDecimal(1000));
+        productPersist.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         entityManager.persist(productPersist);
@@ -53,6 +55,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         productMerge.setName("Notebook Dell");
         productMerge.setDescription("O melhor da categoria.");
         productMerge.setPrice(new BigDecimal(2000));
+        productMerge.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         productMerge = entityManager.merge(productMerge);
@@ -73,6 +76,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         product.setName("Microphone Rode Videmic");
         product.setDescription("A melhor qualidade de som.");
         product.setPrice(new BigDecimal(1000));
+        product.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         product = entityManager.merge(product);
@@ -109,6 +113,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         product.setName("Kindle Paperwhite");
         product.setDescription("Conheça o novo Kindle Paperwhite");
         product.setPrice(new BigDecimal(599));
+        product.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         product = entityManager.merge(product);
@@ -147,6 +152,7 @@ public class TransactionsWithOperationsTest extends EntityManagerTest {
         product.setName("Câmera Canon");
         product.setDescription("A melhor definição para suas Fotos.");
         product.setPrice(new BigDecimal(5000));
+        product.setCreatedAt(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
         entityManager.persist(product);

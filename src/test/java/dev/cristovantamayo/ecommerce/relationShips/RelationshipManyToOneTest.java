@@ -24,7 +24,7 @@ public class RelationshipManyToOneTest extends EntityManagerTest {
         purchase.setTotal(new BigDecimal(5000));
         purchase.setDeliveryAddress(DeliveryAddress.of("08990-010",
                 "Jefferson Sr", "2376", "Apt 2",
-                "Elwood Park", "Baltimore", "Maryland"));
+                "Elwood Park", "Baltimore", "MD"));
 
         PurchaseItem purchaseItem = new PurchaseItem();
         purchaseItem.setId(new PurchaseItemId());
@@ -32,6 +32,7 @@ public class RelationshipManyToOneTest extends EntityManagerTest {
         purchaseItem.setQuantity(1);
         purchaseItem.setPurchase(purchase);
         purchaseItem.setProduct(product);
+        purchaseItem.setProductPrice(new BigDecimal(900));
 
         entityManager.getTransaction().begin();
         entityManager.persist(purchaseItem);

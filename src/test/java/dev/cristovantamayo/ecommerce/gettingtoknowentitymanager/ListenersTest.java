@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.color.ProfileDataException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class ListenersTest extends EntityManagerTest {
 
@@ -25,6 +27,8 @@ public class ListenersTest extends EntityManagerTest {
 
         purchase.setClient(client);
         purchase.setStatus(PurchaseStatus.WAITING);
+        purchase.setTotal(new BigDecimal(5000));
+        purchase.setPurchaseDate(LocalDateTime.now());
 
         entityManager.getTransaction().begin();
 
