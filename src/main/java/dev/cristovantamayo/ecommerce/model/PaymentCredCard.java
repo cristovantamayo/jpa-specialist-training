@@ -11,7 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "payment_by_credcard")
+//@Table(name = "payment_by_credcard") // Single Table Strategy
 public class PaymentCredCard extends Payment{
 
     @Column(name = "card_number")

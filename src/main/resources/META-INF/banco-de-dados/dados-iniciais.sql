@@ -10,8 +10,7 @@ insert into purchase (id, client_id, purchase_date, total, status) values (2, 1,
 insert into purchase_item (purchase_id, product_id, product_price, quantity) values (1, 1, 499, 2);
 insert into purchase_item (purchase_id, product_id, product_price, quantity) values (2, 1, 499, 1);
 
-insert into payment (purchase_id, payment_status, payment_type) values (2, 'IN_PROCESS', 'CredCard');
-
-insert into payment_by_credcard (purchase_id, payment_status, card_number) values (2, '123')
+insert into payment (purchase_id, payment_status, card_number, payment_type) values (2, 'IN_PROCESS', '123', 'CredCard');
+--insert into payment_by_credcard (purchase_id, card_number) values (2, '123')
 
 insert into category (name) values ("Electronics");
