@@ -43,7 +43,7 @@ public class InheritanceTest extends EntityManagerTest {
         PaymentCredCard paymentCredcard = new PaymentCredCard();
         paymentCredcard.setPurchase(purchase);
         paymentCredcard.setPaymentStatus(PaymentStatus.IN_PROCESS);
-        paymentCredcard.setCardNumber("123");
+        paymentCredcard.setCardNumber("12345");
 
         entityManager.getTransaction().begin();
         entityManager.persist(paymentCredcard);
