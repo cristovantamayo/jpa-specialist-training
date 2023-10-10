@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-//@DiscriminatorValue("CredCard") // Table Per Class Strategy
+@DiscriminatorValue("CredCard")
 @NoArgsConstructor
 @AllArgsConstructor
 
