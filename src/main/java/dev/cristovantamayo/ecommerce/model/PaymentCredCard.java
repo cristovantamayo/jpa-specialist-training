@@ -6,12 +6,12 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@DiscriminatorValue("CredCard")
+//@DiscriminatorValue("CredCard") // Table Per Class Strategy
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Entity
-//@Table(name = "payment_by_credcard") // Single Table Strategy
+@Table(name = "payment_by_credcard")
 public class PaymentCredCard extends Payment{
 
     @Column(name = "card_number")
