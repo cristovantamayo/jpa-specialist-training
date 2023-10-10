@@ -21,10 +21,13 @@ import java.util.List;
         indexes = { @Index(name = "idx_product_name", columnList = "name") })
 public class Product extends EntityBaseInteger {
 
+    @Column(length = 100, nullable = false)
     private String name;
 
+    @Column(columnDefinition = "varchar(215) not null default 'empty'")
     private String description;
-    
+
+    @Column(precision = 12, scale = 2) // price decimal(12, 2)
     public BigDecimal price;
 
     @ManyToMany

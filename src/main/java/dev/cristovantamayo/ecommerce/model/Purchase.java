@@ -35,12 +35,14 @@ public class Purchase extends EntityBaseInteger {
     @OneToOne(mappedBy = "purchase")
     private Invoice invoice;
 
+    @Column(precision = 21, scale = 2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
     @Column(name = "purchase_item")
     private List<PurchaseItem> purchaseItems;
 
+    @Column(length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     private PurchaseStatus status;
 
