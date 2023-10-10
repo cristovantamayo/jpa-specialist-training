@@ -27,7 +27,6 @@ public class Product extends EntityBaseInteger {
     @Column(columnDefinition = "varchar(215) not null default 'empty'")
     private String description;
 
-    @Column(precision = 12, scale = 2) // price decimal(12, 2)
     public BigDecimal price;
 
     @ManyToMany
@@ -40,7 +39,7 @@ public class Product extends EntityBaseInteger {
     @OneToOne(mappedBy = "product")
     private Stock stock;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", insertable = false)
@@ -48,7 +47,7 @@ public class Product extends EntityBaseInteger {
 
     @ElementCollection
     @CollectionTable(name = "product_tag", joinColumns = @JoinColumn(name = "product_id"))
-    @Column(name = "tag")
+    @Column(name = "tag", length = 50, nullable = false)
     private List<String> tags;
 
     @ElementCollection

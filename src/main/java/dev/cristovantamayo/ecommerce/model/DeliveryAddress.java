@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 @Getter
 @Setter
@@ -13,18 +14,25 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class DeliveryAddress {
 
+    @Column(length = 9)
     private String cep;
 
+    @Column(length = 100)
     private String street;
 
+    @Column(length = 10)
     private String number;
 
+    @Column(length = 50)
     private String complement;
 
+    @Column(length = 50)
     private String neighborhood;
 
+    @Column(length = 50)
     private String city;
 
+    @Column(length = 2)
     private String state;
 
     public static DeliveryAddress of (String cep, String street, String number, String complement, String neighborhood, String city, String state){

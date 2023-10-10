@@ -1,8 +1,8 @@
 insert into product (id, name, price, description, created_at) values (1, 'Kindle', 499.0, 'Conheça o novo Kindle', date_sub(sysdate(), interval 1 day));
 insert into product (id, name, price, description, created_at) values (3, 'Câmera GoPro Hero 7', 1400.0, 'Desempenho 2x melhor.', date_sub(sysdate(), interval 1 day));
 
-insert into client (id, name) values (1, 'Fernando Medeiros');
-insert into client (id, name) values (2, 'Marcos Mariano');
+insert into client (id, name, cpf) values (1, 'Fernando Medeiros', '111111111');
+insert into client (id, name, cpf) values (2, 'Marcos Mariano', '222222222');
 
 insert into purchase (id, client_id, purchase_date, total, status) values (1, 1, sysdate(), 998.0, 'WAITING');
 insert into purchase (id, client_id, purchase_date, total, status) values (2, 1, sysdate(), 499.0, 'WAITING');

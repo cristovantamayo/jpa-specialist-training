@@ -14,7 +14,7 @@ import javax.persistence.*;
 //@Table(name = "payment_by_ticket") // Single Table Strategy
 public class PaymentTicket extends Payment {
 
-    @Column(name = "bar_code")
+    @Column(name = "bar_code", length = 100)
     private String barCode;
 
 }

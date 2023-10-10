@@ -19,11 +19,13 @@ import java.util.Map;
         indexes = { @Index(name="idx_name", columnList = "name")})
 public class Client extends EntityBaseInteger {
 
+    @Column(length = 100, nullable = false)
     private String name;
 
     @Transient
     private String firstName;
 
+    @Column(length = 14, nullable = false)
     private String cpf;
 
     @Column(table = "client_detail")

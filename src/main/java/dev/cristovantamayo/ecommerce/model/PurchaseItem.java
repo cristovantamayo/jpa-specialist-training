@@ -30,9 +30,10 @@ public class PurchaseItem {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @Column(name = "product_price")
+    @Column(name = "product_price", nullable = false)
     private BigDecimal productPrice;
 
+    @Column(nullable = false)
     private Integer quantity;
 
     public static PurchaseItem of (Purchase purchase, Product product, BigDecimal productPrice, Integer quantity) {
