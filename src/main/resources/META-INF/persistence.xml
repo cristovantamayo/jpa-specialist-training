@@ -13,21 +13,35 @@
             <!--Development only start-->
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/> <!-- drop, create -->
 
-            <!-- scrpit
+            <!-- none
+                 script
                  metadata
                  metadata-then-script
                  script-then-metabase -->
             <property name="jakarta.persistence.schema-generation.create-source"
-                      value="metadata-then-script"/>
+                      value="none"/>
             <property name="jakarta.persistence.schema-generation.drop-source"
-                      value="metadata-then-script"/>
+                      value="none"/>
 
             <property name="jakarta.persistence.schema-generation.create-script-source"
                       value="META-INF/database/script-to-create.sql"/>
             <property name="jakarta.persistence.schema-generation.drop-script-source"
                       value="META-INF/database/script-to-drop.sql"/>
 
-            <property name="jakarta.persistence.sql-load-script-source" value="META-INF/database/initials-inserts.sql"/>
+            <property name="jakarta.persistence.sql-load-script-source"
+                      value="META-INF/database/initials-inserts.sql"/>
+
+            <!-- none
+                 drop
+                 create
+                 drop-and-create -->
+            <property name="jakarta.persistence.schema-generation.scripts.action"
+                      value="none"/>
+            <property name="jakarta.persistence.schema-generation.scripts.create-target"
+                      value="/home/ctamayo/algaworks/workspaces/jpa/exported/script-to-create-exported.sql"/>
+            <property name="jakarta.persistence.schema-generation.scripts.drop-target"
+                      value="/home/ctamayo/algaworks/workspaces/jpa/exported/script-to-drop-exported.sql"/>
+
             <!--Development only end-->
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
