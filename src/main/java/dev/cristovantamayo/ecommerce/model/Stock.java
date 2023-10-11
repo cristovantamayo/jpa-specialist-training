@@ -10,11 +10,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "stock")
+@Table(name = "stock", uniqueConstraints = {
+        @UniqueConstraint(name = "unq_stock_product",
+                columnNames = { "product_id"})} )
 public class Stock extends EntityBaseInteger {
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_stock_product"))
     private Product product;
 
     private Integer quantity;

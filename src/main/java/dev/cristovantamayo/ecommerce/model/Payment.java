@@ -15,7 +15,7 @@ public abstract class Payment extends EntityBaseInteger {
 
     @MapsId
     @OneToOne(optional = false)
-    @JoinColumn(name = "purchase_id")
+    @JoinColumn(name = "purchase_id", nullable = false, foreignKey = @ForeignKey(name = "fk_payment_purchase"))
     private Purchase purchase;
 
     @Column(name = "payment_status", length = 20, nullable = false)

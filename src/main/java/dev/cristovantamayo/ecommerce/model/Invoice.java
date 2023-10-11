@@ -16,7 +16,8 @@ public class Invoice extends EntityBaseInteger {
 
     @MapsId
     @OneToOne(optional = false)
-    @JoinColumn(name = "purchase_id")
+    @JoinColumn(name = "purchase_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_invoice_purchase"))
     //@JoinTable(name = "purchase_invoice",
     //        joinColumns = @JoinColumn(name = "invoice_id", unique = true),
     //        inverseJoinColumns = @JoinColumn(name = "purchase_id", unique = true))

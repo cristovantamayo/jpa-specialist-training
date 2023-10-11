@@ -11,8 +11,9 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SecondaryTable(name = "client_detail", pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"))
-
+@SecondaryTable(name = "client_detail",
+        pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"),
+        foreignKey = @ForeignKey(name = "fk_client_client_detail"))
 @Entity
 @Table(name="client",
         uniqueConstraints = { @UniqueConstraint(name = "unq_cpf", columnNames = {"cpf"}) },
@@ -39,7 +40,9 @@ public class Client extends EntityBaseInteger {
     private List<Purchase> purchases;
 
     @ElementCollection
-    @CollectionTable(name = "client_contact", joinColumns = @JoinColumn(name = "client_id"))
+    @CollectionTable(name = "client_contact",
+            joinColumns = @JoinColumn(name = "client_id",
+                    foreignKey = @ForeignKey(name = "fk_client_contacts")))
     @MapKeyColumn(name = "type")
     @Column(name = "description")
     private Map<String, String> contacts;

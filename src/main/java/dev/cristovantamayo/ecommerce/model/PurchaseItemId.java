@@ -16,11 +16,11 @@ import java.io.Serializable;
 public class PurchaseItemId implements Serializable {
 
     @EqualsAndHashCode.Include
-    @Column(name = "purchase_id")
+    @Column(name = "purchase_id", nullable = false)
     private Integer purchaseId;
 
     @EqualsAndHashCode.Include
-    @Column(name = "product_id")
+    @Column(name = "product_id", nullable = false)
     private Integer productId;
 
 }

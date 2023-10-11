@@ -22,12 +22,14 @@ public class PurchaseItem {
 
     @MapsId("purchaseId")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "purchase_id")
+    @JoinColumn(name = "purchase_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_purchase_Item_purchase"))
     private Purchase purchase;
 
     @MapsId("productId")
     @ManyToOne(optional = false)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_purchase_item_product"))
     private Product product;
 
     @Column(name = "product_price", nullable = false)
