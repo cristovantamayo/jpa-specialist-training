@@ -19,7 +19,7 @@ import java.util.List;
 @Table(name = "purchase")
 public class Purchase extends EntityBaseInteger {
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false) // cascade = CascadeType.PERSIST
     @JoinColumn(name = "client_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_purchase_client"))
     private Client client;
@@ -39,7 +39,7 @@ public class Purchase extends EntityBaseInteger {
     @Column(nullable = false)
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER) // cascade = CascadeType.PERSIST
     @Column(name = "purchase_item")
     private List<PurchaseItem> purchaseItems;
 
