@@ -39,7 +39,7 @@ public class Purchase extends EntityBaseInteger {
     @Column(nullable = false)
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER) // cascade = CascadeType.PERSIST
+    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER) // , cascade = CascadeType.MERGE
     @Column(name = "purchase_item")
     private List<PurchaseItem> purchaseItems;
 
@@ -73,10 +73,11 @@ public class Purchase extends EntityBaseInteger {
     //@PrePersist
     //@PreUpdate
     public void calculateTotal() {
-        if(purchaseItems != null) {
-            total = purchaseItems.stream().map(PurchaseItem::getProductPrice)
-                    .reduce(BigDecimal.ZERO, BigDecimal::add);
-        }
+        total = BigDecimal.ZERO;
+        if(purchaseItems != null)
+            total = purchaseItems.stream().map(
+                    i -> new BigDecimal(i.getQuantity()).multiply(i.getProductPrice()))
+                            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @PostPersist

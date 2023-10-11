@@ -21,7 +21,7 @@ public class PurchaseItem {
     private PurchaseItemId id;
 
     @MapsId("purchaseId")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false) // , cascade = CascadeType.MERGE
     @JoinColumn(name = "purchase_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_purchase_Item_purchase"))
     private Purchase purchase;
