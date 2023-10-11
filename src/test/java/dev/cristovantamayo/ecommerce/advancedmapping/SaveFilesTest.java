@@ -1,4 +1,4 @@
-package dev.cristovantamayo.ecommerce.AdvancedMapping;
+package dev.cristovantamayo.ecommerce.advancedmapping;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Invoice;
@@ -7,13 +7,7 @@ import dev.cristovantamayo.ecommerce.model.Purchase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileOutputStream;
-import java.io.IOError;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class SaveFilesTest extends EntityManagerTest {

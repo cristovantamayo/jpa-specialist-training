@@ -1,4 +1,4 @@
-package dev.cristovantamayo.ecommerce.AdvancedMapping;
+package dev.cristovantamayo.ecommerce.advancedmapping;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Attribute;

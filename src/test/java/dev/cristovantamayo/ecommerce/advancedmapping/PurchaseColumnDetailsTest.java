@@ -1,8 +1,7 @@
-package dev.cristovantamayo.ecommerce.AdvancedMapping;
+package dev.cristovantamayo.ecommerce.advancedmapping;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
-import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import dev.cristovantamayo.ecommerce.model.PurchaseStatus;
 import org.junit.jupiter.api.Assertions;
