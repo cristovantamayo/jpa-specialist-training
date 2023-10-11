@@ -31,8 +31,10 @@ public class Product extends EntityBaseInteger {
 
     @ManyToMany
     @JoinTable(name = "product_category",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
+            joinColumns = @JoinColumn(name = "product_id", nullable = false,
+                    foreignKey = @ForeignKey(name = "fk_product_category_product")),
+            inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false,
+                    foreignKey = @ForeignKey(name = "fk_product_category_category")))
     @Column(name = "categories")
     private List<Category> categories;
 
@@ -46,12 +48,14 @@ public class Product extends EntityBaseInteger {
     private LocalDateTime updatedAt;
 
     @ElementCollection
-    @CollectionTable(name = "product_tag", joinColumns = @JoinColumn(name = "product_id"))
+    @CollectionTable(name = "product_tag",
+            joinColumns = @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "fk_product_tags")))
     @Column(name = "tag", length = 50, nullable = false)
     private List<String> tags;
 
     @ElementCollection
-    @CollectionTable(name = "product_attribute", joinColumns = @JoinColumn(name = "product_id"))
+    @CollectionTable(name = "product_attribute",
+            joinColumns = @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "fk_product_attribute")))
     private List<Attribute> attributes;
 
     @Column(length = 20000)

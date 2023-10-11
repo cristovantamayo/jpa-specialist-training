@@ -20,7 +20,8 @@ import java.util.List;
 public class Purchase extends EntityBaseInteger {
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_purchase_client"))
     private Client client;
 
     @Column(name = "purchase_date", updatable = false, nullable = false)
