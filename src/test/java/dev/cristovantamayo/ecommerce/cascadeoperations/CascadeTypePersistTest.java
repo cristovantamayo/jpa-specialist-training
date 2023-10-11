@@ -12,8 +12,33 @@ import java.util.Arrays;
 
 public class CascadeTypePersistTest extends EntityManagerTest {
 
+    //@Test
+    public void persistProductWithCategory() {
+
+        Product product = new Product();
+        product.setName("Dumbbells 5kg");
+        product.setDescription("Rubberized");
+        product.setPrice(new BigDecimal(110.50));
+        product.setCreatedAt(LocalDateTime.now());
+
+        Category category = new Category();
+        category.setName("Fitness");
+        category.setProducts(Arrays.asList(product));
+        product.setCategories(Arrays.asList(category));
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(product);
+        entityManager.getTransaction().commit();
+
+        entityManager.clear();
+
+        Category actualCategory = entityManager.find(Category.class, category.getId());
+        Assertions.assertFalse(actualCategory.getProducts().isEmpty());
+
+    }
+
     // @Test
-    public void persistirPurchaseComItens() {
+    public void persistPurchaseWithItems() {
         Client client = entityManager.find(Client.class, 1);
         Product product = entityManager.find(Product.class, 1);
 
@@ -45,7 +70,7 @@ public class CascadeTypePersistTest extends EntityManagerTest {
     }
 
     @Test
-    public void persistirPurchaseItemComPurchase() {
+    public void persistPurchaseItemWithPurchase() {
         Client client = entityManager.find(Client.class, 1);
         Product product = entityManager.find(Product.class, 1);
 
@@ -73,7 +98,7 @@ public class CascadeTypePersistTest extends EntityManagerTest {
     }
 
     // @Test
-    public void persistirPurchaseComClient() {
+    public void persistPurchaseWithClient() {
         Client client = new Client();
         client.setBirthDate(LocalDate.of(1980, 1, 1));
         client.setGender(ClientGender.MAN);
