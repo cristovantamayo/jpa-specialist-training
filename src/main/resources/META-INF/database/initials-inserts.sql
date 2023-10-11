@@ -4,8 +4,8 @@ insert into product (id, name, price, description, created_at) values (3, 'Câme
 insert into client (id, name, cpf) values (1, 'Fernando Medeiros', '111111111');
 insert into client (id, name, cpf) values (2, 'Marcos Mariano', '222222222');
 
-insert into client_detail(client_id, gender, birth_date) values (1, 'MAN', date_sub(sysdate(), interval 27 year));
-insert into client_detail(client_id, gender, birth_date) values (2, 'MAN', date_sub(sysdate(), interval 30 year));
+insert into client_detail (client_id, gender, birth_date) values (1, 'MAN', date_sub(sysdate(), interval 27 year));
+insert into client_detail (client_id, gender, birth_date) values (2, 'MAN', date_sub(sysdate(), interval 30 year));
 
 insert into purchase (id, client_id, purchase_date, total, status) values (1, 1, sysdate(), 998.0, 'WAITING');
 insert into purchase (id, client_id, purchase_date, total, status) values (2, 1, sysdate(), 499.0, 'WAITING');
@@ -18,3 +18,6 @@ insert into payment (purchase_id, payment_status, card_number, payment_type) val
 
 insert into category (id, name) values (1, "Electronics");
 insert into category (id, name) values (2, "Books");
+
+insert into product_category (product_id, category_id) values (3, 1);
+insert into product_category (product_id, category_id) values (1, 1);
