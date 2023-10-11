@@ -29,7 +29,7 @@ public class Product extends EntityBaseInteger {
 
     public BigDecimal price;
 
-    @ManyToMany() // cascade = CascadeType.PERSIST
+    @ManyToMany() // cascade = CascadeType.MERGE
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "product_id", nullable = false,
                     foreignKey = @ForeignKey(name = "fk_product_category_product")),
