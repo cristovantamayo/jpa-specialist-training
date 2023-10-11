@@ -10,18 +10,18 @@
             <property name="jakarta.persistence.jdbc.user" value="root" />
             <property name="jakarta.persistence.jdbc.password" value="secret" />
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
-            <!--Development only start-->
-            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/> <!-- drop, create -->
 
-            <!-- none
-                 script
+            <!--Development only start-->
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/> <!-- none, drop, create -->
+
+            <!-- script
                  metadata
                  metadata-then-script
                  script-then-metabase -->
             <property name="jakarta.persistence.schema-generation.create-source"
-                      value="none"/>
+                      value="metadata-then-script"/>
             <property name="jakarta.persistence.schema-generation.drop-source"
-                      value="none"/>
+                      value="metadata-then-script"/>
 
             <property name="jakarta.persistence.schema-generation.create-script-source"
                       value="META-INF/database/script-to-create.sql"/>
