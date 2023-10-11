@@ -20,7 +20,8 @@ public class Category extends EntityBaseInteger {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "parent_category_id")
+    @JoinColumn(name = "parent_category_id",
+            foreignKey = @ForeignKey(name = "fk_category_parent_category"))
     private Category parentCategory;
 
     @OneToMany(mappedBy = "parentCategory")
