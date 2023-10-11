@@ -32,9 +32,9 @@ public class Product extends EntityBaseInteger {
     @ManyToMany
     @JoinTable(name = "product_category",
             joinColumns = @JoinColumn(name = "product_id", nullable = false,
-                    foreignKey = @ForeignKey(name = "fk_product_categories")),
+                    foreignKey = @ForeignKey(name = "fk_product_category_product")),
             inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false,
-                    foreignKey = @ForeignKey(name = "fk_product_category")))
+                    foreignKey = @ForeignKey(name = "fk_product_category_category")))
     @Column(name = "categories")
     private List<Category> categories;
 

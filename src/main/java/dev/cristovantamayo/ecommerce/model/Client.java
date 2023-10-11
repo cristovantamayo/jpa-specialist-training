@@ -13,7 +13,7 @@ import java.util.Map;
 @AllArgsConstructor
 @SecondaryTable(name = "client_detail",
         pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"),
-        foreignKey = @ForeignKey(name = "fk_client_client_detail"))
+        foreignKey = @ForeignKey(name = "fk_client_detail_client"))
 @Entity
 @Table(name="client",
         uniqueConstraints = { @UniqueConstraint(name = "unq_cpf", columnNames = {"cpf"}) },
