@@ -39,7 +39,7 @@ public class Purchase extends EntityBaseInteger {
     @Column(nullable = false)
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER) // , cascade = CascadeType.MERGE
+    @OneToMany(mappedBy = "purchase", fetch = FetchType.EAGER) //, cascade = CascadeType.REMOVE
     @Column(name = "purchase_item")
     private List<PurchaseItem> purchaseItems;
 
