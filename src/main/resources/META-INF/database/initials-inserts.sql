@@ -7,10 +7,11 @@ insert into client (id, name, cpf) values (2, 'Marcos Mariano', '222222222');
 insert into client_detail (client_id, gender, birth_date) values (1, 'MAN', date_sub(sysdate(), interval 27 year));
 insert into client_detail (client_id, gender, birth_date) values (2, 'MAN', date_sub(sysdate(), interval 30 year));
 
-insert into purchase (id, client_id, purchase_date, total, status) values (1, 1, sysdate(), 998.0, 'WAITING');
+insert into purchase (id, client_id, purchase_date, total, status) values (1, 1, sysdate(), 2398.0, 'WAITING');
 insert into purchase (id, client_id, purchase_date, total, status) values (2, 1, sysdate(), 499.0, 'WAITING');
 
 insert into purchase_item (purchase_id, product_id, product_price, quantity) values (1, 1, 499, 2);
+insert into purchase_item (purchase_id, product_id, product_price, quantity) values (1, 3, 1400, 1);
 insert into purchase_item (purchase_id, product_id, product_price, quantity) values (2, 1, 499, 1);
 
 insert into payment (purchase_id, payment_status, card_number, payment_type) values (2, 'IN_PROCESS', '123', 'CredCard');
