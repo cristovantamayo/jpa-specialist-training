@@ -5,6 +5,7 @@ import dev.cristovantamayo.ecommerce.model.Purchase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -27,6 +28,22 @@ public class BasicJPQJTest extends EntityManagerTest {
         List<Purchase> purchases = typedQuery.getResultList();
 
         Assertions.assertNotNull(purchase);
+        Assertions.assertFalse(purchases.isEmpty());
+    }
+
+    @Test
+    public void showDifferenceBetweenQueries() {
+
+        final String jpql = "select p from Purchase p where p.id = 1";
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(jpql, Purchase.class);
+        Purchase purchase1 = typedQuery.getSingleResult();
+        Assertions.assertNotNull(purchase1);
+
+        Query query = entityManager.createQuery(jpql);
+        Purchase purchase2 = (Purchase) query.getSingleResult();
+        Assertions.assertNotNull(purchase2);
+        List<Purchase> purchases = query.getResultList();
         Assertions.assertFalse(purchases.isEmpty());
     }
 }
