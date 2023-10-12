@@ -1,6 +1,7 @@
 package dev.cristovantamayo.ecommerce.jpql;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
+import dev.cristovantamayo.ecommerce.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.model.Client;
 import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Purchase;
@@ -68,11 +69,20 @@ public class BasicJPQJTest extends EntityManagerTest {
 
     @Test
     public void projectResult() {
-        String jpql = "select id, name from Product";
+        final String jpql = "select id, name from Product";
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
         List<Object[]> objects = typedQuery.getResultList();
 
         Assertions.assertTrue(objects.get(0).length == 2);
         objects.forEach(obj -> System.out.println(format("%s, %s", obj[0], obj[1])));
+    }
+
+    @Test
+    public void projectDTO() {
+        final String jpql = "select new dev.cristovantamayo.ecommerce.dto.ProductDTO(id, name) from Product";
+        TypedQuery<ProductDTO> typedQuery = entityManager.createQuery(jpql, ProductDTO.class);
+        List<ProductDTO> products = typedQuery.getResultList();
+        Assertions.assertFalse(products.isEmpty());
+        products.forEach(p -> System.out.println(format("%s, %s", p.getId(), p.getName())));
     }
 }
