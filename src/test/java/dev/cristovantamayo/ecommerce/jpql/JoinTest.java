@@ -54,4 +54,16 @@ public class JoinTest extends EntityManagerTest {
         List<Object[]> purchases = typedQuery.getResultList();
         Assertions.assertFalse(purchases.isEmpty());
     }
+
+    @Test
+    public void doJoinFetch() {
+        final String jpql = "select p from Purchase p " +
+                "left join fetch p.payment " +
+                "join fetch p.client " +
+                "left join fetch p.invoice";
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(jpql, Purchase.class);
+
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+    }
 }
