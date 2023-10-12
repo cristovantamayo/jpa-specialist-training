@@ -11,6 +11,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class BasicJPQJTest extends EntityManagerTest {
 
     @Test
@@ -62,5 +64,15 @@ public class BasicJPQJTest extends EntityManagerTest {
         TypedQuery<Client> typedQueryClient = entityManager.createQuery(jpqlClient, Client.class);
         List<Client> clients = typedQueryClient.getResultList();
         Assertions.assertTrue(Client.class.equals(clients.get(0).getClass()));
+    }
+
+    @Test
+    public void projectResult() {
+        String jpql = "select id, name from Product";
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+        List<Object[]> objects = typedQuery.getResultList();
+
+        Assertions.assertTrue(objects.get(0).length == 2);
+        objects.forEach(obj -> System.out.println(format("%s, %s", obj[0], obj[1])));
     }
 }
