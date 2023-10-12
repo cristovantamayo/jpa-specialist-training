@@ -40,4 +40,21 @@ public class JoinTest extends EntityManagerTest {
         Assertions.assertTrue(products.size() == 3);
 
     }
+
+    @Test
+    public void doInnerOuterJoin() {
+        /** Inner Join vs Inner Outer Join: the second brings all purchases */
+        final String jpqlJoin = "select p From Purchase p left join p.payment pg";
+        TypedQuery<Purchase> typedQueryJoin = entityManager.createQuery(jpqlJoin, Purchase.class);
+        List<Purchase> purchasesJoin = typedQueryJoin.getResultList();
+        Assertions.assertTrue(purchasesJoin.size() == 2);
+
+        final String jpql = "select p From Purchase p left join p.payment pg on pg.paymentStatus = 'IN_PROCESS'";
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+        List<Object[]> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+    }
+
+
+
 }
