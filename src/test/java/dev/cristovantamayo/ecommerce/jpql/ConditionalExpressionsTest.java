@@ -19,4 +19,20 @@ public class ConditionalExpressionsTest extends EntityManagerTest {
         clients.forEach(c -> System.out.println(c.getName()));
         Assertions.assertFalse(clients.isEmpty());
     }
+
+    @Test
+    public void useIsNull() {
+        String jpql ="select p from Product p where p.photo is null";
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+    }
+
+    @Test
+    public void useIsEmpty() {
+        String jpql ="select p from Product p WHERE p.attributes is empty";
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+    }
 }
