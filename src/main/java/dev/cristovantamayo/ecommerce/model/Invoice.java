@@ -27,6 +27,7 @@ public class Invoice extends EntityBaseInteger {
     @Column(length = 1000, nullable = false)
     private byte[] xml;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "issue_date", nullable = false)
     private Date issueDate;
 
