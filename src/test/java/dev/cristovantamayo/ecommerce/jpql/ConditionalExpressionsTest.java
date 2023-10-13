@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ConditionalExpressionsTest extends EntityManagerTest {
@@ -34,5 +35,20 @@ public class ConditionalExpressionsTest extends EntityManagerTest {
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
         List<Object[]> list = typedQuery.getResultList();
         Assertions.assertFalse(list.isEmpty());
+    }
+
+    @Test
+    public void useMajorAndMinor() {
+        String jpqlMajor ="select p from Product p WHERE p.price > :minPrice";
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpqlMajor, Object[].class);
+        typedQuery.setParameter("minPrice", new BigDecimal(499));
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+
+        String jpqlMinor ="select p from Product p WHERE p.price < :maxPrice";
+        TypedQuery<Object[]> typedQueryMinor = entityManager.createQuery(jpqlMinor, Object[].class);
+        typedQueryMinor.setParameter("maxPrice", new BigDecimal(1000));
+        List<Object[]> listMinor = typedQueryMinor.getResultList();
+        Assertions.assertFalse(listMinor.isEmpty());
     }
 }
