@@ -2,12 +2,15 @@ package dev.cristovantamayo.ecommerce.jpql;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
+import dev.cristovantamayo.ecommerce.model.Product;
+import dev.cristovantamayo.ecommerce.model.Purchase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAmount;
 import java.util.List;
 
 public class ConditionalExpressionsTest extends EntityManagerTest {
@@ -54,11 +57,31 @@ public class ConditionalExpressionsTest extends EntityManagerTest {
     }
 
     @Test
-    public void useMajorAndMinorWothDates() {
-        String jpqlMajor ="select p from Purchase p where p.purchaseDate > :data";
-        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpqlMajor, Object[].class);
-        typedQuery.setParameter("data", LocalDateTime.now().minusDays(2));
+    public void useMajorAndMinorWithDates() {
+        final String jpql ="select p from Purchase p where p.purchaseDate >= :initial and p.purchaseDate <= :final";
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+        typedQuery.setParameter("initial", LocalDateTime.now().minusDays(2));
+        typedQuery.setParameter("final", LocalDateTime.now().plusDays(1));
         List<Object[]> list = typedQuery.getResultList();
         Assertions.assertFalse(list.isEmpty());
+    }
+
+    @Test
+    public void useBetween() {
+        final String jpql ="select p from Purchase p " +
+                "where p.purchaseDate between :initial and :final";
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(jpql, Purchase.class);
+        typedQuery.setParameter("initial", LocalDateTime.now().minusDays(2));
+        typedQuery.setParameter("final", LocalDateTime.now().plusDays(1));
+        List<Purchase> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+
+        final String jpqlQtd = "select p from Product p " +
+                "where p.price between :initial and :final";
+        TypedQuery<Product> typedQueryQtd = entityManager.createQuery(jpqlQtd, Product.class);
+        typedQueryQtd.setParameter("initial", new BigDecimal(499));
+        typedQueryQtd.setParameter("final", new BigDecimal(1400));
+        List<Product> listQtd = typedQueryQtd.getResultList();
+        Assertions.assertFalse(listQtd.isEmpty());
     }
 }
