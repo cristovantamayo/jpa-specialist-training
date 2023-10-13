@@ -24,7 +24,7 @@ public class PaginationJPQLTest extends EntityManagerTest {
             Integer toPage = perPage + page - 1;
 
             typedQuery.setFirstResult(toPage);
-            typedQuery.setMaxResults(perPage);
+            typedQuery.setMaxResults(perPage); /** only use setMaxResult ignoring setFirstResult */
 
             List<Category> categories = typedQuery.getResultList();
             Assertions.assertFalse(categories.isEmpty());
