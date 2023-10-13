@@ -19,8 +19,13 @@ insert into payment (purchase_id, payment_status, card_number, payment_type) val
 
 insert into invoice (purchase_id, xml, issue_date) VALUES (2, "<?xml></xml>", date_sub(sysdate(), interval 1 day));
 
-insert into category (id, name) values (1, "Electronics");
-insert into category (id, name) values (2, "Books");
+insert into category (name) values ("Electronics");
+insert into category (name) values ("Books");
+insert into category (name) values ("Sports");
+insert into category (name) values ("Education");
+insert into category (name) values ("Health");
+insert into category (name) values ("Cleaner");
+insert into category (name) values ("Video Games");
 
 insert into product_category (product_id, category_id) values (3, 1);
 insert into product_category (product_id, category_id) values (1, 1);
