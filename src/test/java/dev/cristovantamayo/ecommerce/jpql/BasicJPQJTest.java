@@ -85,4 +85,13 @@ public class BasicJPQJTest extends EntityManagerTest {
         Assertions.assertFalse(products.isEmpty());
         products.forEach(p -> System.out.println(format("%s, %s", p.getId(), p.getName())));
     }
+
+    @Test
+    public void orderingResults() {
+        final String jpql = "select c from Client c order by c.name desc";
+        TypedQuery<Client> typedQuery = entityManager.createQuery(jpql, Client.class);
+        List<Client> clients = typedQuery.getResultList();
+        Assertions.assertFalse(clients.isEmpty());
+        clients.forEach(c -> System.out.println(format("%s, %s", c.getId(), c.getName())));
+    }
 }
