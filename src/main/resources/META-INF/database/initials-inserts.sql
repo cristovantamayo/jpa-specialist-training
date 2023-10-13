@@ -17,6 +17,8 @@ insert into purchase_item (purchase_id, product_id, product_price, quantity) val
 insert into payment (purchase_id, payment_status, card_number, payment_type) values (2, 'IN_PROCESS', '123', 'CredCard');
 --insert into payment_by_credcard (purchase_id, card_number) values (2, '123')
 
+insert into invoice (purchase_id, xml, issue_date) VALUES (2, "<?xml></xml>", date_sub(sysdate(), interval 1 day));
+
 insert into category (id, name) values (1, "Electronics");
 insert into category (id, name) values (2, "Books");
 
