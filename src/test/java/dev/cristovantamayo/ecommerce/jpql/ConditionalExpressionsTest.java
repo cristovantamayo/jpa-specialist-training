@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ConditionalExpressionsTest extends EntityManagerTest {
@@ -50,5 +51,14 @@ public class ConditionalExpressionsTest extends EntityManagerTest {
         typedQueryMinor.setParameter("maxPrice", new BigDecimal(1000));
         List<Object[]> listMinor = typedQueryMinor.getResultList();
         Assertions.assertFalse(listMinor.isEmpty());
+    }
+
+    @Test
+    public void useMajorAndMinorWothDates() {
+        String jpqlMajor ="select p from Purchase p where p.purchaseDate > :data";
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpqlMajor, Object[].class);
+        typedQuery.setParameter("data", LocalDateTime.now().minusDays(2));
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
     }
 }
