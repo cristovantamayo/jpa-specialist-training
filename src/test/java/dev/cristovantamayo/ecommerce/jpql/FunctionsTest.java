@@ -1,6 +1,7 @@
 package dev.cristovantamayo.ecommerce.jpql;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
+import dev.cristovantamayo.ecommerce.model.Purchase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -82,4 +83,26 @@ public class FunctionsTest extends EntityManagerTest {
         Assertions.assertFalse(list.isEmpty());
         list.forEach(size -> System.out.println(size));
     }
+
+    @Test
+    public void applyNativeFunctions() {
+
+        final String jpql = "select p from Purchase p " +
+                "where function('above_media_billing', p.total) = 1";
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(jpql, Purchase.class);
+        List<Purchase> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(p -> System.out.println(p));
+
+        final String jpql2 = "select function('dayname', p.purchaseDate) from Purchase p " +
+                "where function('above_media_billing', p.total) = 1";
+
+        TypedQuery<String> typedQuery2 = entityManager.createQuery(jpql2, String.class);
+        List<String> list2 = typedQuery2.getResultList();
+        Assertions.assertFalse(list2.isEmpty());
+        list2.forEach(p -> System.out.println(p));
+    }
+
+
 }
