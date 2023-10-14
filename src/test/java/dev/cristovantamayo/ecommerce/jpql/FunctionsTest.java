@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.TimeZone;
 
 import static java.lang.String.format;
 
@@ -45,6 +44,24 @@ public class FunctionsTest extends EntityManagerTest {
         final String jpqlHour = "select hour(p.purchaseDate), minute(p.purchaseDate), second(p.purchaseDate) from Purchase p";
 
         TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpqlHour, Object[].class);
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(arr -> System.out.println(format("%s | %s | %s", arr[0], arr[1], arr[2]!=null?arr[2]:"")));
+    }
+
+    @Test
+    public void applyNumberFunctions() {
+        /** abs(-10) --> module
+         * mod(3,2) --> rest of division
+         * sqrt(9) --> square root
+          */
+
+        final String jpql = "select abs(-10), mod(3,2), sqrt(9) from Purchase p " +
+                "where abs(p.total) > 1000";
+
+
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
         List<Object[]> list = typedQuery.getResultList();
         Assertions.assertFalse(list.isEmpty());
         list.forEach(arr -> System.out.println(format("%s | %s | %s", arr[0], arr[1], arr[2]!=null?arr[2]:"")));
