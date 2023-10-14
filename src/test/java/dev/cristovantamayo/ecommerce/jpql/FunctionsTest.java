@@ -66,4 +66,20 @@ public class FunctionsTest extends EntityManagerTest {
         Assertions.assertFalse(list.isEmpty());
         list.forEach(arr -> System.out.println(format("%s | %s | %s", arr[0], arr[1], arr[2]!=null?arr[2]:"")));
     }
+
+    @Test
+    public void applyCollectionsFunctions() {
+        /**
+         */
+
+        final String jpql = "select size(p.purchaseItems) from Purchase p " +
+                "where size(p.purchaseItems) > 1";
+
+
+
+        TypedQuery<Integer> typedQuery = entityManager.createQuery(jpql, Integer.class);
+        List<Integer> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(size -> System.out.println(size));
+    }
 }
