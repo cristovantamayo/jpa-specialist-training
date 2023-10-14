@@ -104,5 +104,28 @@ public class FunctionsTest extends EntityManagerTest {
         list2.forEach(p -> System.out.println(p));
     }
 
+    @Test
+    public void applyAggregationFunctions() {
+
+        /**
+         * avg -> take the average
+         * count - count occurrences
+         * min - minimum value found
+         * max - Maximum value found
+         * sum - sum of all values
+         */
+
+        final String jpqlAvg = "select avg(p.total) from Purchase p";
+        final String jpqlCount = "select count(p) from Purchase p";
+        final String jpqlMin = "select min(p.total) from Purchase p";
+        final String jpqlMax = "select max(p.total) from Purchase p";
+        final String jpqlSum = "select sum(p.total) from Purchase p";
+
+        TypedQuery<Number> typedQuery = entityManager.createQuery(jpqlSum, Number.class);
+        List<Number> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(p -> System.out.println(p));
+    }
+
 
 }
