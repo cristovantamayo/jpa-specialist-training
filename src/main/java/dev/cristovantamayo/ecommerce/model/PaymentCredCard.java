@@ -14,7 +14,7 @@ import javax.persistence.*;
 //@Table(name = "payment_by_credcard") // Single Table Strategy
 public class PaymentCredCard extends Payment{
 
-    @Column(name = "card_number", length = 50, nullable = false)
+    @Column(name = "card_number", length = 50)
     private String cardNumber;
 
 }

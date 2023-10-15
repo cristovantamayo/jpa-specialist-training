@@ -10,13 +10,38 @@ import org.junit.jupiter.api.Test;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
 import java.util.List;
+
+import static java.lang.String.format;
 
 public class ConditionalExpressionsTest extends EntityManagerTest {
 
     @Test
-    public void useConditinalExpressionLike() {
+    public void useConditionalExpressionCase() {
+        final String jpql2 = "select p.id, " +
+                "case p.status " +
+                "   when 'PAID_OUT' then  'Is Paid' " +
+                "   when 'CANCELED' then 'Was Canceled' " +
+                "   else 'Is Waiting' " +
+                "end " +
+                "from Purchase p";
+
+        final String jpql = "select p.id, " +
+                "case type(p.payment) " +
+                "   when 'CredCard' then 'Paid with CredCard' " +
+                "   when 'Ticket' then 'Paid with Ticket' " +
+                "   else 'Not Paid yet' " +
+                "end " +
+                "from Purchase p";
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(arr -> System.out.println(format("%s, %s", arr[0], arr[1])));
+    }
+
+    @Test
+    public void useConditionalExpressionLike() {
         final String jpql = "select c from Client c where c.name like concat('%', :name, '%')";
         TypedQuery<Client> typedQuery = entityManager.createQuery(jpql, Client.class);
         typedQuery.setParameter("name", "Fern");
