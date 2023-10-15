@@ -10,11 +10,38 @@ import org.junit.jupiter.api.Test;
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.String.format;
 
 public class ConditionalExpressionsTest extends EntityManagerTest {
+
+    @Test
+    public void useConditionalExpressionIN() {
+        List<Integer> params = Arrays.asList(1, 2, 4);
+        final String jpql ="select p from Purchase p where p.id in (:ids)";
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(jpql, Purchase.class);
+        typedQuery.setParameter("ids", params);
+        List<Purchase> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+
+
+
+        Client client1 = new Client();
+        client1.setId(1);
+
+        Client client2 = entityManager.find(Client.class, 2);
+        List<Client> clients = Arrays.asList(client1, client2);
+
+        final String jpqlClient = "select p from Purchase p where p.client in (:clients)";
+
+        TypedQuery<Purchase> typedQueryClient = entityManager.createQuery(jpqlClient, Purchase.class);
+        typedQueryClient.setParameter("clients", clients);
+        List<Purchase> listClient = typedQueryClient.getResultList();
+        Assertions.assertFalse(listClient.isEmpty());
+    }
 
     @Test
     public void useConditionalExpressionCase() {
