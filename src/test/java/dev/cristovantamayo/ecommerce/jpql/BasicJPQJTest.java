@@ -3,6 +3,7 @@ package dev.cristovantamayo.ecommerce.jpql;
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.model.Client;
+import dev.cristovantamayo.ecommerce.model.PaymentStatus;
 import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import org.junit.jupiter.api.Assertions;
@@ -10,11 +11,30 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.String.format;
 
 public class BasicJPQJTest extends EntityManagerTest {
+
+    @Test
+    public void useDistinct() {
+
+        List<Integer> productIds = Arrays.asList(1, 2, 3, 4);
+
+        /** Avoid Duplications */
+        final String jpql = "select distinct p from Purchase p " +
+                "join p.purchaseItems i " +
+                "join i.product pro " +
+                "where pro.id in (:productIds)";
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(jpql, Purchase.class);
+        typedQuery.setParameter("productIds", productIds);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        System.out.println(purchases.size());
+    }
 
     @Test
     public void findById() {
