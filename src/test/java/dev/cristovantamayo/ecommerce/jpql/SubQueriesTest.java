@@ -15,10 +15,24 @@ import static java.lang.String.format;
 
 public class SubQueriesTest extends EntityManagerTest {
 
+    @Test
+    public void searchExerciseSubQuery() {
+        final String jpql4 = "select c from Client c " +
+                "where exists (" +
+                "   select 1 from Purchase p " +
+                "       join p.purchaseItems i" +
+                "       where p.client = c" +
+                "           and size(i) > 1 " +
+                ")";
 
+        TypedQuery<Client> typedQuery = entityManager.createQuery(jpql4, Client.class);
+        List<Client> clients = typedQuery.getResultList();
+        Assertions.assertFalse(clients.isEmpty());
+        clients.forEach(c -> System.out.println(format("CLIENT_ID: %s, NAME: %s", c.getId(), c.getName())));
+    }
 
     @Test
-    public void SearchExerciseSubQueriesWithIN() {
+    public void searchExerciseSubQueriesWithIN() {
         final String jpql = "select p from Purchase p " +
                 "where p.id in (" +
                 "   select i2.purchase.id from PurchaseItem i2 " +
