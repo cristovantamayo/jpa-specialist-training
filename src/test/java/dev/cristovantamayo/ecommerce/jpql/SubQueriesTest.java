@@ -2,7 +2,6 @@ package dev.cristovantamayo.ecommerce.jpql;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Client;
-import dev.cristovantamayo.ecommerce.model.PaymentStatus;
 import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import org.junit.jupiter.api.Assertions;
@@ -10,12 +9,30 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.TypedQuery;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.String.format;
 
 public class SubQueriesTest extends EntityManagerTest {
+
+
+
+    @Test
+    public void SearchExerciseSubQueriesWithIN() {
+        final String jpql = "select p from Purchase p " +
+                "where p.id in (" +
+                "   select i2.purchase.id from PurchaseItem i2 " +
+                "       join i2.product p2 " +
+                "       join p2.categories c2 " +
+                "   where :categoryId = c2.id" +
+                ")";
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(jpql, Purchase.class);
+        typedQuery.setParameter("categoryId", 8);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(c -> System.out.println(format("CLIENT_ID: %s, NAME: %s", c.getId(), c.getClient().getName())));
+    }
 
     @Test
     public void SearchSubQueriesWithExists() {
