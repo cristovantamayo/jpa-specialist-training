@@ -15,20 +15,35 @@ public class GroupByTest extends EntityManagerTest {
     public void groupResults() {
         /**
          * Quantity of product by category
-         * Total of month sales
+         * Total of sales per Month
          * Total of sales by category
          */
+        // Total of sales per Month
         final String jpql1 = "select concat(year(p.purchaseDate), '/', function('monthname', p.purchaseDate)), " +
                 "sum(p.total) " +
-                " from Purchase p " +
-                " group by year(p.purchaseDate), month(p.purchaseDate)";
-
-        final String jpql = "select c.name, sum(i.productPrice) from PurchaseItem i " +
+                "from Purchase p " +
+                "where year(p.purchaseDate) = year(current_date) " +
+                "group by year(p.purchaseDate), month(p.purchaseDate)";
+        // total per product
+        final String jpql2 = "select c.name, sum(i.productPrice) from PurchaseItem i " +
                 "join i.product pro " +
                 "join pro.categories c " +
                 "group by c.id";
+        // total per Client last 3 months
+        final String jpql3 = "select c.name, concat('Total of Sales: ', count(i)) from PurchaseItem i " +
+                "join i.purchase p " +
+                "join p.client c " +
+                "where year(p.purchaseDate) = year(current_date) and month(p.purchaseDate) >= (month(current_date)-3)" +
+                "group by c.name";
+        // total per category per month
+        final String jpql = "select " +
+                " concat(year(p.purchaseDate), '/', month(p.purchaseDate), '/', day(p.purchaseDate)), " +
+                " concat(c.name, ': ', sum(ip.productPrice)) " +
+                " from PurchaseItem ip join ip.purchase p join ip.product pro join pro.categories c " +
+                " group by concat(year(p.purchaseDate), '/', month(p.purchaseDate), '/', day(p.purchaseDate)), c.id " +
+                " order by concat(year(p.purchaseDate), '/', month(p.purchaseDate), '/', day(p.purchaseDate)), c.name ";
 
-        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql3, Object[].class);
         List<Object[]> objects = typedQuery.getResultList();
 
         Assertions.assertTrue(objects.get(0).length == 2);
