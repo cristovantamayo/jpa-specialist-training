@@ -18,6 +18,21 @@ import static java.lang.String.format;
 public class SubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void SearchSubQueriesWithExists() {
+        final String jpql = "select p from Product p " +
+                "where exists (" +
+                "   select 1 from PurchaseItem i2 " +
+                "       join i2.product p2 " +
+                "   where p2 = p" +
+                ")";
+
+        TypedQuery<Product> typedQuery1 = entityManager.createQuery(jpql, Product.class);
+        List<Product> products = typedQuery1.getResultList();
+        Assertions.assertFalse(products.isEmpty());
+        products.forEach(p -> System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s", p.getId(), p.getName(), p.getPrice())));
+    }
+
+    @Test
     public void SearchSubQueriesWithIN() {
         final String jpql = "select p from Purchase p " +
                 "where p.id in (" +
