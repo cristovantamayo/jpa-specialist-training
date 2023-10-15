@@ -12,6 +12,23 @@ import static java.lang.String.format;
 public class GroupByTest extends EntityManagerTest {
 
     @Test
+    public void groupingWithHaving() {
+        // Total of sales that categories most sales
+        final String jpql = "select cat.name, sum(i.productPrice) " +
+                "from PurchaseItem i " +
+                "join i.product pro " +
+                "join pro.categories cat " +
+                "group by cat.id " +
+                "having sum(i.productPrice) > 3000"; /** sum --> total, avg --> the average, others */
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(jpql, Object[].class);
+        List<Object[]> objects = typedQuery.getResultList();
+
+        Assertions.assertTrue(objects.get(0).length == 2);
+        objects.forEach(obj -> System.out.println(format("%s, %s", obj[0], obj[1])));
+    }
+
+    @Test
     public void groupResults() {
         /**
          * Quantity of product by category
