@@ -17,6 +17,18 @@ public class BatchOperationsTest extends EntityManagerTest {
     private static final int LIMIT_INSERTIONS = 4;
 
     @Test
+    public void batchDeletion() {
+        entityManager.getTransaction().begin();
+
+        final String jpql = "delete from Product p where p.id between 8 and 12";
+
+        Query query = entityManager.createQuery(jpql);
+        query.executeUpdate();
+
+        entityManager.getTransaction().commit();
+    }
+
+    @Test
     public void batchUpdate() {
         entityManager.getTransaction().begin();
 
