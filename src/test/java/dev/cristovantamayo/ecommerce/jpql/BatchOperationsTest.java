@@ -4,6 +4,7 @@ import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Product;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.Query;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,6 +15,24 @@ import java.util.stream.Collectors;
 public class BatchOperationsTest extends EntityManagerTest {
 
     private static final int LIMIT_INSERTIONS = 4;
+
+    @Test
+    public void batchUpdate() {
+        entityManager.getTransaction().begin();
+
+        String jpql2 = "update Product p set p.price = p.price + 1 where p.id between 1 and 10";
+
+        String jpql = "update Product p set p.price = p.price + (p.price * 0.1) " +
+                "where exists (" +
+                "   select 1 from p.categories c2 where c2.id = :category" +
+                ")";
+
+        Query query = entityManager.createQuery(jpql);
+        query.setParameter("category", 1);
+        query.executeUpdate();
+
+        entityManager.getTransaction().commit();
+    }
 
     @Test
     public void batchInsert() {
