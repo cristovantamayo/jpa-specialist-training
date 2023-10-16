@@ -16,14 +16,37 @@ import static java.lang.String.format;
 public class SubQueriesTest extends EntityManagerTest {
 
     @Test
-    public void searchSubQueriesWithAll() {
+    public void SearchSubQueriesWithAny() {
 
         /** All products that always been sold at the current price. */
         final String jpql2 = "select p from Product p " +
-                "where p.price = ALL (" +
+                "where p.price = ANY (" +
                 "   select productPrice from PurchaseItem where product = p" +
                 ")";
 
+        /** All products that were not sold at the current price. */
+        final String jpql = "select p from Product p " +
+                "where p.price <> ANY ( " +
+                "  select productPrice from PurchaseItem where product = p" +
+                ")";
+        /** Can be substituted by SOME */
+        final String jpql3 = "select p from Product p " +
+                "where p.price <> SOME ( " +
+                "  select productPrice from PurchaseItem where product = p" +
+                ")";
+
+        TypedQuery<Product> typedQuery1 = entityManager.createQuery(jpql, Product.class);
+        List<Product> products = typedQuery1.getResultList();
+        Assertions.assertFalse(products.isEmpty());
+        products.forEach(p -> System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s", p.getId(), p.getName(), p.getPrice())));
+    }
+    @Test
+    public void searchSubQueriesWithAll() {
+
+        /** All products that have been sold at least once at the current price. */
+        final String jpql2 = "select p from Product p ";
+
+        /** All products that were not sold at the current price. */
         final String jpql = "select p from Product p " +
                 "where p.price > ALL ( " +
                 "  select productPrice from PurchaseItem where product = p" +
