@@ -16,6 +16,24 @@ import static java.lang.String.format;
 public class SubQueriesTest extends EntityManagerTest {
 
     @Test
+    public void SearchSubQueriesAllExercise() {
+
+        /** All products that always been sold at the same price */
+        final String jpql = "select pro from PurchaseItem i " +
+                "join i.product pro " +
+                "where i.productPrice = All (" +
+                "   select i2.productPrice FROM PurchaseItem i2 " +
+                "       where i2.product = pro " +
+                "           and i2.purchase <> i.purchase" +
+                ")";
+
+        TypedQuery<Product> typedQuery1 = entityManager.createQuery(jpql, Product.class);
+        List<Product> products = typedQuery1.getResultList();
+        Assertions.assertFalse(products.isEmpty());
+        products.forEach(p -> System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s", p.getId(), p.getName(), p.getPrice())));
+    }
+
+    @Test
     public void SearchSubQueriesWithAny() {
 
         /** All products that always been sold at the current price. */
