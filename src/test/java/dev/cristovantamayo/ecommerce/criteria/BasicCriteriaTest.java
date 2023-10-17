@@ -7,6 +7,7 @@ import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,6 +18,34 @@ import java.util.List;
 import static java.lang.String.format;
 
 public class BasicCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void projectResultTuple() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteriaQuery = criteriaBuilder.createQuery(Tuple.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.multiselect(root.get("id"), root.get("name"));
+
+        TypedQuery<Tuple> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Tuple> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(t -> System.out.println(format("ID: %s, PRODUCT: %s", t.get(0), t.get(1))));
+
+        System.out.println("\n-------------------------------------------\n");
+
+        CriteriaQuery<Tuple> criteriaQuery2 = criteriaBuilder.createTupleQuery();
+        Root<Product> root2 = criteriaQuery2.from(Product.class);
+
+        criteriaQuery2.select(criteriaBuilder.tuple(root.get("id").alias("id"), root.get("name").alias("name")));
+
+        TypedQuery<Tuple> typedQuery2 = entityManager.createQuery(criteriaQuery2);
+        List<Tuple> list2 = typedQuery2.getResultList();
+        Assertions.assertFalse(list2.isEmpty());
+        list2.forEach(t -> System.out.println(format("ID: %s, PRODUCT: %s", t.get("id"), t.get("name"))));
+
+
+    }
 
     @Test
     public void projectResult() {
