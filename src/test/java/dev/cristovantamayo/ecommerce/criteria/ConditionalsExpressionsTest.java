@@ -20,13 +20,61 @@ import static java.lang.String.format;
 public class ConditionalsExpressionsTest extends EntityManagerTest {
 
     @Test
+    public void useOperatorOR() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.or(
+                    criteriaBuilder.equal(root.get(Purchase_.STATUS), PurchaseStatus.WAITING),
+                    criteriaBuilder.equal(root.get(Purchase_.STATUS), PurchaseStatus.PAID_OUT)
+                ),
+                criteriaBuilder.greaterThan(root.get(Purchase_.TOTAL), new BigDecimal(499))
+        );
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p ->
+                p.getPurchaseItems().forEach(i ->
+                        System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s",
+                                i.getProduct().getId(), i.getProduct().getName(), i.getProduct().getPrice()))));
+    }
+
+    @Test
+    public void useOperatorAND() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.select(root);
+        criteriaQuery.where(
+                criteriaBuilder.and(
+                    criteriaBuilder.greaterThan(root.get(Purchase_.TOTAL), new BigDecimal(499)),
+                    criteriaBuilder.equal(root.get(Purchase_.STATUS), PurchaseStatus.PAID_OUT)
+                ),
+                criteriaBuilder.greaterThan(root.get(Purchase_.purchaseDate), LocalDateTime.now().minusDays(5))
+        );
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p ->
+                p.getPurchaseItems().forEach(i ->
+                        System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s",
+                                i.getProduct().getId(), i.getProduct().getName(), i.getProduct().getPrice()))));
+    }
+
+    @Test
     public void useDifference() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
         Root<Purchase> root = criteriaQuery.from(Purchase.class);
 
         criteriaQuery.select(root);
-        criteriaQuery.where(criteriaBuilder.notEqual(root.get(Purchase_.TOTAL), new BigDecimal(499)));
+        criteriaQuery.where(criteriaBuilder.greaterThan(root.get(Purchase_.TOTAL), new BigDecimal(880)));
 
         TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
         List<Purchase> purchases = typedQuery.getResultList();
