@@ -9,7 +9,26 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class JoinCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void searchForPurchaseBySpecificProduct() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+        Join<Purchase, PurchaseItem> joinItems = root.join("purchaseItems");
+        Join<PurchaseItem, Product> joinProduct = joinItems.join("product");
+
+        criteriaQuery.select(root);
+        criteriaQuery.where(criteriaBuilder.equal(joinProduct.get("id"), 1));
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p -> p.getPurchaseItems().forEach(i -> System.out.println(format("ID: %s, PRODUCT: %s", i.getProduct().getId(), i.getProduct().getName()))) );
+    }
 
     @Test
     public void doCriteriaJoinFetchAsJoin() {
