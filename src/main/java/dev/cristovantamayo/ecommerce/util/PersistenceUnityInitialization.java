@@ -2,9 +2,9 @@ package dev.cristovantamayo.ecommerce.util;
 
 import dev.cristovantamayo.ecommerce.model.Product;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class PersistenceUnityInitialization {
 

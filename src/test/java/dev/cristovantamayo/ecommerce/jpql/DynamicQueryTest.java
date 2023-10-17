@@ -5,7 +5,7 @@ import dev.cristovantamayo.ecommerce.model.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.TypedQuery;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 
 import static java.lang.String.format;

@@ -1,6 +1,6 @@
 package dev.cristovantamayo.ecommerce.listeners;
 
-import javax.persistence.PostLoad;
+import jakarta.persistence.PostLoad;
 
 public class GenericListener {
 

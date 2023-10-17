@@ -1,8 +1,9 @@
 package dev.cristovantamayo.ecommerce.model;
 
+import jakarta.persistence.metamodel.StaticMetamodel;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;

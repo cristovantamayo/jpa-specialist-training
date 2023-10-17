@@ -4,8 +4,8 @@ import dev.cristovantamayo.ecommerce.model.Purchase;
 import dev.cristovantamayo.ecommerce.service.InvoiceService;
 import dev.cristovantamayo.ecommerce.service.InvoiceServiceImpl;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 public class GenerateInvoiceListener {
 

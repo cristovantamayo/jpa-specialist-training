@@ -1,7 +1,7 @@
 package dev.cristovantamayo.ecommerce.util;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +14,7 @@ public class ExecuteDDL {
 
         properties.put("jakarta.persistence.schema-generation.create-source",
                 "metadata-then-script");
-        properties.put("javax.persistence.schema-generation.drop-source",
+        properties.put("jakarta.persistence.schema-generation.drop-source",
                 "metadata-then-script");
 
         properties.put("jakarta.persistence.schema-generation.create-script-source",
