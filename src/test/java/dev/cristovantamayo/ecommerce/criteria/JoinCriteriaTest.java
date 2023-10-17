@@ -6,15 +6,24 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class JoinCriteriaTest extends EntityManagerTest {
 
+    @Test
+    public void doCriteriaLeftOuterJoin() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+        Join<Purchase, Payment> joinPayment = root.join("payment", JoinType.LEFT);
 
+        criteriaQuery.select(root);
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertTrue(purchases.size() == 5);
+    }
 
     @Test
     public void doCriteriaJoinOn() {
@@ -31,8 +40,6 @@ public class JoinCriteriaTest extends EntityManagerTest {
         List<Purchase> purchases = typedQuery.getResultList();
         Assertions.assertTrue(purchases.size() == 2);
     }
-
-
 
     @Test
     public void doCriteriaJoin() {
