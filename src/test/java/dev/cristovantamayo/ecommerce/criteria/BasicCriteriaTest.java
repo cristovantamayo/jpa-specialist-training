@@ -1,6 +1,7 @@
 package dev.cristovantamayo.ecommerce.criteria;
 
 import dev.cristovantamayo.ecommerce.model.Client;
+import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +14,23 @@ import javax.persistence.criteria.Root;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class BasicCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void selectAllProductsExercise() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(root);
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Product> products = typedQuery.getResultList();
+        Assertions.assertFalse(products.isEmpty());
+        products.forEach(p -> System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s", p.getId(), p.getName(), p.getPrice())));
+    }
 
     @Test
     public void selectAttributeAsResponse() {
