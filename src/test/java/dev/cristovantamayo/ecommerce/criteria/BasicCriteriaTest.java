@@ -19,6 +19,20 @@ import static java.lang.String.format;
 public class BasicCriteriaTest extends EntityManagerTest {
 
     @Test
+    public void projectResult() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.multiselect(root.get("id"), root.get("name"));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(arr -> System.out.println(format("ID: %s, PRODUCT: %s", arr[0], arr[1])));
+    }
+
+    @Test
     public void selectAllProductsExercise() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
