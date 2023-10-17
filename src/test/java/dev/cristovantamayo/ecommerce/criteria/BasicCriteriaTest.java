@@ -1,5 +1,6 @@
 package dev.cristovantamayo.ecommerce.criteria;
 
+import dev.cristovantamayo.ecommerce.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.model.Client;
 import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Purchase;
@@ -18,6 +19,21 @@ import java.util.List;
 import static java.lang.String.format;
 
 public class BasicCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void projectResultDTO() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ProductDTO> criteriaQuery = criteriaBuilder.createQuery(ProductDTO.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(criteriaBuilder
+                .construct(ProductDTO.class, root.get("id"), root.get("name")));
+
+        TypedQuery<ProductDTO> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<ProductDTO> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(dto -> System.out.println(format("ID: %s, PRODUCT: %s", dto.getId(), dto.getName())));
+    }
 
     @Test
     public void projectResultTuple() {
