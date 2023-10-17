@@ -12,12 +12,26 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static java.lang.String.format;
 
 public class ConditionalsExpressionsTest extends EntityManagerTest {
+
+    @Test
+    public void orderingResults() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);
+        Root<Client> root = criteriaQuery.from(Client.class);
+
+        criteriaQuery.select(root);
+        criteriaQuery.orderBy(criteriaBuilder.desc(root.get(Client_.NAME)));
+
+        TypedQuery<Client> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Client> clients = typedQuery.getResultList();
+        Assertions.assertFalse(clients.isEmpty());
+        clients.forEach(c -> System.out.println(c.getName()));
+    }
 
     @Test
     public void useOperatorOR() {
