@@ -4,7 +4,7 @@ import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Product;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.Query;
+import jakarta.persistence.Query;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;

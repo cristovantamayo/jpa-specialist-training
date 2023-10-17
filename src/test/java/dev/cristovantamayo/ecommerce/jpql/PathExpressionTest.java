@@ -8,8 +8,8 @@ import dev.cristovantamayo.ecommerce.model.PurchaseStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import javax.persistence.TemporalType;
-import javax.persistence.TypedQuery;
+import jakarta.persistence.TemporalType;
+import jakarta.persistence.TypedQuery;
 import java.util.Date;
 import java.util.List;
 
