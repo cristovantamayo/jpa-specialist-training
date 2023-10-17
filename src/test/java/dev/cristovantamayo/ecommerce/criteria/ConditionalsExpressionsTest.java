@@ -1,10 +1,7 @@
 package dev.cristovantamayo.ecommerce.criteria;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
-import dev.cristovantamayo.ecommerce.model.Client;
-import dev.cristovantamayo.ecommerce.model.Client_;
-import dev.cristovantamayo.ecommerce.model.Product;
-import dev.cristovantamayo.ecommerce.model.Product_;
+import dev.cristovantamayo.ecommerce.model.*;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -13,11 +10,33 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.List;
 
 import static java.lang.String.format;
 
 public class ConditionalsExpressionsTest extends EntityManagerTest {
+
+    @Test
+    public void useGreaterAndLessExpressionsForDates() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        Calendar initialDate =  Calendar.getInstance();
+        initialDate.add(Calendar.DATE, -3);
+
+        criteriaQuery.select(root);
+        criteriaQuery.where(criteriaBuilder.lessThan(root.get(Purchase_.PURCHASE_DATE), initialDate.getTime()));
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p ->
+                p.getPurchaseItems().forEach(i ->
+                        System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s",
+                                i.getProduct().getId(), i.getProduct().getName(), i.getProduct().getPrice()))));
+    }
 
     @Test
     public void useMajorAndMinorExpression() {
