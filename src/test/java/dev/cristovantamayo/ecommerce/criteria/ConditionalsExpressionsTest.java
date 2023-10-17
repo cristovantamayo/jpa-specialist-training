@@ -10,12 +10,62 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import static java.lang.String.format;
 
 public class ConditionalsExpressionsTest extends EntityManagerTest {
+
+    @Test
+    public void useBetweenDates() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        // Calendar initialDate =  Calendar.getInstance();
+        // initialDate.add(Calendar.DATE, -30);
+        // Calendar lastDate = Calendar.getInstance();
+        // lastDate.add(Calendar.DATE, -2);
+
+        criteriaQuery.select(root);
+
+        //criteriaQuery.where(criteriaBuilder.between(root.get(Purchase_.PURCHASE_DATE), initialDate, lastDate));
+
+        criteriaQuery.where(criteriaBuilder.between(
+                root.get(Purchase_.PURCHASE_DATE),
+                LocalDateTime.now().minusDays(5).withSecond(0).withMinute(0).withHour(0),
+                LocalDateTime.now()
+        ));
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p ->
+                p.getPurchaseItems().forEach(i ->
+                        System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s",
+                                i.getProduct().getId(), i.getProduct().getName(), i.getProduct().getPrice()))));
+    }
+
+    @Test
+    public void useBetweenQuantities() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.select(root);
+        criteriaQuery.where(criteriaBuilder.between(root.get(Purchase_.TOTAL), new BigDecimal(799), new BigDecimal(3500)));
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p ->
+                p.getPurchaseItems().forEach(i ->
+                        System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s",
+                                i.getProduct().getId(), i.getProduct().getName(), i.getProduct().getPrice()))));
+    }
 
     @Test
     public void useGreaterAndLessExpressionsForDates() {
