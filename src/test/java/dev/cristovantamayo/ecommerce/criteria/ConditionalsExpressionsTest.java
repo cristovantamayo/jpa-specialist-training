@@ -20,6 +20,24 @@ import static java.lang.String.format;
 public class ConditionalsExpressionsTest extends EntityManagerTest {
 
     @Test
+    public void useDifference() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.select(root);
+        criteriaQuery.where(criteriaBuilder.notEqual(root.get(Purchase_.TOTAL), new BigDecimal(499)));
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p ->
+                p.getPurchaseItems().forEach(i ->
+                        System.out.println(format("ID: %s, PRODUCT: %s, PRICE: %s",
+                                i.getProduct().getId(), i.getProduct().getName(), i.getProduct().getPrice()))));
+    }
+
+    @Test
     public void useBetweenDates() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
