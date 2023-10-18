@@ -13,6 +13,7 @@ insert into purchase (id, client_id, purchase_date, total, status) values (2, 1,
 insert into purchase (id, client_id, purchase_date, total, status) values (3, 1, date_sub(sysdate(), interval 4 day), 3500.0, 'PAID_OUT');
 insert into purchase (id, client_id, purchase_date, total, status) values (4, 2, date_sub(sysdate(), interval 2 day), 499.0, 'PAID_OUT');
 insert into purchase (id, client_id, purchase_date, total, status) values (5, 1, date_sub(sysdate(), interval 2 day), 799.0, 'PAID_OUT');
+insert into purchase (id, client_id, purchase_date, total, status) values (6, 2, sysdate(), 799.0, 'WAITING');
 
 insert into purchase_item (purchase_id, product_id, product_price, quantity) values (1, 1, 499, 2);
 insert into purchase_item (purchase_id, product_id, product_price, quantity) values (1, 3, 1400, 1);
@@ -20,11 +21,13 @@ insert into purchase_item (purchase_id, product_id, product_price, quantity) val
 insert into purchase_item (purchase_id, product_id, product_price, quantity) values (3, 4, 3500, 1);
 insert into purchase_item (purchase_id, product_id, product_price, quantity) values (4, 1, 499, 1);
 insert into purchase_item (purchase_id, product_id, product_price, quantity) values (5, 1, 799, 1);
+insert into purchase_item (purchase_id, product_id, product_price, quantity) values (6, 1, 799, 1);
 
 insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code) values (1, 'RECEIVED', 'CredCard', '0123', null);
 insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code) values (2, 'IN_PROCESS', 'CredCard', '4567', null);
-insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code) values (3, 'RECEIVED', 'Ticket', null, '8910');
+insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code, due_date) values (3, 'RECEIVED', 'Ticket', null, '8910', date_sub(sysdate(), interval 2 day));
 insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code) values (4, 'IN_PROCESS', 'CredCard', '1112', null);
+insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code, due_date) values (6, 'IN_PROCESS', 'Ticket', null, '456', date_add(sysdate(), interval 2 day));
 
 insert into invoice (purchase_id, xml, issue_date) VALUES (2, "<?xml></xml>", date_sub(sysdate(), interval 1 day));
 

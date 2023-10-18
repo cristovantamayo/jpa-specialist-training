@@ -4,6 +4,8 @@ import lombok.*;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @DiscriminatorValue("Ticket")
@@ -16,5 +18,8 @@ public class PaymentTicket extends Payment {
 
     @Column(name = "bar_code", length = 100)
     private String barCode;
+
+    @Column(name = "due_date")
+    private LocalDate dueDate;
 
 }
