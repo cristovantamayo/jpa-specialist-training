@@ -18,6 +18,31 @@ import static java.lang.String.format;
 public class CriteriaFunctionsTest extends EntityManagerTest {
 
     @Test
+    public void applyNumberFunctions() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.multiselect(
+                root.get(Purchase_.ID),
+                criteriaBuilder.abs(criteriaBuilder.prod(root.get(Purchase_.ID), -1)),
+                criteriaBuilder.mod(root.get(Purchase_.ID), 2),
+                criteriaBuilder.sqrt(root.get(Purchase_.TOTAL))
+        );
+
+        criteriaQuery.where(criteriaBuilder
+                .greaterThan(criteriaBuilder.sqrt(root.get(Purchase_.TOTAL)), 3.0));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(arr -> {
+            System.out.println(format("default: %s\nabs: %s\nmod: %s\nsqrt: %s", arr[0], arr[1], arr[2], arr[3]));
+            System.out.println("----------------------------------------");
+        });
+    }
+
+    @Test
     public void applyDateFunctions() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
