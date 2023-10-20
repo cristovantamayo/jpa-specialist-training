@@ -18,6 +18,26 @@ import static java.lang.String.format;
 public class CriteriaFunctionsTest extends EntityManagerTest {
 
     @Test
+    public void applyNativeFunctions() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.multiselect(
+                root.get(Purchase_.ID),
+                criteriaBuilder.function("dayname", String.class, root.get(Purchase_.PURCHASE_DATE))
+        );
+
+        criteriaQuery.where(criteriaBuilder
+                .isTrue(criteriaBuilder.function("above_media_billing", Boolean.class, root.get(Purchase_.TOTAL))));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(arr -> System.out.println(format("%s, dayname: %s", arr[0], arr[1])));
+    }
+
+    @Test
     public void applyCollectionsFunctions() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
