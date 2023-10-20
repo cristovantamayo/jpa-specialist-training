@@ -18,6 +18,26 @@ import static java.lang.String.format;
 public class CriteriaFunctionsTest extends EntityManagerTest {
 
     @Test
+    public void applyCollectionsFunctions() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.multiselect(
+                root.get(Purchase_.ID),
+                criteriaBuilder.size(root.get(Purchase_.PURCHASE_ITEMS))
+        );
+
+        criteriaQuery.where(criteriaBuilder
+                .greaterThan(criteriaBuilder.size(root.get(Purchase_.PURCHASE_ITEMS)), 1));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(arr -> System.out.println(format("%s, size: %s", arr[0], arr[1])));
+    }
+
+    @Test
     public void applyNumberFunctions() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
