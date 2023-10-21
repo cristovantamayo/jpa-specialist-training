@@ -31,7 +31,7 @@ public class ConditionalsExpressionsTest extends EntityManagerTest {
 //                        .when(StatusPurchase.WAITING, "It's waiting.")
 //                        .otherwise(root.get(Purchase_.STATUS)).as(String.class)
                 criteriaBuilder.selectCase(root.get(Purchase_.PAYMENT).type().as(String.class))
-                        .when("Ticket", "It was paid by bank slip.")
+                        .when("BankSlip", "It was paid by bank slip.")
                         .when("CredCard", "It was paid by card")
                         .otherwise("Not identified")
         );

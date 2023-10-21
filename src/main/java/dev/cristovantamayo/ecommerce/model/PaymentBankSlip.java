@@ -8,13 +8,13 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@DiscriminatorValue("Ticket")
+@DiscriminatorValue("BankSlip")
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Entity
-//@Table(name = "payment_by_ticket") // Single Table Strategy
-public class PaymentTicket extends Payment {
+//@Table(name = "payment_by_bankslip") // Single Table Strategy
+public class PaymentBankSlip extends Payment {
 
     @Column(name = "bar_code", length = 100)
     private String barCode;

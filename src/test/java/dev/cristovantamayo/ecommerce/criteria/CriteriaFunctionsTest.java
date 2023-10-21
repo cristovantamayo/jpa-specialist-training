@@ -111,8 +111,8 @@ public class CriteriaFunctionsTest extends EntityManagerTest {
         CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
         Root<Purchase> root = criteriaQuery.from(Purchase.class);
         Join<Purchase, Payment> joinPayment = root.join(Purchase_.payment);
-        Join<Purchase, PaymentTicket> joinPaymentTicket =
-                criteriaBuilder.treat(joinPayment, PaymentTicket.class);
+        Join<Purchase, PaymentBankSlip> joinPaymentBankSlip =
+                criteriaBuilder.treat(joinPayment, PaymentBankSlip.class);
 
         criteriaQuery.multiselect(
                 root.get(Purchase_.ID),
@@ -125,7 +125,7 @@ public class CriteriaFunctionsTest extends EntityManagerTest {
             criteriaBuilder.between(
                     criteriaBuilder.currentDate(),
                             root.get(Purchase_.PURCHASE_DATE).as(java.sql.Date.class),
-                            joinPaymentTicket.get(PaymentTicket_.DUE_DATE).as(java.sql.Date.class)),
+                            joinPaymentBankSlip.get(PaymentBankSlip_.DUE_DATE).as(java.sql.Date.class)),
                     criteriaBuilder.equal(root.get(Purchase_.STATUS), PurchaseStatus.WAITING)
         );
 
