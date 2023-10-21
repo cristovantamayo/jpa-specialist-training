@@ -13,11 +13,40 @@ import static java.lang.String.format;
 public class GroupingResultsTest extends EntityManagerTest {
 
     @Test
+    public void groupingResultsExercise () {
+        /** Total sold vy Client
+         *
+         * String jpql = "select c.name, sum(i.productPrice) from PurchaseItem i " +
+         *      "join i.purchase p " +
+         *      "join p.client c " +
+         *      "group by c.id";
+         */
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<PurchaseItem> root = criteriaQuery.from(PurchaseItem.class);
+        Join<PurchaseItem, Purchase> joinPurchase = root.join(PurchaseItem_.PURCHASE);
+        Join<Purchase, Client> joinClient = joinPurchase.join(Purchase_.CLIENT);
+
+        criteriaQuery.multiselect(
+                joinClient.get(Client_.ID),
+                joinClient.get(Client_.NAME),
+                criteriaBuilder.sum(root.get(PurchaseItem_.productPrice))
+        );
+
+        criteriaQuery.groupBy(joinClient.get(Client_.ID));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+
+        list.forEach(arr -> System.out.println(format("Id: %s, Name: %s, Count: %s", arr[0], arr[1], arr[2])));
+    }
+
+    @Test
     public void groupingResults02 () {
         /** Total sold by Category
          *
-         * String jpql = "select c.name, sum(i.productPrice) from PurchaseItem i "
-         *      "join i.product pro join pro.categories c "
+         * String jpql = "select c.name, sum(i.productPrice) from PurchaseItem i " +
+         *      "join i.product pro join pro.categories c " +
          *      "group by c.id";
          */
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -44,8 +73,8 @@ public class GroupingResultsTest extends EntityManagerTest {
     public void groupingResults01 () {
         /** Number of products by category
          *
-         * String jpql = "select c.name, count(p.id) from Category c "
-         *          "join c.products p "
+         * String jpql = "select c.name, count(p.id) from Category c " +
+         *          "join c.products p " +
          *          "group by c.id";
          */
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
