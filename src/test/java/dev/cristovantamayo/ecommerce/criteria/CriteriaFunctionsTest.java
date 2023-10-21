@@ -18,6 +18,29 @@ import static java.lang.String.format;
 public class CriteriaFunctionsTest extends EntityManagerTest {
 
     @Test
+    public void applyAggregationFunctions() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.multiselect(
+                criteriaBuilder.count(root.get(Purchase_.ID)),
+                criteriaBuilder.avg(root.get(Purchase_.TOTAL)),
+                criteriaBuilder.sum(root.get(Purchase_.TOTAL)),
+                criteriaBuilder.min(root.get(Purchase_.TOTAL)),
+                criteriaBuilder.max(root.get(Purchase_.TOTAL))
+        );
+
+//        criteriaQuery.where(criteriaBuilder
+//                .isTrue(criteriaBuilder.function("above_media_billing", Boolean.class, root.get(Purchase_.TOTAL))));
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Object[]> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(arr -> System.out.println(format("count: %s\navg: %s\nsum: %s\nmin: %s\nmax: %s", arr[0], arr[1], arr[2], arr[3], arr[4])));
+    }
+
+    @Test
     public void applyNativeFunctions() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
