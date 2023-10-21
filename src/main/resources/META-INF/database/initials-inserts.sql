@@ -25,9 +25,9 @@ insert into purchase_item (purchase_id, product_id, product_price, quantity) val
 
 insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code) values (1, 'RECEIVED', 'CredCard', '0123', null);
 insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code) values (2, 'IN_PROCESS', 'CredCard', '4567', null);
-insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code, due_date) values (3, 'RECEIVED', 'Ticket', null, '8910', date_sub(sysdate(), interval 2 day));
+insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code, due_date) values (3, 'RECEIVED', 'BankSlip', null, '8910', date_sub(sysdate(), interval 2 day));
 insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code) values (4, 'IN_PROCESS', 'CredCard', '1112', null);
-insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code, due_date) values (6, 'IN_PROCESS', 'Ticket', null, '456', date_add(sysdate(), interval 2 day));
+insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code, due_date) values (6, 'IN_PROCESS', 'BankSlip', null, '456', date_add(sysdate(), interval 2 day));
 
 insert into invoice (purchase_id, xml, issue_date) VALUES (2, "<?xml></xml>", date_sub(sysdate(), interval 1 day));
 

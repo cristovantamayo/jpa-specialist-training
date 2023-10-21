@@ -19,6 +19,32 @@ import static java.lang.String.format;
 public class ConditionalsExpressionsTest extends EntityManagerTest {
 
     @Test
+    public void useCaseExpression() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.multiselect(
+                root.get(Purchase_.ID),
+//                criteriaBuilder.selectCase(root.get(Purchase_.STATUS))
+//                        .when(StatusPurchase.PAID_OUT, "Was paid.")
+//                        .when(StatusPurchase.WAITING, "It's waiting.")
+//                        .otherwise(root.get(Purchase_.STATUS)).as(String.class)
+                criteriaBuilder.selectCase(root.get(Purchase_.PAYMENT).type().as(String.class))
+                        .when("BankSlip", "It was paid by bank slip.")
+                        .when("CredCard", "It was paid by card")
+                        .otherwise("Not identified")
+        );
+
+        TypedQuery<Object[]> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Object[]> lista = typedQuery.getResultList();
+        Assertions.assertFalse(lista.isEmpty());
+
+        lista.forEach(arr -> System.out.println(arr[0] + ", " + arr[1]));
+    }
+
+    @Test
     public void orderingResults() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);

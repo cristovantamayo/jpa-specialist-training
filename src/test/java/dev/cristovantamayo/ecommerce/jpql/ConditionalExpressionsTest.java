@@ -56,7 +56,7 @@ public class ConditionalExpressionsTest extends EntityManagerTest {
         final String jpql = "select p.id, " +
                 "case type(p.payment) " +
                 "   when 'CredCard' then 'Paid with CredCard' " +
-                "   when 'Ticket' then 'Paid with Ticket' " +
+                "   when 'BankSlip' then 'Paid with Bank Slip' " +
                 "   else 'Not Paid yet' " +
                 "end " +
                 "from Purchase p";
