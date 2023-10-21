@@ -1,10 +1,9 @@
 package dev.cristovantamayo.ecommerce.criteria;
 
 import dev.cristovantamayo.ecommerce.dto.ProductDTO;
-import dev.cristovantamayo.ecommerce.model.Client;
-import dev.cristovantamayo.ecommerce.model.Product;
-import dev.cristovantamayo.ecommerce.model.Purchase;
+import dev.cristovantamayo.ecommerce.model.*;
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
+import jakarta.persistence.criteria.Join;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +18,22 @@ import java.util.List;
 import static java.lang.String.format;
 
 public class BasicCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void useDistinct() {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+        Join<Purchase, PurchaseItem> joinItems = root.join(Purchase_.purchaseItems);
+
+        criteriaQuery.select(root);
+        criteriaQuery.distinct(true);
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p -> System.out.println(format("PurchaseId: %s", p.getId())));
+    }
 
     @Test
     public void projectResultDTO() {
