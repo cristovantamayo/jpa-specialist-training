@@ -11,12 +11,55 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import static java.lang.String.format;
 
 public class ConditionalsExpressionsTest extends EntityManagerTest {
+
+    @Test
+    public void useInExpression02(){
+
+        Client client01 = entityManager.find(Client.class, 1);
+        Client client02 = new Client();
+        client02.setId(2);
+
+        List<Client> clients = Arrays.asList(client01, client02);
+        // List<Integer> clientsIds = Arrays.asList(client01.getId(), client02.getId());
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.select(root);
+
+        criteriaQuery.where(root.get(Purchase_.CLIENT).in(clients));
+        // criteriaQuery.where(root.get(Purchase_.CLIENT).get(Client_.ID).in(clientsIds));
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+    }
+
+    @Test
+    public void useInExpression01(){
+
+        List<Integer> ids = Arrays.asList(1, 3, 4, 6);
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.select(root);
+
+        criteriaQuery.where(root.get(Purchase_.ID).in(ids));
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+    }
 
     @Test
     public void useCaseExpression() {
