@@ -25,14 +25,15 @@ public class PassingParametersCriteriaTest extends EntityManagerTest {
         Root<Purchase> root = criteriaQuery.from(Purchase.class);
 
         criteriaQuery.select(root);
-        ParameterExpression<Integer> parameterExpressionId = criteriaBuilder.parameter(Integer.class);
-        // ParameterExpression<Integer> parameterExpressionId2 = criteriaBuilder.parameter(Integer.class, "myId");
+        /** It is not a currently used way to pass parameters. */
+        //ParameterExpression<Integer> parameterExpressionId = criteriaBuilder.parameter(Integer.class);
+        ParameterExpression<Integer> parameterExpressionId = criteriaBuilder.parameter(Integer.class, "myId");
         criteriaQuery.where(criteriaBuilder.equal(root.get("id"), parameterExpressionId));
 
 
         TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
-        typedQuery.setParameter(parameterExpressionId, 1);
-        // typedQuery.setParameter("myId", 1);
+        //typedQuery.setParameter(parameterExpressionId, 1);
+        typedQuery.setParameter("myId", 1);
 
         List<Purchase> purchases = typedQuery.getResultList();
         Assertions.assertFalse(purchases.isEmpty());
