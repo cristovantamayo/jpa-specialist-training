@@ -1,10 +1,7 @@
 package dev.cristovantamayo.ecommerce.criteria;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
-import dev.cristovantamayo.ecommerce.model.Product;
-import dev.cristovantamayo.ecommerce.model.Product_;
-import dev.cristovantamayo.ecommerce.model.Purchase;
-import dev.cristovantamayo.ecommerce.model.Purchase_;
+import dev.cristovantamayo.ecommerce.model.*;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -16,7 +13,39 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class SubqueriesCriteriaTest extends EntityManagerTest {
+public class SubQueriesCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void searchSubQueries03() {
+        /** Good customers.
+        *
+        * String jpql = "select c from Client c where " +
+        *          " 500 < (select sum(p.total) from Purchase p where p.client = c)";  
+        */
+        
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);
+        Root<Client> root = criteriaQuery.from(Client.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<BigDecimal> subquery = criteriaQuery.subquery(BigDecimal.class);
+        Root<Purchase> subqueryRoot = subquery.from(Purchase.class);
+        subquery.select(criteriaBuilder.sum(subqueryRoot.get(Purchase_.total)));
+        subquery.where(criteriaBuilder.equal(
+                root, subqueryRoot.get(Purchase_.client)));
+
+        criteriaQuery.where(criteriaBuilder.greaterThan(subquery, new BigDecimal(1300)));
+
+        TypedQuery<Client> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Client> lista = typedQuery.getResultList();
+        Assertions.assertFalse(lista.isEmpty());
+
+        lista.forEach(obj -> System.out.println(
+                "ID: " + obj.getId() + ", Nome: " + obj.getName()));
+    }
     @Test
     public void searchSubQueries02() {
        /** All orders above average sales
