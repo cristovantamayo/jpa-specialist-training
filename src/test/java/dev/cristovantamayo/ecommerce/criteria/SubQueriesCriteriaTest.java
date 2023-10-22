@@ -16,6 +16,48 @@ import static java.lang.String.format;
 public class SubQueriesCriteriaTest extends EntityManagerTest {
 
     @Test
+    public void searchWithSubQueryAndExistsExercis() {
+        /** Products that have already been sold at a price different from the initial price.
+         */
+
+        final String jpql = "select p from Product p WHERE exists (" +
+                      "  select 1 from PurchaseItem i " +
+                      "     where i.product = p " +
+                      "          and i.productPrice <> p.price)";
+
+        TypedQuery<Product> typedQueryJpql = entityManager.createQuery(jpql, Product.class);
+        List<Product> productsJpql = typedQueryJpql.getResultList();
+        Assertions.assertFalse(productsJpql.isEmpty());
+        productsJpql.forEach((p -> System.out.println(format("Productid: %s, product: %s", p.getId(), p.getName()))));
+
+        System.out.println("\n------------------------------------\n");
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<Integer> subquery = criteriaQuery.subquery(Integer.class);
+        Root<PurchaseItem> subQueryRoot = subquery.from(PurchaseItem.class);
+        subquery.select(criteriaBuilder.literal(1));
+        subquery.where(
+                criteriaBuilder.equal(subQueryRoot.get(PurchaseItem_.product), root),
+                criteriaBuilder.notEqual(
+                        subQueryRoot.get(PurchaseItem_.productPrice),
+                        root.get(Product_.price)
+                )
+        );
+
+        criteriaQuery.where(criteriaBuilder.exists(subquery));
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Product> products = typedQuery.getResultList();
+        Assertions.assertFalse(products.isEmpty());
+        products.forEach((p -> System.out.println(format("Productid: %s, product: %s", p.getId(), p.getName()))));
+    }
+
+    @Test
     public void searchWithINExercise() {
         /** Purchases that contain category 2 products
          *
