@@ -13,6 +13,35 @@ import java.util.List;
 public class SubQueriesCriteriaTest extends EntityManagerTest {
 
     @Test
+    public void pesquisarComExists() {
+        /** All products that have already been sold.
+         *
+         *  String jpql = "select p from Product p where exists " +
+         *       " (select 1 from PurchaseItem ip2 join ip2.product p2 where p2 = p)";
+         */
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<Integer> subquery = criteriaQuery.subquery(Integer.class);
+        Root<PurchaseItem> subqueryRoot = subquery.from(PurchaseItem.class);
+        subquery.select(criteriaBuilder.literal(1));
+        subquery.where(criteriaBuilder.equal(subqueryRoot.get(PurchaseItem_.product), root));
+
+        criteriaQuery.where(criteriaBuilder.exists(subquery));
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Product> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+
+        list.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
+
+    @Test
     public void pesquisarComIN() {
         /** Purchase that Product cost more than 100
         *
