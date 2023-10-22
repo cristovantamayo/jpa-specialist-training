@@ -8,11 +8,44 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 
 import static java.lang.String.format;
 
 public class SubQueriesCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void searchWithINExercise() {
+        /**
+         *
+         *      String = "select p from Purchase p where p IN (
+         *              select i.purchase from PurchaseItem i
+         *                  join i.product pro
+         *                      where pro.category.id = 2
+         *          )"
+         */
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<Integer> subquery = criteriaQuery.subquery(Integer.class);
+        Root<PurchaseItem> subQueryRoot = subquery.from(PurchaseItem.class);
+        Join<PurchaseItem, Product> joinProduct = subQueryRoot.join(PurchaseItem_.product);
+        Join<Product, Category> joinCategory = joinProduct.join(Product_.CATEGORIES);
+        subquery.select(subQueryRoot.get(PurchaseItem_.id).get(PurchaseItemId_.purchaseId));
+        subquery.where(criteriaBuilder.equal(joinCategory.get(Category_.id), 2));
+
+        criteriaQuery.where(root.get(Purchase_.id).in(subquery));
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p -> System.out.println(format("PurchaseId: %s", p.getId())));
+    }
 
     @Test
     public void searchProductExercise() {

@@ -41,6 +41,6 @@ insert into category (name) values ("Cleaner");
 insert into category (name) values ("Video Games");
 insert into category (name) values ('Câmeras');
 
-insert into product_category (product_id, category_id) values (3, 1);
+insert into product_category (product_id, category_id) values (3, 2);
 insert into product_category (product_id, category_id) values (1, 1);
 insert into product_category (product_id, category_id) values (4, 8);
