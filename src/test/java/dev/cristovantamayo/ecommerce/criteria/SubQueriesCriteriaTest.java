@@ -10,10 +10,40 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static java.lang.String.format;
+
 public class SubQueriesCriteriaTest extends EntityManagerTest {
 
     @Test
-    public void pesquisarComExists() {
+    public void searchProductExercise() {
+        /** Customers who have already placed more than 2 orders
+         *
+         *  String jpql = "select c from Client c where exists (
+         *          (select count(1) from Purchase p where p.client = c) > 2"
+         */
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Client> criteriaQuery = criteriaBuilder.createQuery(Client.class);
+        Root<Client> root = criteriaQuery.from(Client.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<Long> subquery = criteriaQuery.subquery(Long.class);
+        Root<Purchase> subQueryRoot = subquery.from(Purchase.class);
+        subquery.select(criteriaBuilder.count(criteriaBuilder.literal(1)));
+        subquery.where(criteriaBuilder.equal(subQueryRoot.get(Purchase_.client), root));
+
+        criteriaQuery.where(criteriaBuilder.greaterThan(subquery, 2L));
+
+        TypedQuery<Client> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Client> clients = typedQuery.getResultList();
+        Assertions.assertFalse(clients.isEmpty());
+        clients.forEach(c -> System.out.println(format("id: %s, name: %s", c.getId(), c.getName())));
+
+    }
+
+    @Test
+    public void searchWithExists() {
         /** All products that have already been sold.
          *
          *  String jpql = "select p from Product p where exists " +
@@ -42,7 +72,7 @@ public class SubQueriesCriteriaTest extends EntityManagerTest {
     }
 
     @Test
-    public void pesquisarComIN() {
+    public void searchWithIN() {
         /** Purchase that Product cost more than 100
         *
         *  String jpql = "select p from Purchase p where p.id in" +
