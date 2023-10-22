@@ -16,7 +16,23 @@ import static java.lang.String.format;
 public class SubQueriesTest extends EntityManagerTest {
 
     @Test
-    public void SearchSubQueriesAllExercise() {
+    public void searchWithINExercise() {
+        /** Purchases that contain category 2 products */
+        String jpql = "select p from Purchase p where p.id IN (" +
+                "         select i.purchase.id from PurchaseItem i " +
+                "               join i.product pro " +
+                "               join pro.categories c " +
+                "                   where c.id = 2" +
+                "      )";
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(jpql, Purchase.class);
+        List<Purchase> purchases = typedQuery.getResultList();
+        Assertions.assertFalse(purchases.isEmpty());
+        purchases.forEach(p -> System.out.println(format("PurchaseId: %s", p.getId())));
+    }
+
+    @Test
+    public void searchSubQueriesAllExercise() {
 
         /** All products that always been sold at the same price */
         final String jpql = "select pro from PurchaseItem i " +
@@ -34,7 +50,7 @@ public class SubQueriesTest extends EntityManagerTest {
     }
 
     @Test
-    public void SearchSubQueriesWithAny() {
+    public void searchSubQueriesWithAny() {
 
         /** All products that always been sold at the current price. */
         final String jpql2 = "select p from Product p " +
@@ -82,7 +98,7 @@ public class SubQueriesTest extends EntityManagerTest {
     }
 
     @Test
-    public void SearchSubQueriesWithExists2() {
+    public void searchSubQueriesWithExists2() {
         final String jpql = "select p from Product p " +
                 "where exists (" +
                 "   select 1 from PurchaseItem i2 " +
@@ -130,7 +146,7 @@ public class SubQueriesTest extends EntityManagerTest {
     }
 
     @Test
-    public void SearchSubQueriesWithExists() {
+    public void searchSubQueriesWithExists() {
         final String jpql = "select p from Product p " +
                 "where exists (" +
                 "   select 1 from PurchaseItem i2 " +
@@ -145,7 +161,7 @@ public class SubQueriesTest extends EntityManagerTest {
     }
 
     @Test
-    public void SearchSubQueriesWithIN() {
+    public void searchSubQueriesWithIN() {
         final String jpql = "select p from Purchase p " +
                 "where p.id in (" +
                 "   select p2.id from PurchaseItem i2 " +
