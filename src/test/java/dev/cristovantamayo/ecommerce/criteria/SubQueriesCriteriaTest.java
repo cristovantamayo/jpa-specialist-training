@@ -3,10 +3,7 @@ package dev.cristovantamayo.ecommerce.criteria;
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.*;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
-import jakarta.persistence.criteria.Subquery;
+import jakarta.persistence.criteria.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +11,39 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class SubQueriesCriteriaTest extends EntityManagerTest {
+
+    @Test
+    public void pesquisarComIN() {
+        /** Purchase that Product cost more than 100
+        *
+        *  String jpql = "select p from Purchase p where p.id in" +
+        *        " (select p2.id from PurchaseItem i2 " +
+        *        "      join i2.purchase p2 join i2.produto pro2 where pro2.price > 100)";
+        */
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Purchase> criteriaQuery = criteriaBuilder.createQuery(Purchase.class);
+        Root<Purchase> root = criteriaQuery.from(Purchase.class);
+
+        criteriaQuery.select(root);
+
+        Subquery<Integer> subquery = criteriaQuery.subquery(Integer.class);
+        Root<PurchaseItem> subqueryRoot = subquery.from(PurchaseItem.class);
+        Join<PurchaseItem, Purchase> subQueryJoinPurchase = subqueryRoot.join(PurchaseItem_.purchase);
+        Join<PurchaseItem, Product> subQueryJoinProduct = subqueryRoot.join(PurchaseItem_.product);
+        subquery.select(subQueryJoinPurchase.get(Purchase_.id));
+        subquery.where(criteriaBuilder.greaterThan(
+                subQueryJoinProduct.get(Product_.price), new BigDecimal(1300)));
+
+        criteriaQuery.where(root.get(Purchase_.id).in(subquery));
+
+        TypedQuery<Purchase> typedQuery = entityManager.createQuery(criteriaQuery);
+
+        List<Purchase> lista = typedQuery.getResultList();
+        Assertions.assertFalse(lista.isEmpty());
+
+        lista.forEach(obj -> System.out.println("ID: " + obj.getId()));
+    }
 
     @Test
     public void searchSubQueries03() {
