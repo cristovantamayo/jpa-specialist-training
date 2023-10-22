@@ -17,13 +17,14 @@ public class SubQueriesCriteriaTest extends EntityManagerTest {
 
     @Test
     public void searchWithINExercise() {
-        /**
+        /** Purchases that contain category 2 products
          *
-         *      String = "select p from Purchase p where p IN (
-         *              select i.purchase from PurchaseItem i
-         *                  join i.product pro
-         *                      where pro.category.id = 2
-         *          )"
+         *      String jpql = "select p from Purchase p where p.id IN (" +
+         *                 "         select i.purchase.id from PurchaseItem i " +
+         *                 "               join i.product pro " +
+         *                 "               join pro.categories c " +
+         *                 "                   where c.id = 2" +
+         *                 "      )";
          */
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
