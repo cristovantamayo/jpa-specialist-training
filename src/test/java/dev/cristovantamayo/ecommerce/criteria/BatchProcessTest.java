@@ -14,6 +14,24 @@ import java.math.BigDecimal;
 public class BatchProcessTest extends EntityManagerTest {
 
     @Test
+    public void batchDeletion() {
+        entityManager.getTransaction().begin();
+
+        /** final String jpql = "delete from Product p where p.id between 8 and 12";
+         */
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaDelete<Product> criteriaDelete = criteriaBuilder.createCriteriaDelete(Product.class);
+        Root<Product> root = criteriaDelete.from(Product.class);
+        criteriaDelete.where(criteriaBuilder.between(root.get(Product_.id), 5, 12));
+
+        Query query = entityManager.createQuery(criteriaDelete);
+        query.executeUpdate();
+
+        entityManager.getTransaction().commit();
+    }
+
+    @Test
     public void batchUpdate() {
         entityManager.getTransaction().begin();
 
