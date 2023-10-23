@@ -16,6 +16,47 @@ import static java.lang.String.format;
 public class SubQueriesCriteriaTest extends EntityManagerTest {
 
     @Test
+    public void searchWithAllExercise() {
+        /** All products have always been sold at the same price. */
+
+        String jpql ="select distinct p from PurchaseItem i join i.product p where " +
+                " i.productPrice = ALL " +
+                " (select i2.productPrice from PurchaseItem i2 where i2.product = p and i2.id <> i.id)";
+
+        TypedQuery<Product> typedQueryJpql = entityManager.createQuery(jpql, Product.class);
+        List<Product> productsJpql = typedQueryJpql.getResultList();
+        Assertions.assertFalse(productsJpql.isEmpty());
+        productsJpql.forEach(p -> System.out.println(format("ID: %s, product: %s", p.getId(), p.getName())));
+
+        System.out.println("\n------------------------------------\n");
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<PurchaseItem> root = criteriaQuery.from(PurchaseItem.class);
+
+        criteriaQuery.select(root.get(PurchaseItem_.product));
+        criteriaQuery.distinct(true);
+
+        Subquery<BigDecimal> subquery = criteriaQuery.subquery(BigDecimal.class);
+        Root<PurchaseItem> subQuryRoot = subquery.from(PurchaseItem.class);
+        subquery.select(subQuryRoot.get(PurchaseItem_.productPrice));
+        subquery.where(
+                criteriaBuilder.equal(subQuryRoot.get(PurchaseItem_.product), root.get(PurchaseItem_.product)),
+                criteriaBuilder.notEqual(subQuryRoot, root)
+        );
+
+        criteriaQuery.where(
+                criteriaBuilder.equal(
+                        root.get(PurchaseItem_.productPrice), criteriaBuilder.all(subquery)));
+
+        TypedQuery<Product> typedQuery = entityManager.createQuery(criteriaQuery);
+        List<Product> list = typedQuery.getResultList();
+        Assertions.assertFalse(list.isEmpty());
+        list.forEach(obj -> System.out.println(format("ID: %s, product: %s", obj.getId(), obj.getName())));
+
+    }
+
+    @Test
     public void searchWithAny02() {
         /** All products that have already been sold for a different price than the current one.
         *
