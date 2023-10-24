@@ -13,6 +13,24 @@ import static java.lang.String.format;
 public class NativeConsulsTest extends EntityManagerTest {
 
     @Test
+    public void executeNativeSqlReturningEntityPassingParameters (){
+
+        final String sql = "select prd_id id , prd_name name, prd_description description, " +
+                "prd_created_at created_at, prd_updated_at updated_at, prd_price price, prd_photo photo " +
+                "from product_ecm where prd_id = :id";
+
+        Query query = entityManager.createNativeQuery(sql, Product.class);
+        query.setParameter("id", 201);
+
+        List<Product> list = query.getResultList();
+
+        Assertions.assertFalse(list.isEmpty());
+        list.stream().forEach(p -> {
+            System.out.println(format("Id: %s, Product: %s", p.getId(), p.getName()));
+        });
+    }
+
+    @Test
     public void executeNativeSqlReturningEntity (){
         final String sql3 = "select id, name, description, created_at, updated_at, price, photo " +
                 "from product_store";
