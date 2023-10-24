@@ -9,6 +9,11 @@ import java.nio.MappedByteBuffer;
 
 @Getter
 @Setter
+@SqlResultSetMappings({
+        @SqlResultSetMapping(name="purchase_item-product.PurchaseItem-Product",
+                entities = { @EntityResult(entityClass = PurchaseItem.class),
+                        @EntityResult(entityClass = Product.class) })
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
