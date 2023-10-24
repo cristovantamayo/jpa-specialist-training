@@ -11,6 +11,10 @@ import java.util.List;
 
 @Getter
 @Setter
+@SqlResultSetMappings({
+        @SqlResultSetMapping(name="product_store.Product",
+                entities = { @EntityResult(entityClass = Product.class) })
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @NamedQueries({

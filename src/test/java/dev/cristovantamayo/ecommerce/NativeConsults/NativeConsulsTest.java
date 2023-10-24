@@ -2,6 +2,7 @@ package dev.cristovantamayo.ecommerce.NativeConsults;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.model.Product;
+import dev.cristovantamayo.ecommerce.model.PurchaseItem;
 import jakarta.persistence.Query;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,36 @@ import java.util.List;
 import static java.lang.String.format;
 
 public class NativeConsulsTest extends EntityManagerTest {
+
+    @Test
+    public void executeNativeSqlWithSQLResultSetMapping02 (){
+        final String sql = "select * from purchase_item ip join product p on p.id = ip.product_id";
+
+        Query query = entityManager.createNativeQuery(sql, "purchase_item-product.PurchaseItem-Product");
+
+        List<Object[]> list = query.getResultList();
+
+        Assertions.assertFalse(list.isEmpty());
+        list.stream().forEach(arr -> {
+            System.out.println(format("PurchaseId: %s, Id: %s, Product: %s", ((PurchaseItem)arr[0]).getId().getPurchaseId(),
+                    ((Product)arr[1]).getId(), ((Product)arr[1]).getName()));
+        });
+    }
+
+    @Test
+    public void executeNativeSqlWithSQLResultSetMapping01 (){
+        final String sql = "select id, name, description, created_at, updated_at, price, photo " +
+                "from product_store";
+
+        Query query = entityManager.createNativeQuery(sql, "product_store.Product");
+
+        List<Product> list = query.getResultList();
+
+        Assertions.assertFalse(list.isEmpty());
+        list.stream().forEach(p -> {
+            System.out.println(format("Id: %s, Product: %s", p.getId(), p.getName()));
+        });
+    }
 
     @Test
     public void executeNativeSqlReturningEntityPassingParameters (){
