@@ -44,3 +44,18 @@ insert into category (name) values ('Câmeras');
 insert into product_category (product_id, category_id) values (3, 2);
 insert into product_category (product_id, category_id) values (1, 1);
 insert into product_category (product_id, category_id) values (4, 8);
+
+insert into store_product (id, name, price, created_at, description) values (101, 'Kindle', 799.0, date_sub(sysdate(), interval 1 day), 'Conheça o novo Kindle, agora com iluminação embutida ajustável, que permite que você leia em ambientes abertos ou fechados, a qualquer hora do dia.');
+insert into store_product (id, name, price, created_at, description) values (103, 'Câmera GoPro Hero 7', 1500.0, date_sub(sysdate(), interval 1 day), 'Desempenho 2x melhor.');
+insert into store_product (id, name, price, created_at, description) values (104, 'Câmera Canon 80D', 3500.0, sysdate(), 'O melhor ajuste de foco.');
+insert into store_product (id, name, price, created_at, description) values (105, 'Microfone de Lapela', 50.0, sysdate(), 'Produto massa');
+
+insert into product_ecm (prd_id, prd_name, prd_price, prd_created_at, prd_description) values (201, 'Kindle', 799.0, date_sub(sysdate(), interval 1 day), 'Conheça o novo Kindle, agora com iluminação embutida ajustável, que permite que você leia em ambientes abertos ou fechados, a qualquer hora do dia.');
+insert into product_ecm (prd_id, prd_name, prd_price, prd_created_at, prd_description) values (203, 'Câmera GoPro Hero 7', 1500.0, date_sub(sysdate(), interval 1 day), 'Desempenho 2x melhor.');
+insert into product_ecm (prd_id, prd_name, prd_price, prd_created_at, prd_description) values (204, 'Câmera Canon 80D', 3500.0, sysdate(), 'O melhor ajuste de foco.');
+insert into product_ecm (prd_id, prd_name, prd_price, prd_created_at, prd_description) values (205, 'Microfone de Lapela', 50.0, sysdate(), 'Produto massa');
+
+insert into product_erp (id, name, price, description) values (301, 'Kindle', 799.0, 'Conheça o novo Kindle, agora com iluminação embutida ajustável, que permite que você leia em ambientes abertos ou fechados, a qualquer hora do dia.');
+insert into product_erp (id, name, price, description) values (303, 'Câmera GoPro Hero 7', 1500.0, 'Desempenho 2x melhor.');
+insert into product_erp (id, name, price, description) values (304, 'Câmera Canon 80D', 3500.0, 'O melhor ajuste de foco.');
+insert into product_erp (id, name, price, description) values (305, 'Microfone de Lapela', 50.0, 'Produto massa');
