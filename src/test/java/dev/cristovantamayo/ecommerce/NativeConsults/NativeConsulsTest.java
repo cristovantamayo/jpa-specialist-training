@@ -16,6 +16,30 @@ import static java.lang.String.format;
 public class NativeConsulsTest extends EntityManagerTest {
 
     @Test
+    public void useNamedNativeQuery02 (){
+        Query query = entityManager.createNamedQuery("product_ecm.list");
+
+        List<Product> list = query.getResultList();
+
+        Assertions.assertFalse(list.isEmpty());
+        list.stream().forEach(p -> {
+            System.out.println(format("Id: %s, Product: %s", p.getId(), p.getName()));
+        });
+    }
+
+    @Test
+    public void useNamedNativeQuery01 (){
+        Query query = entityManager.createNamedQuery("product_store.list");
+
+        List<Product> list = query.getResultList();
+
+        Assertions.assertFalse(list.isEmpty());
+        list.stream().forEach(p -> {
+            System.out.println(format("Id: %s, Product: %s", p.getId(), p.getName()));
+        });
+    }
+
+    @Test
     public void useColumnResultReturningDTO() {
         final String sql = "select * from product_ecm ";
 
