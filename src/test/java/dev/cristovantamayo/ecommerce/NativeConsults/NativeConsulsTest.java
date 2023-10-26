@@ -14,6 +14,21 @@ import static java.lang.String.format;
 public class NativeConsulsTest extends EntityManagerTest {
 
     @Test
+    public void executeNativeSqlWithFieldResult (){
+        final String sql = "select * " + //id, name, description, created_at, updated_at, price, photo
+                "from product_ecm ";
+
+        Query query = entityManager.createNativeQuery(sql, "product_store.Product");
+
+        List<Product> list = query.getResultList();
+
+        Assertions.assertFalse(list.isEmpty());
+        list.stream().forEach(p -> {
+            System.out.println(format("Id: %s, Product: %s", p.getId(), p.getName()));
+        });
+    }
+
+    @Test
     public void executeNativeSqlWithSQLResultSetMapping02 (){
         final String sql = "select * from purchase_item ip join product p on p.id = ip.product_id";
 
