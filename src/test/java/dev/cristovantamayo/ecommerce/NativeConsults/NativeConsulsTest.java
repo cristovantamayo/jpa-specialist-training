@@ -2,9 +2,9 @@ package dev.cristovantamayo.ecommerce.NativeConsults;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import dev.cristovantamayo.ecommerce.dto.ProductDTO;
+import dev.cristovantamayo.ecommerce.model.Category;
 import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.PurchaseItem;
-import jakarta.persistence.ColumnResult;
 import jakarta.persistence.Query;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,13 +17,13 @@ public class NativeConsulsTest extends EntityManagerTest {
 
     @Test
     public void useNamedNativeQuery02 (){
-        Query query = entityManager.createNamedQuery("product_ecm.list");
+        Query query = entityManager.createNamedQuery("ecm_category.list");
 
-        List<Product> list = query.getResultList();
+        List<Category> list = query.getResultList();
 
         Assertions.assertFalse(list.isEmpty());
-        list.stream().forEach(p -> {
-            System.out.println(format("Id: %s, Product: %s", p.getId(), p.getName()));
+        list.stream().forEach(c -> {
+            System.out.println(format("Category => Id: %s, Name: %s", c.getId(), c.getName()));
         });
     }
 
