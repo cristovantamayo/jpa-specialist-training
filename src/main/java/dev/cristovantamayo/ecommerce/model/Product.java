@@ -1,7 +1,6 @@
 package dev.cristovantamayo.ecommerce.model;
 
-import dev.cristovantamayo.ecommerce.dto.ProductDTO;
-import dev.cristovantamayo.ecommerce.listeners.GenerateInvoiceListener;
+import dev.cristovantamayo.ecommerce.model.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.listeners.GenericListener;
 import lombok.*;
 

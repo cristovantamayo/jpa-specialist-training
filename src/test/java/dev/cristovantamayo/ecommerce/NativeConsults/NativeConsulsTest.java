@@ -1,7 +1,8 @@
 package dev.cristovantamayo.ecommerce.NativeConsults;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
-import dev.cristovantamayo.ecommerce.dto.ProductDTO;
+import dev.cristovantamayo.ecommerce.model.dto.CategoryDTO;
+import dev.cristovantamayo.ecommerce.model.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.model.Category;
 import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.PurchaseItem;
@@ -14,6 +15,18 @@ import java.util.List;
 import static java.lang.String.format;
 
 public class NativeConsulsTest extends EntityManagerTest {
+
+    @Test
+    public void useNamedNativeFromExternalXMLreturnDTO (){
+        Query query = entityManager.createNamedQuery("ecm_category.list.dto");
+
+        List<CategoryDTO> list = query.getResultList();
+
+        Assertions.assertFalse(list.isEmpty());
+        list.stream().forEach(c -> {
+            System.out.println(format("CategoryDTO > Id: %s, Name: %s", c.getId(), c.getName()));
+        });
+    }
 
     @Test
     public void useNamedNativeQuery02 (){

@@ -1,5 +1,7 @@
 package dev.cristovantamayo.ecommerce.model;
 
+import dev.cristovantamayo.ecommerce.model.dto.CategoryDTO;
+import dev.cristovantamayo.ecommerce.model.dto.ProductDTO;
 import lombok.*;
 
 import jakarta.persistence.*;
