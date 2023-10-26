@@ -59,3 +59,12 @@ insert into product_erp (id, name, price, description) values (301, 'Kindle', 79
 insert into product_erp (id, name, price, description) values (303, 'Câmera GoPro Hero 7', 1500.0, 'Desempenho 2x melhor.');
 insert into product_erp (id, name, price, description) values (304, 'Câmera Canon 80D', 3500.0, 'O melhor ajuste de foco.');
 insert into product_erp (id, name, price, description) values (305, 'Microfone de Lapela', 50.0, 'Produto massa');
+
+insert into ecm_category (cat_id, cat_name) values (201, 'Eletrodomésticos');
+insert into ecm_category (cat_id, cat_name) values (202, 'Livros');
+insert into ecm_category (cat_id, cat_name) values (203, 'Esportes');
+insert into ecm_category (cat_id, cat_name) values (204, 'Futebol');
+insert into ecm_category (cat_id, cat_name) values (205, 'Natação');
+insert into ecm_category (cat_id, cat_name) values (206, 'Notebooks');
+insert into ecm_category (cat_id, cat_name) values (207, 'Smartphones');
+insert into ecm_category (cat_id, cat_name) values (208, 'Câmeras');
