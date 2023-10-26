@@ -1,8 +1,10 @@
 package dev.cristovantamayo.ecommerce.NativeConsults;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
+import dev.cristovantamayo.ecommerce.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.PurchaseItem;
+import jakarta.persistence.ColumnResult;
 import jakarta.persistence.Query;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,21 @@ import static java.lang.String.format;
 public class NativeConsulsTest extends EntityManagerTest {
 
     @Test
-    public void executeNativeSqlWithFieldResult (){
+    public void useColumnResultReturningDTO() {
+        final String sql = "select * from product_ecm ";
+
+        Query query = entityManager.createNativeQuery(sql, "product_ecm.ProductDTO");
+
+        List<ProductDTO> list = query.getResultList();
+
+        Assertions.assertFalse(list.isEmpty());
+        list.stream().forEach(p -> {
+            System.out.println(format("ProductDTO > Id: %s, Name: %s", p.getId(), p.getName()));
+        });
+    }
+
+    @Test
+    public void executeNativeSqlWithFieldResult () {
         final String sql = "select * " + //id, name, description, created_at, updated_at, price, photo
                 "from product_ecm ";
 

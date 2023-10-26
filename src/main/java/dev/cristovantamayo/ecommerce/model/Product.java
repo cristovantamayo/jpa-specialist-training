@@ -1,5 +1,6 @@
 package dev.cristovantamayo.ecommerce.model;
 
+import dev.cristovantamayo.ecommerce.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.listeners.GenerateInvoiceListener;
 import dev.cristovantamayo.ecommerce.listeners.GenericListener;
 import lombok.*;
@@ -24,7 +25,15 @@ import java.util.List;
                         @FieldResult(name = "photo", column = "prd_photo"),
                         @FieldResult(name = "createdAt", column = "prd_created_at"),
                         @FieldResult(name = "updatedAt", column = "prd_updated_at")
-                }) })
+                }) }),
+        @SqlResultSetMapping(name ="product_ecm.ProductDTO",
+                classes = {
+                        @ConstructorResult(targetClass = ProductDTO.class,
+                                columns = {
+                                        @ColumnResult(name="prd_id", type = Integer.class),
+                                        @ColumnResult(name="prd_name", type = String.class)
+                                })
+                })
 })
 @NoArgsConstructor
 @AllArgsConstructor
