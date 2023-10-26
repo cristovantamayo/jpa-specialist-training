@@ -1,6 +1,6 @@
 package dev.cristovantamayo.ecommerce.criteria;
 
-import dev.cristovantamayo.ecommerce.dto.ProductDTO;
+import dev.cristovantamayo.ecommerce.model.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.model.*;
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
 import jakarta.persistence.criteria.Join;

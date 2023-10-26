@@ -1,7 +1,6 @@
 package dev.cristovantamayo.ecommerce.criteria;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
-import dev.cristovantamayo.ecommerce.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Product_;
 import org.junit.jupiter.api.Assertions;

@@ -1,4 +1,4 @@
-package dev.cristovantamayo.ecommerce.dto;
+package dev.cristovantamayo.ecommerce.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDTO {
+public class CategoryDTO {
 
     private Integer id;
     private String name;
 
 }
+
+

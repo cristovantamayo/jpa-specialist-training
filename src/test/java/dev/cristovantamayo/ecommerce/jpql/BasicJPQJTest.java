@@ -1,10 +1,8 @@
 package dev.cristovantamayo.ecommerce.jpql;
 
 import dev.cristovantamayo.ecommerce.EntityManagerTest;
-import dev.cristovantamayo.ecommerce.dto.ProductDTO;
+import dev.cristovantamayo.ecommerce.model.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.model.Client;
-import dev.cristovantamayo.ecommerce.model.PaymentStatus;
-import dev.cristovantamayo.ecommerce.model.Product;
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
