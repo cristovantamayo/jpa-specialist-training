@@ -12,6 +12,12 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedStoredProcedureQuery(name = "sold_above_average", procedureName = "sold_above_average",
+        parameters = {
+                @StoredProcedureParameter(name = "p_year", type = Integer.class, mode = ParameterMode.IN)
+        },
+        resultClasses = Client.class
+)
 @SecondaryTable(name = "client_detail",
         pkJoinColumns = @PrimaryKeyJoinColumn(name = "client_id"),
         foreignKey = @ForeignKey(name = "fk_client_detail_client"))

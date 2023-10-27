@@ -15,6 +15,18 @@ import java.util.List;
 public class StoredProceduresTest extends EntityManagerTest {
 
     @Test
+    public void receiveListFormNamedProcedure() {
+        StoredProcedureQuery storedProcedureQuery = entityManager
+                .createNamedStoredProcedureQuery("sold_above_average");
+
+        storedProcedureQuery.setParameter("p_year", 2023);
+
+        List<Client> clients = storedProcedureQuery.getResultList();
+
+        Assertions.assertFalse(clients.isEmpty());
+    }
+
+    @Test
     public void invokeProcedureExercise() {
 
         final Integer productId = 1;
