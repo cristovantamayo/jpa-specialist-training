@@ -6,3 +6,37 @@ create table ecm_category (cat_id integer not null auto_increment, cat_name varc
 
 create function above_media_billing(myValue double) returns boolean reads sql data return myValue > (select avg(total) from purchase);
 SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
+
+create procedure search_name_product(in product_id int, out product_name varchar(255))
+begin
+    select name into product_name from product where id = product_id;
+end
+
+create procedure sold_up-from_media(in ano integer)
+begin
+    select cli.* from client cli
+        join purchase pur on pur.client_id = cli.id
+    where ped.status = 'PAID_OUT'
+        and year(pur.purchase_date) = pYear
+    group by pur.client_id
+    having sum(pur.total) >= (
+        select avg(total_per_client.sum_total)
+            from (
+                select sum(pur2.total) sum_total
+                    from purchase ped2
+                    where pur.status = 'PAID_OUT'
+                        and year(pur2.purchase_date) = pYear
+                    group by pur2.client_id)
+                        as total_per_client);
+end
+
+create procedure adjust_price_product(in product_id int, in perceptual_adjust double, out price_adjusted double)
+begin
+    declare product_price double;
+    select price into product_price
+        from product
+            where id = product_id;
+     set price_adjusted = product_price + (product_price * perceptual_adjust);
+     update product set price = price_adjusted
+        where id = product_id;
+end
