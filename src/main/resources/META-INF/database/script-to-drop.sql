@@ -5,3 +5,7 @@
  drop table if exists ecm_category;
 
  drop function if exists above_media_billing;
+
+ drop procedure search_name_product;
+ drop procedure sold_above_average;
+ drop procedure adjust_product_price;
