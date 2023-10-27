@@ -31,13 +31,13 @@ begin
                             group by pur2.client_id) as total_per_client);
 end
 
-create procedure adjust_price_product(in product_id int, in perceptual_adjust double, out price_adjusted double)
+create procedure adjust_product_price(in product_id int, in percentage_adjustment double, out adjusted_price double)
 begin
     declare product_price double;
     select price into product_price
         from product
             where id = product_id;
-     set price_adjusted = product_price + (product_price * perceptual_adjust);
-     update product set price = price_adjusted
+     set adjusted_price = product_price + (product_price * percentage_adjustment);
+     update product set price = adjusted_price
         where id = product_id;
 end
