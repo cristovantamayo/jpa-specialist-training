@@ -17,7 +17,7 @@ begin
     select cli.*, cli_d.*
         from client cli
             join client_detail cli_d on cli_d.client_id = cli.id
-            join purchase ped on pur.client_id = cli.id
+            join purchase pur on pur.client_id = cli.id
         where pur.status = 'PAID_OUT'
             and year(pur.purchase_date) = p_year
         group by pur.client_id
@@ -25,7 +25,7 @@ begin
             select avg(total_per_client.sum_total)
                 from (
                     select sum(pur2.total) sum_total
-                        from purchase ped2
+                        from purchase pur2
                             where pur2.status = 'PAID_OUT'
                                 and year(pur2.purchase_date) = p_year
                             group by pur2.client_id) as total_per_client);
@@ -41,3 +41,20 @@ begin
      update product set price = adjusted_price
         where id = product_id;
 end
+
+create view view_clients_above_average as 
+    select cli.*, cli_d.* 
+        from client cli 
+            join client_detail cli_d on cli_d.client_id = cli.id 
+            join purchase pur on pur.client_id = cli.id 
+        where pur.status = 'PAID_OUT' 
+            and year(pur.purchase_date) = year(current_date) 
+        group by pur.client_id 
+        having sum(pur.total) >= (
+            select avg(total_por_client.sum_total) 
+                from (
+                    select sum(pur2.total) sum_total 
+                        from purchase pur2 
+                        where pur2.status = 'PAID_OUT' 
+                            and year(pur2.purchase_date) = year(current_date) 
+                        group by pur2.client_id) as total_por_client);
