@@ -9,3 +9,5 @@
  drop procedure search_name_product;
  drop procedure sold_above_average;
  drop procedure adjust_product_price;
+
+ drop view if exists view_clients_above_average;
