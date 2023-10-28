@@ -48,6 +48,7 @@ public class Purchase extends EntityBaseInteger {
     @Column(nullable = false)
     private BigDecimal total;
 
+    @NotEmpty
     @OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY) //, cascade = CascadeType.PERSIST ,orphanRemoval = true
     @Column(name = "purchase_item")
     private List<PurchaseItem> purchaseItems;
