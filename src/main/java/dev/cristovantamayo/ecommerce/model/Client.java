@@ -1,6 +1,7 @@
 package dev.cristovantamayo.ecommerce.model;
 
 import jakarta.persistence.metamodel.StaticMetamodel;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -27,12 +28,14 @@ import java.util.Map;
         indexes = { @Index(name="idx_name", columnList = "name")})
 public class Client extends EntityBaseInteger {
 
+    @NotBlank
     @Column(length = 100, nullable = false)
     private String name;
 
     @Transient
     private String firstName;
 
+    @NotBlank
     @Column(length = 14, nullable = false)
     private String cpf;
 
