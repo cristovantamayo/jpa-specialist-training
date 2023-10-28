@@ -1,7 +1,7 @@
-insert into product (id, name, price, description, created_at) values (1, 'Kindle', 799.0, 'Conheça o novo Kindle', date_sub(sysdate(), interval 1 day));
-insert into product (id, name, price, description, created_at) values (3, 'Câmera GoPro Hero 7', 1400.0, 'Desempenho 2x melhor.', date_sub(sysdate(), interval 1 day));
-insert into product (id, name, price, description, created_at) values (4, 'Câmera Canon 80D', 3500.0, 'O melhor ajuste de foco.', date_sub(sysdate(), interval 2 day));
-insert into product (id, name, price, description, created_at) values (5, 'Lapel Microphone', 50.0, 'Top Product', date_sub(sysdate(), interval 2 day));
+insert into product (id, name, price, description, created_at, active) values (1, 'Kindle', 799.0, 'Conheça o novo Kindle', date_sub(sysdate(), interval 1 day), 'YES');
+insert into product (id, name, price, description, created_at, active) values (3, 'Câmera GoPro Hero 7', 1400.0, 'Desempenho 2x melhor.', date_sub(sysdate(), interval 1 day), 'YES');
+insert into product (id, name, price, description, created_at, active) values (4, 'Câmera Canon 80D', 3500.0, 'O melhor ajuste de foco.', date_sub(sysdate(), interval 2 day), 'YES');
+insert into product (id, name, price, description, created_at, active) values (5, 'Lapel Microphone', 50.0, 'Top Product', date_sub(sysdate(), interval 2 day), "NO");
 
 insert into client (id, name, cpf) values (1, 'Fernando Medeiros', '111111111');
 insert into client (id, name, cpf) values (2, 'Marcos Mariano', '222222222');
