@@ -2,6 +2,7 @@ package dev.cristovantamayo.ecommerce.model;
 
 import dev.cristovantamayo.ecommerce.model.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.listeners.GenericListener;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -62,12 +63,15 @@ import java.util.List;
         indexes = { @Index(name = "idx_product_name", columnList = "name") })
 public class Product extends EntityBaseInteger {
 
+    @NotBlank
     @Column(length = 100, nullable = false)
     private String name;
 
     @Lob // longtext
     private String description;
 
+    @NotNull
+    @Pattern(regexp = "")
     public BigDecimal price;
 
     @ManyToMany() // cascade = CascadeType.MERGE
@@ -79,12 +83,15 @@ public class Product extends EntityBaseInteger {
     @Column(name = "categories")
     private List<Category> categories;
 
+
     @OneToOne(mappedBy = "product")
     private Stock stock;
 
+    @PastOrPresent
     @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
+    @PastOrPresent
     @Column(name = "updated_at", insertable = false)
     private LocalDateTime updatedAt;
 

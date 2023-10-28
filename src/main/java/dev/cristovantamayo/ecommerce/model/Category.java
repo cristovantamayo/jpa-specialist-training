@@ -2,6 +2,7 @@ package dev.cristovantamayo.ecommerce.model;
 
 import dev.cristovantamayo.ecommerce.model.dto.CategoryDTO;
 import dev.cristovantamayo.ecommerce.model.dto.ProductDTO;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -18,6 +19,7 @@ import java.util.List;
         indexes = { @Index(name = "idx_category_name", columnList = "name")})
 public class Category extends EntityBaseInteger {
 
+    @NotBlank
     @Column(length = 100, nullable = false)
     private String name;
 

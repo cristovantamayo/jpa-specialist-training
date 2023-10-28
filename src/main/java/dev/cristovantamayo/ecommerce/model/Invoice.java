@@ -1,5 +1,8 @@
 package dev.cristovantamayo.ecommerce.model;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -14,6 +17,7 @@ import java.util.Date;
 @Table(name = "invoice")
 public class Invoice extends EntityBaseInteger {
 
+    @NotNull
     @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "purchase_id", nullable = false,
@@ -23,10 +27,13 @@ public class Invoice extends EntityBaseInteger {
     //        inverseJoinColumns = @JoinColumn(name = "purchase_id", unique = true))
     private Purchase purchase;
 
+    @NotEmpty
     @Lob
     @Column(length = 1000, nullable = false)
     private byte[] xml;
 
+    @NotNull
+    @PastOrPresent
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "issue_date", nullable = false)
     private Date issueDate;
