@@ -1,5 +1,6 @@
 package dev.cristovantamayo.ecommerce.model;
 
+import dev.cristovantamayo.ecommerce.model.converter.BooleanYesNoConverter;
 import dev.cristovantamayo.ecommerce.model.dto.ProductDTO;
 import dev.cristovantamayo.ecommerce.listeners.GenericListener;
 import jakarta.validation.constraints.*;
@@ -48,7 +49,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Product.list", query = "select p from Product p"),
         @NamedQuery(name = "Product.listByCategory", query = """
-                select p from Product p 
+                select p from Product p
                     where exists ( select 1 from Category c2
                                             join c2.products p2
                                         where p2 = p
@@ -83,7 +84,6 @@ public class Product extends EntityBaseInteger {
     @Column(name = "categories")
     private List<Category> categories;
 
-
     @OneToOne(mappedBy = "product")
     private Stock stock;
 
@@ -109,8 +109,13 @@ public class Product extends EntityBaseInteger {
     @Column(length = 20000)
     private byte[] photo;
 
+    @Convert(converter = BooleanYesNoConverter.class)
+    @NotNull
+    @Column(length = 3, nullable = false)
+    private Boolean active = Boolean.FALSE;
+
     public static Product of (String name, String description, BigDecimal price,
                               List<Category> categories, Stock stock, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        return new Product(name, description, price, categories, stock, createdAt, updatedAt, null, null, null);
+        return new Product(name, description, price, categories, stock, createdAt, updatedAt, null, null, null, false);
     }
 }
