@@ -1,5 +1,8 @@
 package dev.cristovantamayo.ecommerce.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -15,11 +18,14 @@ import jakarta.persistence.*;
                 columnNames = { "product_id"})} )
 public class Stock extends EntityBaseInteger {
 
+    @NotNull
     @OneToOne(optional = false)
     @JoinColumn(name = "product_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_stock_product"))
     private Product product;
 
+    @NotNull
+    @PositiveOrZero
     private Integer quantity;
 
     public static Stock of (Product product, Integer quantity) {

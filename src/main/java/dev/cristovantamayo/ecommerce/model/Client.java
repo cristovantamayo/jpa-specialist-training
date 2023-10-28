@@ -2,6 +2,8 @@ package dev.cristovantamayo.ecommerce.model;
 
 import jakarta.persistence.metamodel.StaticMetamodel;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -35,14 +37,16 @@ public class Client extends EntityBaseInteger {
     @Transient
     private String firstName;
 
-    @NotBlank
+    @NotNull
     @Column(length = 14, nullable = false)
     private String cpf;
 
+    @NotNull
     @Column(table = "client_detail", nullable = false)
     @Enumerated(EnumType.STRING)
     private ClientGender gender;
 
+    @Past
     @Column(name = "birth_date", table = "client_detail")
     private LocalDate birthDate;
 

@@ -2,6 +2,7 @@ package dev.cristovantamayo.ecommerce.model;
 
 import dev.cristovantamayo.ecommerce.listeners.GenerateInvoiceListener;
 import dev.cristovantamayo.ecommerce.listeners.GenericListener;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -19,23 +20,31 @@ import java.util.List;
 @Table(name = "purchase")
 public class Purchase extends EntityBaseInteger {
 
+    @NotNull
     @ManyToOne(optional = false) // cascade = CascadeType.PERSIST
     @JoinColumn(name = "client_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_purchase_client"))
     private Client client;
 
+    @NotNull
+    @PastOrPresent
     @Column(name = "purchase_date", updatable = false, nullable = false)
     private LocalDateTime purchaseDate;
 
+    @PastOrPresent
     @Column(name = "updated_at", insertable = false)
     private LocalDateTime updatedAt;
 
+    @NotNull
+    @FutureOrPresent
     @Column(name = "purchase_due_date")
     private LocalDateTime purchaseDueDate;
 
     @OneToOne(mappedBy = "purchase")
     private Invoice invoice;
 
+    @NotNull
+    @Positive
     @Column(nullable = false)
     private BigDecimal total;
 
@@ -43,6 +52,7 @@ public class Purchase extends EntityBaseInteger {
     @Column(name = "purchase_item")
     private List<PurchaseItem> purchaseItems;
 
+    @NotNull
     @Column(length = 20, nullable = false)
     @Enumerated(EnumType.STRING)
     private PurchaseStatus status;
