@@ -26,6 +26,7 @@ public class Stock extends EntityBaseInteger {
 
     @NotNull
     @PositiveOrZero
+    @Column(nullable = false)
     private Integer quantity;
 
     public static Stock of (Product product, Integer quantity) {

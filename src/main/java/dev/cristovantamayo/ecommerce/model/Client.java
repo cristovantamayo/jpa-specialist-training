@@ -4,6 +4,7 @@ import jakarta.persistence.metamodel.StaticMetamodel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -38,6 +39,7 @@ public class Client extends EntityBaseInteger {
     private String firstName;
 
     @NotNull
+    @Pattern(regexp = "(^\\d{3}\\x2E\\d{3}\\x2E\\d{3}\\x2D\\d{2}$)")
     @Column(length = 14, nullable = false)
     private String cpf;
 

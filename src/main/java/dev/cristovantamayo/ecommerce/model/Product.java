@@ -71,7 +71,7 @@ public class Product extends EntityBaseInteger {
     private String description;
 
     @NotNull
-    @Pattern(regexp = "")
+    @Positive
     public BigDecimal price;
 
     @ManyToMany() // cascade = CascadeType.MERGE

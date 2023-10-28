@@ -17,7 +17,8 @@ import jakarta.persistence.*;
 //@Table(name = "payment_by_credcard") // Single Table Strategy
 public class PaymentCredCard extends Payment{
 
-    @NotBlank
+    //@NotBlank
+    @NotEmpty
     @Column(name = "card_number", length = 50)
     private String cardNumber;
 
