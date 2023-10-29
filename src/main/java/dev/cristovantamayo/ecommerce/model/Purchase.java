@@ -2,14 +2,12 @@ package dev.cristovantamayo.ecommerce.model;
 
 import dev.cristovantamayo.ecommerce.listeners.GenerateInvoiceListener;
 import dev.cristovantamayo.ecommerce.listeners.GenericListener;
-import jakarta.validation.constraints.*;
-import lombok.*;
-
 import jakarta.persistence.*;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-import org.hibernate.engine.spi.PersistentAttributeInterceptable;
-import org.hibernate.engine.spi.PersistentAttributeInterceptor;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
