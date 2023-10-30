@@ -17,6 +17,29 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "Purchase.essentialData",
+                attributeNodes = {
+                        @NamedAttributeNode("purchaseDate"),
+                        @NamedAttributeNode("status"),
+                        @NamedAttributeNode("total"),
+                        @NamedAttributeNode(
+                                value = "client",
+                                subgraph = "cli"
+                        )
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "cli",
+                                attributeNodes = {
+                                        @NamedAttributeNode("name"),
+                                        @NamedAttributeNode("cpf")
+                                }
+                        )
+                }
+        )
+})
 @EntityListeners({ GenerateInvoiceListener.class, GenericListener.class })
 
 @Entity
