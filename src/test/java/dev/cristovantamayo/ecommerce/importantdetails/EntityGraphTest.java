@@ -18,6 +18,25 @@ import java.util.Map;
 public class EntityGraphTest extends EntityManagerTest {
 
     @Test
+    public void LookingForEssentialsAttributesOfPurchaseWithNamedEntityGraph() {
+
+        EntityGraph<?> entityGraph =
+                entityManager.createEntityGraph("Purchase.essentialData");
+
+        entityGraph.addAttributeNodes("payment");
+
+        TypedQuery<Purchase> typedQuery =  entityManager
+                .createQuery("select p from Purchase p where p.id = 1", Purchase.class);
+
+        List<Purchase> purchases = typedQuery
+                .setHint("javax.persistence.fetchgraph", entityGraph)
+                .getResultList();
+
+        Assertions.assertFalse(purchases.isEmpty());
+
+    }
+
+    @Test
     public void LookingForEssentialsAttributesOfPurchase04 () {
 
         EntityGraph<Purchase> entityGraph =
