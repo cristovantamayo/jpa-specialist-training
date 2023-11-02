@@ -14,7 +14,7 @@
         <validation-mode>CALLBACK</validation-mode>
 
         <properties>
-            <property name="jakarta.persistence.SharedCacheMode" value="ALL" />
+            <property name="jakarta.persistence.sharedCache.mode" value="ALL"/>
 
             <property name="jakarta.persistence.jdbc.url"
                       value="jdbc:mysql://localhost/jpa_specialist_training?createDatabaseIfNotExist=true" />
