@@ -24,7 +24,21 @@ public class CacheTest {
     }
 
     @Test
-    public void ChechIfIsInL2Cache () {
+    public void l2CacheOptionsAnalyse () {
+        Cache cache = entityManagerFactory.getCache();
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Search from Instance 1");
+        entityManager1
+                .createQuery("select p from Purchase p", Purchase.class)
+                .getResultList();
+
+        Assertions.assertTrue(cache.contains(Purchase.class, 1));
+    }
+
+    @Test
+    public void checkIfIsInL2Cache () {
         Cache cache = entityManagerFactory.getCache();
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
 
@@ -39,7 +53,7 @@ public class CacheTest {
     }
 
     @Test
-    public void RemoveFromL2Cache () {
+    public void removeFromL2Cache () {
         Cache cache = entityManagerFactory.getCache();
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
