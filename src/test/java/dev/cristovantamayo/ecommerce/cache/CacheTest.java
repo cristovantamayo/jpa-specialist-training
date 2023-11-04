@@ -2,10 +2,7 @@ package dev.cristovantamayo.ecommerce.cache;
 
 import dev.cristovantamayo.ecommerce.model.Purchase;
 import jakarta.persistence.*;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.util.Map;
 
@@ -24,6 +21,21 @@ public class CacheTest {
     @AfterAll
     public static void tearDownAfterClass() {
         entityManagerFactory.close();;
+    }
+
+    @Test
+    public void ChechIfIsInL2Cache () {
+        Cache cache = entityManagerFactory.getCache();
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Search from Instance 1");
+        entityManager1
+                .createQuery("select p from Purchase p", Purchase.class)
+                .getResultList();
+
+        Assertions.assertTrue(cache.contains(Purchase.class, 1));
+        Assertions.assertTrue(cache.contains(Purchase.class, 2));
     }
 
     @Test
