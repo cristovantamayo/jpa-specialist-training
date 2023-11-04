@@ -30,6 +30,24 @@ public class CacheTest {
     }
 
     @Test
+    public void addPurchasesToCache(){
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Search from Instance 1");
+        entityManager1
+                .createQuery("select p from Purchase p", Purchase.class)
+                .getResultList();
+        /** In this case the Entities from result Query will be added to L2 Cache */
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Search from Purchase 2");
+        entityManager2.find(Purchase.class, 1);
+
+    }
+
+    @Test
     public void searchFromCache(){
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();

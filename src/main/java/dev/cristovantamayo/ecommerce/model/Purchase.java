@@ -193,7 +193,7 @@ public class Purchase extends EntityBaseInteger
 
     @PostLoad
     public void postLoad() {
-        System.out.println("After load a Entity");
+        System.out.println("After load Entity");
     }
 
     public static Purchase of (Client client, LocalDateTime purchaseDate, LocalDateTime updateAt, LocalDateTime purchaseDueDate,
