@@ -31,6 +31,7 @@ insert into payment (purchase_id, payment_status, payment_type, card_number, bar
 insert into payment (purchase_id, payment_status, payment_type, card_number, bar_code, due_date) values (6, 'IN_PROCESS', 'BankSlip', null, '456', date_add(sysdate(), interval 2 day));
 
 insert into invoice (purchase_id, xml, issue_date) VALUES (2, "<?xml></xml>", date_sub(sysdate(), interval 1 day));
+insert into invoice (purchase_id, xml, issue_date) VALUES (1, "<?xml></xml>", date_sub(sysdate(), interval 1 day));
 
 insert into category (name) values ("Electronics");
 insert into category (name) values ("Books");
