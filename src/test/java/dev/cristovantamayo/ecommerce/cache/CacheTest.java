@@ -1,10 +1,7 @@
 package dev.cristovantamayo.ecommerce.cache;
 
 import dev.cristovantamayo.ecommerce.model.Purchase;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import jakarta.persistence.PersistenceUnit;
+import jakarta.persistence.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +24,30 @@ public class CacheTest {
     @AfterAll
     public static void tearDownAfterClass() {
         entityManagerFactory.close();;
+    }
+
+    @Test
+    public void RemoveFromL2Cache () {
+        Cache cache = entityManagerFactory.getCache();
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Search from Instance 1");
+        entityManager1
+                .createQuery("select p from Purchase p", Purchase.class)
+                .getResultList();
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Remove from L2 Cache");
+        /** cache.evict(Purchase.class, 1); // --> remove a Entity reference */
+        /** cache.evict(Purchase.class); // --> remove all Entity reference */
+        cache.evictAll(); // clear L2 Cache
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Search from Instance 2");
+        entityManager2.find(Purchase.class, 1);
+        entityManager2.find(Purchase.class, 2);
     }
 
     @Test
