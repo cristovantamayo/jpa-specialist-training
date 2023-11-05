@@ -4,6 +4,7 @@ import dev.cristovantamayo.ecommerce.model.Purchase;
 import jakarta.persistence.*;
 import org.junit.jupiter.api.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.String.format;
@@ -21,6 +22,48 @@ public class CacheTest {
     @AfterAll
     public static void tearDownAfterClass() {
         entityManagerFactory.close();;
+    }
+
+    @Test
+    public void controlL2CacheDynamically () {
+        /** jakarta.persistence.cache.retrieveMode CacheRetrieveMode;
+         * jakarta.persistence.cache.storeMode CacheStoreMode;
+         *
+         * CacheStoreMode
+         *  USE --> All Results will be cached
+         *  BYPASS --> Ignores Result ane not add to cache
+         *  REFRESH --> like USE, caches all Result, but updates on new results
+         *
+         * CacheRetrieveMode
+         *  USE --> All cached result will be used
+         *  BYPASS --> Ignores to use cached result
+         */
+        Cache cache = entityManagerFactory.getCache();
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Retrieve All purchases instance 1");
+        entityManager1
+                .createQuery("select p from Purchase p", Purchase.class)
+                // .setHint("jakarta.persistence.cache.storeMode", CacheStoreMode.BYPASS)
+                .getResultList();
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Search for Purchase 2 from Instance 2");
+        Map<String, Object> properties = new HashMap<>();
+        // properties.put("jakarta.persistence.cache.storeMode", CacheStoreMode.BYPASS);
+        // properties.put("jakarta.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
+        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+        entityManager2.find(Purchase.class, 2, properties);
+
+        System.out.println("\n--------------------------------------------");
+        System.out.println("Retrieve All purchases from Instance 3  (again)");
+        EntityManager entityManager3 = entityManagerFactory.createEntityManager();
+        entityManager3.setProperty("jakarta.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS); // Bypass all Consuls from instance 3
+        entityManager3
+                .createQuery("select p from Purchase p", Purchase.class)
+                .setHint("jakarta.persistence.cache.retrieveMode", CacheRetrieveMode.USE) // USE only this consult
+                .getResultList();
     }
 
     @Test
