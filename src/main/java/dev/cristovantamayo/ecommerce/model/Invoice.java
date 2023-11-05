@@ -19,7 +19,7 @@ public class Invoice extends EntityBaseInteger {
 
     @NotNull
     @MapsId
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "purchase_id", nullable = false,
             foreignKey = @ForeignKey(name = "fk_invoice_purchase"))
     //@JoinTable(name = "purchase_invoice",
