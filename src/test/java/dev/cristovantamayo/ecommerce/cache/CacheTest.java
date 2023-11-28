@@ -25,6 +25,35 @@ public class CacheTest {
     }
 
     @Test
+    public void ehcache () {
+        Cache cache = entityManagerFactory.getCache();
+        EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+
+        log("\n--------------------------------------------");
+        log("Search from Instance 1");
+        entityManager1
+                .createQuery("select p from Purchase p", Purchase.class)
+                .getResultList();
+        log("---");
+
+        waiting(1);
+        Assertions.assertTrue(cache.contains(Purchase.class, 1));
+
+        waiting(6);
+        Assertions.assertFalse(cache.contains(Purchase.class, 1));
+    }
+
+    private static void waiting(int seconds) {
+        try {
+            Thread.sleep(seconds*1000);
+        } catch (InterruptedException e) {}
+    }
+
+    private static void log(String x) {
+        System.out.println(format("[LOG + %s]", x));
+    }
+
+    @Test
     public void controlL2CacheDynamically () {
         /** jakarta.persistence.cache.retrieveMode CacheRetrieveMode;
          * jakarta.persistence.cache.storeMode CacheStoreMode;
@@ -41,23 +70,23 @@ public class CacheTest {
         Cache cache = entityManagerFactory.getCache();
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Retrieve All purchases instance 1");
+        log("\n--------------------------------------------");
+        log("Retrieve All purchases instance 1");
         entityManager1
                 .createQuery("select p from Purchase p", Purchase.class)
                 // .setHint("jakarta.persistence.cache.storeMode", CacheStoreMode.BYPASS)
                 .getResultList();
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Search for Purchase 2 from Instance 2");
+        log("\n--------------------------------------------");
+        log("Search for Purchase 2 from Instance 2");
         Map<String, Object> properties = new HashMap<>();
         // properties.put("jakarta.persistence.cache.storeMode", CacheStoreMode.BYPASS);
         // properties.put("jakarta.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
         entityManager2.find(Purchase.class, 2, properties);
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Retrieve All purchases from Instance 3  (again)");
+        log("\n--------------------------------------------");
+        log("Retrieve All purchases from Instance 3  (again)");
         EntityManager entityManager3 = entityManagerFactory.createEntityManager();
         entityManager3.setProperty("jakarta.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS); // Bypass all Consuls from instance 3
         entityManager3
@@ -71,8 +100,8 @@ public class CacheTest {
         Cache cache = entityManagerFactory.getCache();
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Search from Instance 1");
+        log("\n--------------------------------------------");
+        log("Search from Instance 1");
         entityManager1
                 .createQuery("select p from Purchase p", Purchase.class)
                 .getResultList();
@@ -85,8 +114,8 @@ public class CacheTest {
         Cache cache = entityManagerFactory.getCache();
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Search from Instance 1");
+        log("\n--------------------------------------------");
+        log("Search from Instance 1");
         entityManager1
                 .createQuery("select p from Purchase p", Purchase.class)
                 .getResultList();
@@ -101,20 +130,20 @@ public class CacheTest {
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Search from Instance 1");
+        log("\n--------------------------------------------");
+        log("Search from Instance 1");
         entityManager1
                 .createQuery("select p from Purchase p", Purchase.class)
                 .getResultList();
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Remove from L2 Cache");
+        log("\n--------------------------------------------");
+        log("Remove from L2 Cache");
         /** cache.evict(Purchase.class, 1); // --> remove a Entity reference */
         /** cache.evict(Purchase.class); // --> remove all Entity reference */
         cache.evictAll(); // clear L2 Cache
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Search from Instance 2");
+        log("\n--------------------------------------------");
+        log("Search from Instance 2");
         entityManager2.find(Purchase.class, 1);
         entityManager2.find(Purchase.class, 2);
     }
@@ -124,15 +153,15 @@ public class CacheTest {
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Search from Instance 1");
+        log("\n--------------------------------------------");
+        log("Search from Instance 1");
         entityManager1
                 .createQuery("select p from Purchase p", Purchase.class)
                 .getResultList();
         /** In this case the Entities from result Query will be added to L2 Cache */
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Search from Purchase 2");
+        log("\n--------------------------------------------");
+        log("Search from Purchase 2");
         entityManager2.find(Purchase.class, 1);
 
     }
@@ -142,11 +171,11 @@ public class CacheTest {
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
 
-        System.out.println("Search from Instance 1");
+        log("Search from Instance 1");
         entityManager1.find(Purchase.class, 1);
 
-        System.out.println("\n--------------------------------------------");
-        System.out.println("Search from Instance 2");
+        log("\n--------------------------------------------");
+        log("Search from Instance 2");
         entityManager2.find(Purchase.class, 1);
     }
 }
