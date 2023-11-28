@@ -28,6 +28,7 @@ public class CacheTest {
     public void ehcache () {
         Cache cache = entityManagerFactory.getCache();
         EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+        EntityManager entityManager2 = entityManagerFactory.createEntityManager();
 
         log("\n--------------------------------------------");
         log("Search from Instance 1");
@@ -38,9 +39,13 @@ public class CacheTest {
 
         waiting(1);
         Assertions.assertTrue(cache.contains(Purchase.class, 1));
+        entityManager2.find(Purchase.class, 1);
 
         waiting(6);
         Assertions.assertFalse(cache.contains(Purchase.class, 1));
+
+        entityManager1.close();
+        entityManager2.close();
     }
 
     private static void waiting(int seconds) {
@@ -77,6 +82,8 @@ public class CacheTest {
                 // .setHint("jakarta.persistence.cache.storeMode", CacheStoreMode.BYPASS)
                 .getResultList();
 
+        entityManager1.close();
+
         log("\n--------------------------------------------");
         log("Search for Purchase 2 from Instance 2");
         Map<String, Object> properties = new HashMap<>();
@@ -84,6 +91,8 @@ public class CacheTest {
         // properties.put("jakarta.persistence.cache.retrieveMode", CacheRetrieveMode.BYPASS);
         EntityManager entityManager2 = entityManagerFactory.createEntityManager();
         entityManager2.find(Purchase.class, 2, properties);
+
+        entityManager2.close();
 
         log("\n--------------------------------------------");
         log("Retrieve All purchases from Instance 3  (again)");
@@ -93,6 +102,8 @@ public class CacheTest {
                 .createQuery("select p from Purchase p", Purchase.class)
                 .setHint("jakarta.persistence.cache.retrieveMode", CacheRetrieveMode.USE) // USE only this consult
                 .getResultList();
+
+        entityManager3.close();
     }
 
     @Test
@@ -107,6 +118,8 @@ public class CacheTest {
                 .getResultList();
 
         Assertions.assertTrue(cache.contains(Purchase.class, 1));
+
+        entityManager1.close();
     }
 
     @Test
@@ -122,6 +135,8 @@ public class CacheTest {
 
         Assertions.assertTrue(cache.contains(Purchase.class, 1));
         Assertions.assertTrue(cache.contains(Purchase.class, 2));
+
+        entityManager1.close();
     }
 
     @Test
@@ -146,6 +161,9 @@ public class CacheTest {
         log("Search from Instance 2");
         entityManager2.find(Purchase.class, 1);
         entityManager2.find(Purchase.class, 2);
+
+        entityManager1.close();
+        entityManager2.close();
     }
 
     @Test
@@ -164,6 +182,8 @@ public class CacheTest {
         log("Search from Purchase 2");
         entityManager2.find(Purchase.class, 1);
 
+        entityManager1.close();
+        entityManager2.close();
     }
 
     @Test
@@ -177,5 +197,8 @@ public class CacheTest {
         log("\n--------------------------------------------");
         log("Search from Instance 2");
         entityManager2.find(Purchase.class, 1);
+
+        entityManager1.close();
+        entityManager2.close();
     }
 }
