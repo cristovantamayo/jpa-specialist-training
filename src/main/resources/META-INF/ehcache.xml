@@ -21,7 +21,7 @@
         <value-type>java.lang.Object</value-type>
 
         <expiry>
-            <ttl unit="seconds">2</ttl>
+            <ttl unit="seconds">20</ttl>
         </expiry>
 
         <heap unit="entries">1000</heap>
