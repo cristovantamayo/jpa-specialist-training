@@ -51,7 +51,10 @@ public class PurchaseItem {
     @Column(nullable = false)
     private Integer quantity;
 
+    @Version
+    private Integer version;
+
     public static PurchaseItem of (Purchase purchase, Product product, BigDecimal productPrice, Integer quantity) {
-        return new PurchaseItem(null, purchase, product, productPrice, quantity);
+        return new PurchaseItem(null, purchase, product, productPrice, quantity, null);
     }
 }
