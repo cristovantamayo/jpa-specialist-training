@@ -32,10 +32,86 @@ public class PessimisticLockTest {
         );
     }
 
-    private static void waiting(int segundos) {
+    private static void waiting(int seconds) {
         try {
-            Thread.sleep(segundos * 1000);
+            Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {}
+    }
+
+    @Test
+    public void usePessimisticLockModeTypePessimisticWrite() {
+        Runnable runnable1 = () -> {
+            log("Initializing Runnable 01.");
+
+            String newDescription = "Description detailed. CTM: " + System.currentTimeMillis();
+
+            EntityManager entityManager1 = entityManagerFactory.createEntityManager();
+            entityManager1.getTransaction().begin();
+
+            log("Runnable 01 will charges the product 1.");
+            Product product = entityManager1.find(
+                    Product.class, 1, LockModeType.PESSIMISTIC_WRITE);
+
+            log("Runnable 01 will change the product.");
+            product.setDescription(newDescription);
+
+            log("Runnable 01 will waiting por 3 second(s).");
+            waiting(3);
+
+            log("Runnable 01 will confirm the transaction.");
+            entityManager1.getTransaction().commit();
+            entityManager1.close();
+
+            log("Terminating Runnable 01.");
+        };
+
+        Runnable runnable2 = () -> {
+            log("Initializing Runnable 02.");
+
+            String newDescription = "Very Cool Description! CTM: " + System.currentTimeMillis();
+
+            EntityManager entityManager2 = entityManagerFactory.createEntityManager();
+            entityManager2.getTransaction().begin();
+
+            log("Runnable 02 will charges the product 2.");
+            Product product = entityManager2.find(
+                    Product.class, 1, LockModeType.PESSIMISTIC_WRITE);
+
+            log("Runnable 02 will change the product.");
+            product.setDescription(newDescription);
+
+            log("Runnable 02 will waiting por 1 second(s).");
+            waiting(1);
+
+            log("Runnable 02 will confirm the transaction.");
+            entityManager2.getTransaction().commit();
+            entityManager2.close();
+
+            log("Terminating Runnable 02.");
+        };
+
+        Thread thread1 = new Thread(runnable1);
+        Thread thread2 = new Thread(runnable2);
+
+        thread1.start();
+
+        waiting(1);
+        thread2.start();
+
+        try {
+            thread1.join();
+            thread2.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        EntityManager entityManager3 = entityManagerFactory.createEntityManager();
+        Product product = entityManager3.find(Product.class, 1);
+        entityManager3.close();
+
+        Assertions.assertTrue(product.getDescription().startsWith("Very Cool Description!"));
+
+        log("Terminating method of test.");
     }
 
     @Test
@@ -55,10 +131,10 @@ public class PessimisticLockTest {
             log("Runnable 01 will change the product.");
             product.setDescription(newDescription);
 
-            log("Runnable 01 will esperar por 3 segundo(s).");
+            log("Runnable 01 will waiting por 3 second(s).");
             waiting(3);
 
-            log("Runnable 01 will confirmar a transação.");
+            log("Runnable 01 will confirm the transaction.");
             entityManager1.getTransaction().commit();
             entityManager1.close();
 
@@ -75,15 +151,15 @@ public class PessimisticLockTest {
 
             log("Runnable 02 will charges the product 2.");
             Product product = entityManager2.find(
-                    Product.class, 1, LockModeType.PESSIMISTIC_READ);
+                    Product.class, 1);
 
             log("Runnable 02 will change the product.");
             product.setDescription(newDescription);
 
-            log("Runnable 02 will esperar por 1 segundo(s).");
+            log("Runnable 02 will waiting por 1 second(s).");
             waiting(1);
 
-            log("Runnable 02 will confirmar a transação.");
+            log("Runnable 02 will confirm the transaction.");
             entityManager2.getTransaction().commit();
             entityManager2.close();
 
